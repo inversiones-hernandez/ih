@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Inversiones Hernández | Préstamos Personales</title>
   <meta name="description" content="Inversiones Hernández ofrece préstamos personales rápidos, confiables y con atención personalizada para ayudarte a crecer financieramente." />
 
@@ -11,14 +11,14 @@
   <meta property="og:site_name" content="Inversiones Hernández" />
   <meta property="og:title" content="Inversiones Hernández | Préstamos Personales" />
   <meta property="og:description" content="Préstamos personales rápidos, confiables y con atención cercana. Solicita el tuyo hoy." />
-  <meta property="og:image" content="https://www.inversioneshernandez.com/og-image.jpg" />
+  <meta property="og:image" content="https://inversiones-hernandez.github.io/ih/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:url" content="https://www.inversioneshernandez.com/" />
+  <meta property="og:url" content="https://inversiones-hernandez.github.io/ih/" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Inversiones Hernández | Préstamos Personales" />
   <meta name="twitter:description" content="Préstamos personales rápidos, confiables y con atención cercana." />
-  <meta name="twitter:image" content="https://www.inversioneshernandez.com/og-image.jpg" />
+  <meta name="twitter:image" content="https://inversiones-hernandez.github.io/ih/og-image.jpg" />
 
   <link rel="stylesheet" href="style.css" />
   <script defer src="script.js"></script>
@@ -299,6 +299,40 @@
             <p>Financiamiento para emergencias, proyectos, negocios y oportunidades.</p>
           </article>
         </div>
+      </div>
+    </section>
+
+    <section class="section promo-carousel-section" id="promociones">
+      <div class="container">
+        <div class="section-heading center reveal">
+          <span class="eyebrow">Nuestras Promociones</span>
+          <h2>Todo lo que ofrecemos para ti</h2>
+          <p>Desliza y descubre nuestros planes, beneficios y condiciones especiales.</p>
+        </div>
+      </div>
+
+      <div class="coverflow-wrapper reveal">
+        <div class="coverflow-track" id="coverflowTrack">
+          <div class="cf-slide" data-index="0"><img src="flyer-01.png" alt="¿Necesitas un préstamo?" loading="lazy"></div>
+          <div class="cf-slide" data-index="1"><img src="flyer-02.png" alt="Respuesta Rápida" loading="lazy"></div>
+          <div class="cf-slide" data-index="2"><img src="flyer-03.png" alt="Cliente VIP" loading="lazy"></div>
+          <div class="cf-slide" data-index="3"><img src="flyer-04.png" alt="Cliente Puntual" loading="lazy"></div>
+          <div class="cf-slide" data-index="4"><img src="flyer-05.png" alt="Programa de Referidos" loading="lazy"></div>
+          <div class="cf-slide" data-index="5"><img src="flyer-06.png" alt="Montos desde RD$5,000" loading="lazy"></div>
+          <div class="cf-slide" data-index="6"><img src="flyer-07.png" alt="Financiamiento para Negocios" loading="lazy"></div>
+          <div class="cf-slide" data-index="7"><img src="flyer-08.png" alt="Atención Personalizada" loading="lazy"></div>
+          <div class="cf-slide" data-index="8"><img src="flyer-09.png" alt="Solicita tu Préstamo Hoy" loading="lazy"></div>
+          <div class="cf-slide" data-index="9"><img src="flyer-10.png" alt="¿Necesitas Capital?" loading="lazy"></div>
+        </div>
+
+        <button class="cf-btn cf-prev" id="cfPrev" aria-label="Anterior">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="cf-btn cf-next" id="cfNext" aria-label="Siguiente">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+
+        <div class="cf-dots" id="cfDots"></div>
       </div>
     </section>
 
