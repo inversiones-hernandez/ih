@@ -184,3 +184,149 @@ if (calcAmount && calcPeriodos && freqRadios.length) {
   ajustarRangoPeriodos(frecuenciaActual(), false);
   updateCalculator();
 }
+
+// CARRUSEL COVERFLOW 3D
+(function () {
+  const track = document.getElementById("coverflowTrack");
+  const dotsContainer = document.getElementById("cfDots");
+  const btnPrev = document.getElementById("cfPrev");
+  const btnNext = document.getElementById("cfNext");
+
+  if (!track) return;
+
+  const slides = Array.from(track.querySelectorAll(".cf-slide"));
+  const total = slides.length;
+  let current = 0;
+  let autoTimer = null;
+  let isDragging = false;
+  let dragStartX = 0;
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const dot = document.createElement("button");
+    dot.className = "cf-dot" + (i === 0 ? " active" : "");
+    dot.setAttribute("aria-label", "Ir al flyer " + (i + 1));
+    dot.addEventListener("click", () => goTo(i));
+    dotsContainer.appendChild(dot);
+  });
+
+  function getSlideWidth() {
+    return track.querySelector(".cf-slide").offsetWidth;
+  }
+
+  function applyPositions() {
+    const dots = dotsContainer.querySelectorAll(".cf-dot");
+    const slideW = getSlideWidth();
+    const gap = slideW * 0.62;
+
+    slides.forEach((slide, i) => {
+      const offset = i - current;
+      const absOffset = Math.abs(offset);
+
+      // Cap visible range to 5 slides (center ± 2)
+      const visible = absOffset <= 2;
+      const zIndex = visible ? 10 - absOffset : 0;
+
+      // X position: spread out by gap
+      const x = offset * gap;
+
+      // Rotation (Y axis — the 3D lean)
+      const rotateY = offset === 0 ? 0 : offset > 0 ? -42 : 42;
+
+      // Scale: center is biggest
+      const scale = offset === 0 ? 1 : absOffset === 1 ? 0.82 : 0.66;
+
+      // Opacity: fade out the edges
+      const opacity = offset === 0 ? 1 : absOffset === 1 ? 0.75 : absOffset === 2 ? 0.45 : 0;
+
+      slide.style.transform = `translateX(${x}px) rotateY(${rotateY}deg) scale(${scale})`;
+      slide.style.opacity = opacity;
+      slide.style.zIndex = zIndex;
+      slide.style.visibility = visible ? "visible" : "hidden";
+      slide.style.pointerEvents = offset === 0 ? "auto" : "none";
+      slide.style.boxShadow = offset === 0
+        ? "0 30px 80px rgba(0,0,0,0.55), 0 0 0 2px rgba(91,157,255,0.4)"
+        : "0 20px 50px rgba(0,0,0,0.3)";
+    });
+
+    dots.forEach((dot, i) => dot.classList.toggle("active", i === current));
+  }
+
+  function goTo(index) {
+    current = ((index % total) + total) % total;
+    applyPositions();
+    resetAuto();
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  function startAuto() {
+    autoTimer = setInterval(next, 3800);
+  }
+
+  function resetAuto() {
+    clearInterval(autoTimer);
+    startAuto();
+  }
+
+  // Click a side slide to navigate to it
+  slides.forEach((slide, i) => {
+    slide.addEventListener("click", () => {
+      if (i !== current) goTo(i);
+    });
+  });
+
+  // Arrow buttons
+  btnPrev.addEventListener("click", () => { prev(); });
+  btnNext.addEventListener("click", () => { next(); });
+
+  // Keyboard navigation
+  document.addEventListener("keydown", (e) => {
+    const section = document.getElementById("promociones");
+    if (!section) return;
+    const rect = section.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    }
+  });
+
+  // Touch / drag support
+  track.addEventListener("touchstart", (e) => {
+    isDragging = true;
+    dragStartX = e.touches[0].clientX;
+    clearInterval(autoTimer);
+  }, { passive: true });
+
+  track.addEventListener("touchend", (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+    const diff = dragStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) diff > 0 ? next() : prev();
+    else resetAuto();
+  });
+
+  // Mouse drag
+  track.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    dragStartX = e.clientX;
+    clearInterval(autoTimer);
+  });
+
+  window.addEventListener("mouseup", (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+    const diff = dragStartX - e.clientX;
+    if (Math.abs(diff) > 40) diff > 0 ? next() : prev();
+    else resetAuto();
+  });
+
+  // Pause auto-play on hover
+  track.addEventListener("mouseenter", () => clearInterval(autoTimer));
+  track.addEventListener("mouseleave", () => startAuto());
+
+  // Init
+  applyPositions();
+  startAuto();
+})();
