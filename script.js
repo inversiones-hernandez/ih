@@ -105,10 +105,7 @@ const calcTotal       = document.getElementById("calcTotal");
 const calcNote        = document.getElementById("calcNote");
 
 function formatRD(n) {
-  return "RD$ " + n.toLocaleString("es-DO", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  });
+  return "RD$ " + Math.round(n).toLocaleString("es-DO");
 }
 
 function frecuenciaActual() {
