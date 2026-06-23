@@ -81,28 +81,28 @@ faqItems.forEach(item => {
   });
 });
 
-// CALCULADORA DE PRÉSTAMO — Método ALEMÁN / INSOLUTO (estimación ilustrativa)
-// El sistema alemán amortiza capital fijo cada período; el interés se calcula
-// sobre el saldo pendiente, así que la cuota baja en cada período.
+// CALCULADORA DE PRÉSTAMO — Método FRANCÉS / INSOLUTO FIJO (estimación ilustrativa)
+// Cuota fija calculada con la fórmula de amortización francesa:
+//   Cuota = Monto × [tasa × (1+tasa)^n] / [(1+tasa)^n − 1]
+// Todas las cuotas son iguales; el interés va bajando y el capital subiendo cada período.
 //
 // ⚠️ Tasas de ejemplo. Antes de publicar, confirma que cumplen con la normativa de
 // tasas de interés vigente en República Dominicana (recomendado: revisión legal).
 const FRECUENCIAS = {
-  diario:    { nombre: "día",      nombrePlural: "días",      tasa: 0.025, min: 30, max: 120, step: 1, porDefecto: 30 },
-  semanal:   { nombre: "semana",   nombrePlural: "semanas",   tasa: 0.10,  min: 8, max: 24, step: 1, porDefecto: 8  },
-  quincenal: { nombre: "quincena", nombrePlural: "quincenas", tasa: 0.15,  min: 4, max: 12, step: 1, porDefecto: 4  }
+  diario:    { nombre: "día",      nombrePlural: "días",      tasa: 0.025, min: 30, max: 120, step: 1,  porDefecto: 30 },
+  semanal:   { nombre: "semana",   nombrePlural: "semanas",   tasa: 0.10,  min: 8,  max: 24,  step: 1,  porDefecto: 8  },
+  quincenal: { nombre: "quincena", nombrePlural: "quincenas", tasa: 0.15,  min: 4,  max: 12,  step: 1,  porDefecto: 4  }
 };
 
-const freqRadios = document.querySelectorAll('input[name="frecuencia"]');
-const calcAmount = document.getElementById("calcAmount");
-const calcPeriodos = document.getElementById("calcPeriodos");
+const freqRadios      = document.querySelectorAll('input[name="frecuencia"]');
+const calcAmount      = document.getElementById("calcAmount");
+const calcPeriodos    = document.getElementById("calcPeriodos");
 const calcAmountValue = document.getElementById("calcAmountValue");
 const calcPeriodosLabel = document.getElementById("calcPeriodosLabel");
 const calcPeriodosValue = document.getElementById("calcPeriodosValue");
-const calcPrimera = document.getElementById("calcPrimera");
-const calcUltima = document.getElementById("calcUltima");
-const calcTotal = document.getElementById("calcTotal");
-const calcNote = document.getElementById("calcNote");
+const calcPrimera     = document.getElementById("calcPrimera");
+const calcTotal       = document.getElementById("calcTotal");
+const calcNote        = document.getElementById("calcNote");
 
 function formatRD(n) {
   return "RD$ " + n.toLocaleString("es-DO", {
@@ -112,15 +112,14 @@ function formatRD(n) {
 }
 
 function frecuenciaActual() {
-  const seleccionado = document.querySelector('input[name="frecuencia"]:checked');
-  return seleccionado ? seleccionado.value : "quincenal";
+  const sel = document.querySelector('input[name="frecuencia"]:checked');
+  return sel ? sel.value : "quincenal";
 }
 
-// Ajusta el rango del control de períodos según la frecuencia elegida
 function ajustarRangoPeriodos(frecKey, resetearValor) {
   const cfg = FRECUENCIAS[frecKey];
-  calcPeriodos.min = cfg.min;
-  calcPeriodos.max = cfg.max;
+  calcPeriodos.min  = cfg.min;
+  calcPeriodos.max  = cfg.max;
   calcPeriodos.step = cfg.step;
 
   const valorActual = Number(calcPeriodos.value);
@@ -134,40 +133,28 @@ function ajustarRangoPeriodos(frecKey, resetearValor) {
 function updateCalculator() {
   if (!calcAmount || !calcPeriodos) return;
 
-  const frecKey = frecuenciaActual();
-  const cfg = FRECUENCIAS[frecKey];
-  const TASA = cfg.tasa;
-
-  const monto = Number(calcAmount.value);
+  const frecKey  = frecuenciaActual();
+  const cfg      = FRECUENCIAS[frecKey];
+  const tasa     = cfg.tasa;
+  const monto    = Number(calcAmount.value);
   const periodos = Number(calcPeriodos.value);
 
-  // Amortización de capital fija por período (sistema alemán)
-  const amortizacionCapital = monto / periodos;
-
-  // Primera cuota: interés sobre el monto completo + capital fijo
-  const interesPrimera = monto * TASA;
-  const primeraCuota = amortizacionCapital + interesPrimera;
-
-  // Última cuota: interés solo sobre el saldo restante (una amortización) + capital fijo
-  const saldoUltima = amortizacionCapital;
-  const interesUltima = saldoUltima * TASA;
-  const ultimaCuota = amortizacionCapital + interesUltima;
-
-  // Total a pagar: recorre cada período sumando el interés sobre el saldo pendiente
-  let totalIntereses = 0;
-  let saldo = monto;
-  for (let i = 0; i < periodos; i++) {
-    totalIntereses += saldo * TASA;
-    saldo -= amortizacionCapital;
+  // Fórmula francesa / cuota fija
+  let cuotaFija;
+  if (tasa === 0) {
+    cuotaFija = monto / periodos;
+  } else {
+    const factor = Math.pow(1 + tasa, periodos);
+    cuotaFija = monto * (tasa * factor) / (factor - 1);
   }
-  const totalPagar = monto + totalIntereses;
 
-  calcAmountValue.textContent = formatRD(monto);
+  const totalPagar = cuotaFija * periodos;
+
+  calcAmountValue.textContent  = formatRD(monto);
   calcPeriodosValue.textContent = periodos + " " + (periodos === 1 ? cfg.nombre : cfg.nombrePlural);
-  calcPrimera.textContent = formatRD(primeraCuota);
-  calcUltima.textContent = formatRD(ultimaCuota);
-  calcTotal.textContent = formatRD(totalPagar);
-  calcNote.textContent = "Las cuotas bajan en cada " + cfg.nombre + ".";
+  calcPrimera.textContent      = formatRD(cuotaFija);
+  calcTotal.textContent        = formatRD(totalPagar);
+  calcNote.textContent         = "Todas las cuotas son iguales durante el plazo.";
 }
 
 if (calcAmount && calcPeriodos && freqRadios.length) {
