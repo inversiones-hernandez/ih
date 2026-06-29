@@ -1688,3 +1688,353 @@ html {
 .legal-content ul li {
   list-style: disc;
 }
+
+/* ==============================
+   MEJORAS 2026 — CONFIANZA, CTA Y CONVERSIÓN
+============================== */
+img { max-width: 100%; height: auto; }
+
+.btn-whatsapp {
+  color: white;
+  background: linear-gradient(135deg, #12b76a, #25d366);
+  box-shadow: 0 18px 40px rgba(18, 183, 106, 0.28);
+}
+
+.btn-whatsapp:hover,
+.btn-light:hover {
+  transform: translateY(-3px);
+}
+
+.btn-light {
+  color: var(--azul-oscuro);
+  background: rgba(255,255,255,.94);
+  border: 1px solid rgba(255,255,255,.8);
+}
+
+.hero-mini-offer {
+  margin-top: 22px;
+  width: fit-content;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.82);
+  border: 1px solid rgba(255,255,255,.9);
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.07);
+}
+
+.hero-mini-offer span,
+.hero-mini-offer small {
+  display: block;
+  color: var(--gris-texto);
+  font-size: .82rem;
+}
+
+.hero-mini-offer strong {
+  display: block;
+  margin: 4px 0;
+  font-family: var(--display);
+  color: var(--azul-principal);
+  font-size: 1.25rem;
+  letter-spacing: -.02em;
+}
+
+.loan-types { background: var(--gris-bg); }
+
+.loan-type-grid,
+.commitment-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.loan-type-card,
+.commitment-card {
+  padding: 30px 26px;
+  border-radius: var(--radius);
+  background: white;
+  border: 1px solid var(--borde);
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.06);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.loan-type-card:hover,
+.commitment-card:hover {
+  transform: translateY(-7px);
+  box-shadow: var(--shadow);
+}
+
+.loan-type-icon,
+.commitment-icon {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: rgba(0, 102, 255, 0.10);
+  color: var(--azul-principal);
+  font-size: 1.6rem;
+  margin-bottom: 18px;
+  font-weight: 800;
+}
+
+.loan-type-card h3,
+.commitment-card h3 {
+  color: var(--azul-oscuro);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 1.08rem;
+  margin-bottom: 10px;
+}
+
+.loan-type-card p,
+.commitment-card p {
+  color: var(--gris-texto);
+  line-height: 1.7;
+  font-size: .95rem;
+}
+
+.requirements {
+  background: white;
+}
+
+.requirements-grid,
+.security-grid {
+  display: grid;
+  grid-template-columns: .8fr 1.2fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.requirements-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.requirement-item {
+  padding: 22px;
+  border-radius: 20px;
+  border: 1px solid var(--borde);
+  background: var(--gris-bg);
+}
+
+.requirement-item span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--azul-principal), var(--azul-electrico));
+  color: white;
+  font-family: var(--display);
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+
+.requirement-item strong,
+.requirement-item small {
+  display: block;
+}
+
+.requirement-item strong {
+  color: var(--azul-oscuro);
+  font-family: var(--display);
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.requirement-item small {
+  color: var(--gris-texto);
+  line-height: 1.6;
+}
+
+.security {
+  background:
+    radial-gradient(circle at 10% 20%, rgba(20,149,255,.18), transparent 28%),
+    linear-gradient(135deg, var(--azul-oscuro), #071a52 60%, var(--azul-principal));
+  color: white;
+}
+
+.security .eyebrow {
+  background: rgba(255,255,255,.13);
+  color: white;
+}
+
+.security-card,
+.fraud-card {
+  padding: clamp(28px, 4vw, 44px);
+  border-radius: 28px;
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.20);
+  box-shadow: 0 24px 80px rgba(0,0,0,.18);
+  backdrop-filter: blur(10px);
+}
+
+.security-card h2 {
+  margin-top: 18px;
+  font-family: var(--display);
+  font-size: clamp(2rem, 4vw, 3.3rem);
+  line-height: 1.05;
+  letter-spacing: -.02em;
+}
+
+.security-card p,
+.fraud-card p {
+  margin-top: 16px;
+  line-height: 1.8;
+  color: rgba(255,255,255,.78);
+}
+
+.security-points {
+  margin-top: 24px;
+  display: grid;
+  gap: 12px;
+}
+
+.security-points span {
+  display: block;
+  color: white;
+  font-weight: 800;
+}
+
+.fraud-card strong {
+  display: block;
+  font-family: var(--display);
+  font-size: 1.5rem;
+  color: white;
+}
+
+.fraud-card a {
+  display: inline-flex;
+  margin-top: 22px;
+  padding: 13px 18px;
+  border-radius: 999px;
+  background: white;
+  color: var(--azul-oscuro);
+  font-family: var(--display);
+  font-weight: 800;
+}
+
+.calc-form-link {
+  display: block;
+  margin-top: 14px;
+  text-align: center;
+  font-weight: 800;
+  color: var(--azul-principal);
+}
+
+.coverflow-track picture,
+.coverflow-track img {
+  display: block;
+  width: 100%;
+}
+
+.commitment { background: white; }
+.commitment-grid { grid-template-columns: repeat(3, 1fr); }
+
+.cta-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.footer-actions a {
+  display: inline-flex;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.10);
+  color: white;
+  font-weight: 800;
+  border: 1px solid rgba(255,255,255,.14);
+}
+
+.mobile-action-bar {
+  display: none;
+}
+
+section:not(.hero):not(.location):not(.promo-carousel-section) {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 800px;
+}
+
+.hero,
+.header,
+.promo-carousel-section,
+.location {
+  content-visibility: visible;
+}
+
+@media (max-width: 1024px) {
+  .loan-type-grid { grid-template-columns: repeat(2, 1fr); }
+  .requirements-grid,
+  .security-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .commitment-grid,
+  .requirements-list { grid-template-columns: 1fr; }
+  .hero-mini-offer { width: 100%; }
+  .footer-actions { justify-content: center; }
+}
+
+@media (max-width: 560px) {
+  body { padding-bottom: 74px; }
+  .loan-type-grid { grid-template-columns: 1fr; }
+  .cta-actions { flex-direction: column; }
+  .mobile-action-bar {
+    position: fixed;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    z-index: 120;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 8px;
+    border-radius: 18px;
+    background: rgba(6, 20, 73, .92);
+    border: 1px solid rgba(255,255,255,.16);
+    box-shadow: 0 18px 50px rgba(0,0,0,.24);
+    backdrop-filter: blur(14px);
+  }
+  .mobile-action-bar a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    border-radius: 12px;
+    color: white;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: .86rem;
+    background: linear-gradient(135deg, var(--azul-principal), var(--azul-electrico));
+  }
+  .whatsapp-float,
+  .back-to-top {
+    bottom: 86px;
+  }
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 560px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+}
