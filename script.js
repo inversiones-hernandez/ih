@@ -3,8 +3,11 @@ const menuBtn = document.getElementById("menuBtn");
 const navLinks = document.getElementById("navLinks");
 const backToTop = document.getElementById("backToTop");
 
+const WHATSAPP_NUMBER = "18495942190";
+const FORM_URL = "https://solicitud.prestamoscloud.com/solicitudes/i/inversioneshernandez";
+
 window.addEventListener("scroll", () => {
-  header.classList.toggle("scrolled", window.scrollY > 40);
+  if (header) header.classList.toggle("scrolled", window.scrollY > 40);
   if (backToTop) backToTop.classList.toggle("visible", window.scrollY > 600);
 }, { passive: true });
 
@@ -15,29 +18,30 @@ if (backToTop) {
   });
 }
 
-menuBtn.addEventListener("click", () => {
-  const isOpen = navLinks.classList.toggle("active");
-  menuBtn.classList.toggle("active", isOpen);
-  menuBtn.setAttribute("aria-expanded", String(isOpen));
-});
-
-document.querySelectorAll(".nav-links a").forEach(link => {
-  link.addEventListener("click", () => {
-    navLinks.classList.remove("active");
-    menuBtn.classList.remove("active");
-    menuBtn.setAttribute("aria-expanded", "false");
+if (menuBtn && navLinks) {
+  menuBtn.addEventListener("click", () => {
+    const isOpen = navLinks.classList.toggle("active");
+    menuBtn.classList.toggle("active", isOpen);
+    menuBtn.setAttribute("aria-expanded", String(isOpen));
   });
-});
 
-// Cierra el menú móvil si se hace clic fuera de él
-document.addEventListener("click", (e) => {
-  const clickedInsideNav = navLinks.contains(e.target) || menuBtn.contains(e.target);
-  if (!clickedInsideNav && navLinks.classList.contains("active")) {
-    navLinks.classList.remove("active");
-    menuBtn.classList.remove("active");
-    menuBtn.setAttribute("aria-expanded", "false");
-  }
-});
+  document.querySelectorAll(".nav-links a").forEach(link => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("active");
+      menuBtn.classList.remove("active");
+      menuBtn.setAttribute("aria-expanded", "false");
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    const clickedInsideNav = navLinks.contains(e.target) || menuBtn.contains(e.target);
+    if (!clickedInsideNav && navLinks.classList.contains("active")) {
+      navLinks.classList.remove("active");
+      menuBtn.classList.remove("active");
+      menuBtn.setAttribute("aria-expanded", "false");
+    }
+  });
+}
 
 const revealElements = document.querySelectorAll(".reveal");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -52,9 +56,7 @@ if (prefersReducedMotion || !("IntersectionObserver" in window)) {
         revealOnScroll.unobserve(entry.target);
       }
     });
-  }, {
-    threshold: 0.14
-  });
+  }, { threshold: 0.14 });
 
   revealElements.forEach(element => revealOnScroll.observe(element));
 }
@@ -64,14 +66,14 @@ const faqItems = document.querySelectorAll(".faq-item");
 
 faqItems.forEach(item => {
   const question = item.querySelector(".faq-question");
+  if (!question) return;
 
   question.addEventListener("click", () => {
     const isOpen = item.classList.contains("open");
-
-    // Cierra los demás (acordeón de una sola pregunta abierta a la vez)
     faqItems.forEach(other => {
       other.classList.remove("open");
-      other.querySelector(".faq-question").setAttribute("aria-expanded", "false");
+      const otherQuestion = other.querySelector(".faq-question");
+      if (otherQuestion) otherQuestion.setAttribute("aria-expanded", "false");
     });
 
     if (!isOpen) {
@@ -81,31 +83,29 @@ faqItems.forEach(item => {
   });
 });
 
-// CALCULADORA DE PRÉSTAMO — Método FRANCÉS / INSOLUTO FIJO (estimación ilustrativa)
-// Cuota fija calculada con la fórmula de amortización francesa:
-//   Cuota = Monto × [tasa × (1+tasa)^n] / [(1+tasa)^n − 1]
-// Todas las cuotas son iguales; el interés va bajando y el capital subiendo cada período.
-//
-// ⚠️ Tasas de ejemplo. Antes de publicar, confirma que cumplen con la normativa de
-// tasas de interés vigente en República Dominicana (recomendado: revisión legal).
+// CALCULADORA DE PRÉSTAMO — Método francés / cuota fija (estimación ilustrativa)
 const FRECUENCIAS = {
-  diario:    { nombre: "día",      nombrePlural: "días",      tasa: 0.025, min: 30, max: 120, step: 1,  porDefecto: 30 },
-  semanal:   { nombre: "semana",   nombrePlural: "semanas",   tasa: 0.10,  min: 8,  max: 24,  step: 1,  porDefecto: 8  },
-  quincenal: { nombre: "quincena", nombrePlural: "quincenas", tasa: 0.15,  min: 4,  max: 12,  step: 1,  porDefecto: 4  }
+  diario:    { nombre: "día",      nombrePlural: "días",      tasa: 0.025, min: 30, max: 120, step: 1, porDefecto: 30 },
+  semanal:   { nombre: "semana",   nombrePlural: "semanas",   tasa: 0.10,  min: 8,  max: 24,  step: 1, porDefecto: 8  },
+  quincenal: { nombre: "quincena", nombrePlural: "quincenas", tasa: 0.15,  min: 4,  max: 12,  step: 1, porDefecto: 4  }
 };
 
-const freqRadios      = document.querySelectorAll('input[name="frecuencia"]');
-const calcAmount      = document.getElementById("calcAmount");
-const calcPeriodos    = document.getElementById("calcPeriodos");
+const freqRadios = document.querySelectorAll('input[name="frecuencia"]');
+const calcAmount = document.getElementById("calcAmount");
+const calcPeriodos = document.getElementById("calcPeriodos");
 const calcAmountValue = document.getElementById("calcAmountValue");
 const calcPeriodosLabel = document.getElementById("calcPeriodosLabel");
 const calcPeriodosValue = document.getElementById("calcPeriodosValue");
-const calcPrimera     = document.getElementById("calcPrimera");
-const calcTotal       = document.getElementById("calcTotal");
-const calcNote        = document.getElementById("calcNote");
+const calcPrimera = document.getElementById("calcPrimera");
+const calcTotal = document.getElementById("calcTotal");
+const calcNote = document.getElementById("calcNote");
+const calcWhatsApp = document.getElementById("calcWhatsApp");
 
 function formatRD(n) {
-  return "RD$ " + Math.round(n).toLocaleString("es-DO");
+  return "RD$ " + n.toLocaleString("es-DO", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
 }
 
 function frecuenciaActual() {
@@ -114,9 +114,10 @@ function frecuenciaActual() {
 }
 
 function ajustarRangoPeriodos(frecKey, resetearValor) {
+  if (!calcPeriodos || !calcPeriodosLabel) return;
   const cfg = FRECUENCIAS[frecKey];
-  calcPeriodos.min  = cfg.min;
-  calcPeriodos.max  = cfg.max;
+  calcPeriodos.min = cfg.min;
+  calcPeriodos.max = cfg.max;
   calcPeriodos.step = cfg.step;
 
   const valorActual = Number(calcPeriodos.value);
@@ -130,13 +131,12 @@ function ajustarRangoPeriodos(frecKey, resetearValor) {
 function updateCalculator() {
   if (!calcAmount || !calcPeriodos) return;
 
-  const frecKey  = frecuenciaActual();
-  const cfg      = FRECUENCIAS[frecKey];
-  const tasa     = cfg.tasa;
-  const monto    = Number(calcAmount.value);
+  const frecKey = frecuenciaActual();
+  const cfg = FRECUENCIAS[frecKey];
+  const tasa = cfg.tasa;
+  const monto = Number(calcAmount.value);
   const periodos = Number(calcPeriodos.value);
 
-  // Fórmula francesa / cuota fija
   let cuotaFija;
   if (tasa === 0) {
     cuotaFija = monto / periodos;
@@ -146,12 +146,32 @@ function updateCalculator() {
   }
 
   const totalPagar = cuotaFija * periodos;
+  const cuotaTexto = formatRD(cuotaFija);
+  const totalTexto = formatRD(totalPagar);
+  const montoTexto = formatRD(monto);
+  const plazoTexto = periodos + " " + (periodos === 1 ? cfg.nombre : cfg.nombrePlural);
 
-  calcAmountValue.textContent  = formatRD(monto);
-  calcPeriodosValue.textContent = periodos + " " + (periodos === 1 ? cfg.nombre : cfg.nombrePlural);
-  calcPrimera.textContent      = formatRD(cuotaFija);
-  calcTotal.textContent        = formatRD(totalPagar);
-  calcNote.textContent         = "Todas las cuotas son iguales durante el plazo.";
+  if (calcAmountValue) calcAmountValue.textContent = montoTexto;
+  if (calcPeriodosValue) calcPeriodosValue.textContent = plazoTexto;
+  if (calcPrimera) calcPrimera.textContent = cuotaTexto;
+  if (calcTotal) calcTotal.textContent = totalTexto;
+  if (calcNote) calcNote.textContent = "Todas las cuotas son iguales durante el plazo.";
+
+  if (calcWhatsApp) {
+    const message = [
+      "Hola, quiero solicitar un préstamo con Inversiones Hernández.",
+      "",
+      "Monto: " + montoTexto,
+      "Frecuencia: " + frecKey,
+      "Plazo: " + plazoTexto,
+      "Cuota estimada: " + cuotaTexto,
+      "Total estimado: " + totalTexto,
+      "",
+      "Quiero confirmar los requisitos y condiciones finales."
+    ].join("\n");
+
+    calcWhatsApp.href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message);
+  }
 }
 
 if (calcAmount && calcPeriodos && freqRadios.length) {
@@ -176,7 +196,7 @@ if (calcAmount && calcPeriodos && freqRadios.length) {
   const btnPrev = document.getElementById("cfPrev");
   const btnNext = document.getElementById("cfNext");
 
-  if (!track) return;
+  if (!track || !dotsContainer) return;
 
   const slides = Array.from(track.querySelectorAll(".cf-slide"));
   const total = slides.length;
@@ -185,7 +205,6 @@ if (calcAmount && calcPeriodos && freqRadios.length) {
   let isDragging = false;
   let dragStartX = 0;
 
-  // Build dots
   slides.forEach((_, i) => {
     const dot = document.createElement("button");
     dot.className = "cf-dot" + (i === 0 ? " active" : "");
@@ -195,7 +214,8 @@ if (calcAmount && calcPeriodos && freqRadios.length) {
   });
 
   function getSlideWidth() {
-    return track.querySelector(".cf-slide").offsetWidth;
+    const slide = track.querySelector(".cf-slide");
+    return slide ? slide.offsetWidth : 260;
   }
 
   function applyPositions() {
@@ -206,21 +226,11 @@ if (calcAmount && calcPeriodos && freqRadios.length) {
     slides.forEach((slide, i) => {
       const offset = i - current;
       const absOffset = Math.abs(offset);
-
-      // Cap visible range to 5 slides (center ± 2)
       const visible = absOffset <= 2;
       const zIndex = visible ? 10 - absOffset : 0;
-
-      // X position: spread out by gap
       const x = offset * gap;
-
-      // Rotation (Y axis — the 3D lean)
       const rotateY = offset === 0 ? 0 : offset > 0 ? -42 : 42;
-
-      // Scale: center is biggest
       const scale = offset === 0 ? 1 : absOffset === 1 ? 0.82 : 0.66;
-
-      // Opacity: fade out the edges
       const opacity = offset === 0 ? 1 : absOffset === 1 ? 0.75 : absOffset === 2 ? 0.45 : 0;
 
       slide.style.transform = `translateX(${x}px) rotateY(${rotateY}deg) scale(${scale})`;
@@ -246,7 +256,9 @@ if (calcAmount && calcPeriodos && freqRadios.length) {
   function prev() { goTo(current - 1); }
 
   function startAuto() {
-    autoTimer = setInterval(next, 3800);
+    if (prefersReducedMotion || total <= 1) return;
+    clearInterval(autoTimer);
+    autoTimer = setInterval(next, 4200);
   }
 
   function resetAuto() {
@@ -254,18 +266,15 @@ if (calcAmount && calcPeriodos && freqRadios.length) {
     startAuto();
   }
 
-  // Click a side slide to navigate to it
   slides.forEach((slide, i) => {
     slide.addEventListener("click", () => {
       if (i !== current) goTo(i);
     });
   });
 
-  // Arrow buttons
-  btnPrev.addEventListener("click", () => { prev(); });
-  btnNext.addEventListener("click", () => { next(); });
+  if (btnPrev) btnPrev.addEventListener("click", prev);
+  if (btnNext) btnNext.addEventListener("click", next);
 
-  // Keyboard navigation
   document.addEventListener("keydown", (e) => {
     const section = document.getElementById("promociones");
     if (!section) return;
@@ -276,7 +285,6 @@ if (calcAmount && calcPeriodos && freqRadios.length) {
     }
   });
 
-  // Touch / drag support
   track.addEventListener("touchstart", (e) => {
     isDragging = true;
     dragStartX = e.touches[0].clientX;
@@ -291,7 +299,6 @@ if (calcAmount && calcPeriodos && freqRadios.length) {
     else resetAuto();
   });
 
-  // Mouse drag
   track.addEventListener("mousedown", (e) => {
     isDragging = true;
     dragStartX = e.clientX;
@@ -306,11 +313,10 @@ if (calcAmount && calcPeriodos && freqRadios.length) {
     else resetAuto();
   });
 
-  // Pause auto-play on hover
   track.addEventListener("mouseenter", () => clearInterval(autoTimer));
-  track.addEventListener("mouseleave", () => startAuto());
+  track.addEventListener("mouseleave", startAuto);
+  window.addEventListener("resize", applyPositions);
 
-  // Init
   applyPositions();
   startAuto();
 })();
