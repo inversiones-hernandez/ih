@@ -5,6 +5,7 @@ const backToTop = document.getElementById("backToTop");
 
 const WHATSAPP_NUMBER = "18495942190";
 const FORM_URL = "https://solicitud.prestamoscloud.com/solicitudes/i/inversioneshernandez";
+const REQUEST_EMAIL_ENDPOINT = "https://formsubmit.co/ajax/gestion.inversioneshernandez@gmail.com";
 
 window.addEventListener("scroll", () => {
   if (header) header.classList.toggle("scrolled", window.scrollY > 40);
@@ -100,6 +101,9 @@ const calcPrimera = document.getElementById("calcPrimera");
 const calcTotal = document.getElementById("calcTotal");
 const calcNote = document.getElementById("calcNote");
 const calcWhatsApp = document.getElementById("calcWhatsApp");
+const calcEmailStatus = document.getElementById("calcEmailStatus");
+
+let solicitudCalculada = null;
 
 function formatRD(n) {
   return "RD$ " + n.toLocaleString("es-DO", {
@@ -150,6 +154,15 @@ function updateCalculator() {
   const totalTexto = formatRD(totalPagar);
   const montoTexto = formatRD(monto);
   const plazoTexto = periodos + " " + (periodos === 1 ? cfg.nombre : cfg.nombrePlural);
+  const frecuenciaTexto = frecKey.charAt(0).toUpperCase() + frecKey.slice(1);
+
+  solicitudCalculada = {
+    monto: montoTexto,
+    frecuencia: frecuenciaTexto,
+    plazo: plazoTexto,
+    cuota: cuotaTexto,
+    total: totalTexto
+  };
 
   if (calcAmountValue) calcAmountValue.textContent = montoTexto;
   if (calcPeriodosValue) calcPeriodosValue.textContent = plazoTexto;
@@ -162,7 +175,7 @@ function updateCalculator() {
       "Hola, quiero solicitar un préstamo con Inversiones Hernández.",
       "",
       "Monto: " + montoTexto,
-      "Frecuencia: " + frecKey,
+        "Frecuencia: " + frecuenciaTexto,
       "Plazo: " + plazoTexto,
       "Cuota estimada: " + cuotaTexto,
       "Total estimado: " + totalTexto,
@@ -172,6 +185,60 @@ function updateCalculator() {
 
     calcWhatsApp.href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message);
   }
+}
+
+async function enviarAvisoSolicitudPorCorreo() {
+  if (!solicitudCalculada) return;
+
+  if (calcEmailStatus) {
+    calcEmailStatus.hidden = false;
+    calcEmailStatus.textContent = "Enviando también el aviso al correo de Inversiones Hernández…";
+  }
+
+  const datos = new FormData();
+  datos.append("_subject", "[SOLICITUD WEB] Nuevo cálculo - " + solicitudCalculada.monto);
+  datos.append("_template", "table");
+  datos.append("_captcha", "false");
+  datos.append("Tipo", "Solicitud de préstamo desde la calculadora");
+  datos.append("Monto solicitado", solicitudCalculada.monto);
+  datos.append("Frecuencia", solicitudCalculada.frecuencia);
+  datos.append("Plazo", solicitudCalculada.plazo);
+  datos.append("Cuota estimada", solicitudCalculada.cuota);
+  datos.append("Total estimado", solicitudCalculada.total);
+  datos.append("Canal de contacto", "WhatsApp: +1 849-594-2190");
+  datos.append("Página de origen", window.location.href);
+  datos.append("Fecha y hora", new Intl.DateTimeFormat("es-DO", {
+    dateStyle: "long",
+    timeStyle: "short",
+    timeZone: "America/Santo_Domingo"
+  }).format(new Date()));
+
+  try {
+    const respuesta = await fetch(REQUEST_EMAIL_ENDPOINT, {
+      method: "POST",
+      headers: { Accept: "application/json" },
+      body: datos,
+      keepalive: true
+    });
+
+    if (!respuesta.ok) throw new Error("No se pudo enviar el aviso por correo.");
+
+    if (calcEmailStatus) {
+      calcEmailStatus.textContent = "Listo: WhatsApp abierto y aviso enviado al correo.";
+    }
+  } catch (error) {
+    console.error("Error al enviar la solicitud por correo:", error);
+
+    if (calcEmailStatus) {
+      calcEmailStatus.textContent = "WhatsApp se abrió correctamente. El aviso por correo no pudo confirmarse.";
+    }
+  }
+}
+
+if (calcWhatsApp) {
+  calcWhatsApp.addEventListener("click", () => {
+    void enviarAvisoSolicitudPorCorreo();
+  });
 }
 
 if (calcAmount && calcPeriodos && freqRadios.length) {
