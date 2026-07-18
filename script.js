@@ -155,19 +155,19 @@ function updateCalculator() {
   if (calcPeriodosValue) calcPeriodosValue.textContent = plazoTexto;
   if (calcPrimera) calcPrimera.textContent = cuotaTexto;
   if (calcTotal) calcTotal.textContent = totalTexto;
-  if (calcNote) calcNote.textContent = "Todas las cuotas son iguales durante el plazo.";
+  if (calcNote) calcNote.textContent = "Referencia calculada con cuotas iguales durante el período seleccionado.";
 
   if (calcWhatsApp) {
     const message = [
-      "Hola, quiero solicitar un préstamo con Inversiones Hernández.",
+      "Hola, quiero recibir orientación sobre una opción de financiamiento con Inversiones Hernández.",
       "",
-      "Monto: " + montoTexto,
-      "Frecuencia: " + frecKey,
-      "Plazo: " + plazoTexto,
-      "Cuota estimada: " + cuotaTexto,
-      "Total estimado: " + totalTexto,
+      "Cantidad seleccionada: " + montoTexto,
+      "Frecuencia elegida: " + frecKey,
+      "Plazo estimado: " + plazoTexto,
+      "Cuota orientativa: " + cuotaTexto,
+      "Resultado total orientativo: " + totalTexto,
       "",
-      "Quiero confirmar los requisitos y condiciones finales."
+      "Me gustaría conocer los requisitos y las condiciones aplicables a mi solicitud."
     ].join("\n");
 
     calcWhatsApp.href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message);
