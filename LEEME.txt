@@ -1,0 +1,46 @@
+PAQUETE DE LOGO — Inversiones Hernández
+==========================================
+
+Estos son todos los archivos generados a partir de tu logo original,
+ya integrados en el sitio web (carpeta /assets del sitio).
+
+ARCHIVO                     USO                                          DÓNDE SE USA EN EL SITIO
+---------------------------------------------------------------------------------------------------
+logo-transparent.png        Logo principal, fondo transparente,          Header, insignia del hero,
+                             400x400px, ~100KB                           footer (todas las páginas)
+
+favicon.ico                 Ícono clásico multi-tamaño (16/32/48px)      Pestaña del navegador
+
+favicon-16.png               Ícono de pestaña, 16x16px                   Pestaña del navegador
+favicon-32.png               Ícono de pestaña, 32x32px                   Pestaña del navegador
+
+apple-touch-icon.png         180x180px, fondo blanco sólido              Ícono al "Agregar a inicio"
+                                                                          en iPhone/iPad
+
+icon-192.png                  192x192px, fondo transparente             manifest.json (PWA / Android)
+icon-512.png                  512x512px, fondo transparente             manifest.json (PWA / Android)
+icon-512-maskable.png         512x512px, con margen de seguridad         manifest.json (íconos adaptables
+                               y fondo azul oscuro sólido                de Android — "maskable")
+
+og-image.png                  1200x630px, banner con logo + texto        Vista previa al compartir el
+                               sobre fondo degradado azul                 link en WhatsApp, Facebook,
+                                                                          Instagram, Twitter/X
+
+---------------------------------------------------------------------------------------------------
+
+USO FUERA DEL SITIO WEB
+Si necesitas el logo para otras cosas (redes sociales, tarjetas de
+presentación, documentos, WhatsApp Business), te recomendamos:
+
+- Foto de perfil en redes sociales / WhatsApp Business:
+  usa "icon-512.png" (fondo transparente) o pide una versión con
+  fondo blanco sólido si la plataforma no soporta transparencia.
+
+- Documentos impresos o membretes:
+  usa "logo-transparent.png"; si necesitas mayor resolución para
+  impresión grande, dímelo y genero una versión de mayor tamaño
+  a partir del archivo original que subiste.
+
+- Banner para publicaciones/redes:
+  "og-image.png" ya tiene el formato horizontal listo para usar
+  como portada o publicación compartible.
