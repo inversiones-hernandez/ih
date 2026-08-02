@@ -58,5 +58,41 @@ document.querySelectorAll('.faq-item').forEach((item) => {
   });
 });
 
+// ===== Menú móvil (hamburguesa) =====
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+
+if (menuToggle && navLinks) {
+  const closeMenu = () => {
+    navLinks.classList.remove('open');
+    menuToggle.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  };
+  const toggleMenu = () => {
+    const isOpen = navLinks.classList.toggle('open');
+    menuToggle.classList.toggle('open', isOpen);
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+  };
+
+  menuToggle.addEventListener('click', toggleMenu);
+
+  // Cerrar al elegir un enlace (navegación de una sola página con anclas)
+  navLinks.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  // Cerrar al hacer clic fuera del menú
+  document.addEventListener('click', (e) => {
+    if (!navLinks.classList.contains('open')) return;
+    if (navLinks.contains(e.target) || menuToggle.contains(e.target)) return;
+    closeMenu();
+  });
+
+  // Cerrar si la ventana vuelve a tamaño de escritorio
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 980) closeMenu();
+  });
+}
+
 // ===== Contact form: eliminado — la sección de Contacto ahora solo muestra
 // información de contacto y el mapa (sin formulario). =====
