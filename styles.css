@@ -145,11 +145,35 @@ header {
 .navlinks { display: flex; gap: 28px; align-items: center; font-size: 14.5px; font-weight: 600; }
 .navlinks a { opacity: .85; transition: opacity .2s, color .2s; }
 .navlinks a:hover { opacity: 1; color: var(--primary); }
+
+/* Panel de navegación móvil (activo solo bajo el breakpoint de tablet, ver sección RESPONSIVE) */
+@media (max-width: 980px) {
+  .navlinks {
+    position: fixed; top: 65px; left: 0; right: 0; z-index: 49;
+    flex-direction: column; align-items: stretch; gap: 0;
+    background: var(--bg); border-bottom: 1px solid var(--line);
+    max-height: 0; overflow: hidden; opacity: 0;
+    transition: max-height .3s ease, opacity .25s ease;
+  }
+  .navlinks.open { max-height: 400px; opacity: 1; box-shadow: 0 20px 40px -20px rgba(6,20,73,.25); }
+  .navlinks a { padding: 16px 28px; border-bottom: 1px solid var(--line-soft); opacity: 1; }
+  .navlinks a:hover { background: var(--bg-alt); }
+  .menu-toggle { display: flex; }
+  .menu-toggle.open .icon-burger { display: none; }
+  .menu-toggle.open .icon-close { display: block; }
+}
 .nav-actions { display: flex; align-items: center; gap: 12px; }
 .theme-toggle {
   width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line);
   background: transparent; color: var(--ink); cursor: pointer;
   display: flex; align-items: center; justify-content: center; font-size: 16px;
+}
+
+.menu-toggle {
+  display: none;
+  width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line);
+  background: transparent; color: var(--ink); cursor: pointer;
+  align-items: center; justify-content: center; flex-shrink: 0;
 }
 
 .btn {
@@ -286,21 +310,6 @@ header {
 .faq-a p { padding-bottom: 24px; color: var(--ink-soft); font-size: 15px; max-width: 70ch; }
 .faq-item.open .faq-a { max-height: 220px; }
 
-/* ===== TESTIMONIOS ===== */
-.test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-.test-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; }
-.stars { color: var(--azul-electrico); letter-spacing: 2px; font-size: 14px; margin-bottom: 14px; }
-.test-card p { font-size: 15px; color: var(--ink-soft); margin-bottom: 20px; }
-.test-who { display: flex; align-items: center; gap: 12px; }
-.avatar {
-  width: 40px; height: 40px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--azul-principal), var(--azul-electrico));
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--display); font-weight: 800; color: #fff; font-size: 14px;
-}
-.test-who strong { display: block; font-size: 14px; }
-.test-who span { font-size: 12.5px; color: var(--ink-soft); }
-
 /* ===== SOCIAL ===== */
 .social-wrap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
 .social-card { border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 24px; background: var(--card); text-align: left; transition: transform .25s ease, border-color .25s ease; }
@@ -373,8 +382,6 @@ footer { background: var(--azul-oscuro); color: var(--blanco); padding: 64px 0 2
 .contact-row .ic .icon { width: 20px; height: 20px; color: var(--primary); }
 .wa-float .icon { width: 27px; height: 27px; color: #fff; }
 .tick .icon { width: 15px; height: 15px; color: var(--primary); }
-.stars { display: flex; gap: 3px; }
-.stars .icon { width: 15px; height: 15px; color: var(--azul-electrico); }
 .commit-item .mark .icon { width: 16px; height: 16px; color: var(--azul-electrico); }
 .badge-circle .icon { width: 24px; height: 24px; color: #fff; margin-bottom: 2px; }
 
@@ -447,20 +454,73 @@ footer { background: var(--azul-oscuro); color: var(--blanco); padding: 64px 0 2
   .wa-float { width: 52px; height: 52px; }
 }
 
+/* =========================================================
+   RESPONSIVE — sistema completo por tipo de dispositivo
+   ========================================================= */
+
+/* Monitores grandes: que el contenido no se sienta perdido */
+@media (min-width: 1440px) {
+  .wrap { max-width: 1260px; }
+  .hero-grid { gap: 84px; }
+}
+
+/* Tablets (portrait) y pantallas medianas: activa el menú hamburguesa */
 @media (max-width: 980px) {
   .hero-grid, .about-grid, .commit-wrap, .contact-grid, .pre-cta-card { grid-template-columns: 1fr; }
-  .why-grid, .test-grid { grid-template-columns: repeat(2, 1fr); }
+  .why-grid { grid-template-columns: repeat(2, 1fr); }
   .social-wrap { grid-template-columns: repeat(2, 1fr); }
   .steps { grid-template-columns: repeat(2, 1fr); }
   .step { border-right: none; border-bottom: 1px solid var(--line); }
   .req-list { grid-template-columns: 1fr; }
   .foot-grid { grid-template-columns: 1fr 1fr; }
-  .navlinks { display: none; }
 }
+
+/* Tablets pequeñas / teléfonos grandes en horizontal */
+@media (max-width: 760px) {
+  .wrap { padding: 0 22px; }
+  .commit-item { flex-direction: column; gap: 8px; }
+  .pre-cta-actions { width: 100%; }
+  .pre-cta-card { grid-template-columns: 1fr; }
+}
+
+/* Teléfonos */
 @media (max-width: 600px) {
-  section { padding: 64px 0; }
-  .why-grid, .test-grid, .social-wrap, .steps { grid-template-columns: 1fr; }
-  .commit-wrap { padding: 36px 24px; }
+  section { padding: 56px 0; }
+  .why-grid, .social-wrap, .steps { grid-template-columns: 1fr; }
+  .commit-wrap { padding: 32px 22px; }
   .foot-grid { grid-template-columns: 1fr; }
-  .pre-cta-card { padding: 30px 24px; }
+  .pre-cta-card { padding: 28px 22px; }
+  .nav { padding: 14px 20px; }
+  .brand span, .brand { font-size: 16.5px; }
+  .hero { padding: 60px 0 48px; }
+  .hero-ctas { flex-direction: column; align-items: stretch; }
+  .hero-ctas .btn { justify-content: center; }
+  .hero-strip { gap: 18px; }
+  .stamp-card, .glass-card { padding: 26px 22px; }
+  .why-card, .mv-card, .req-item, .social-card { padding: 22px 20px; }
+  .commit-wrap h2, .section-head h2 { font-size: 24px; }
+  .step-title { font-size: 19px; }
+  .faq-q { font-size: 16px; }
+  .channel-grid { grid-template-columns: 1fr; }
+  .legal-hero { padding: 48px 0 32px; }
+  .legal-block h2 { font-size: 19px; }
 }
+
+/* Teléfonos pequeños (iPhone SE y similares) */
+@media (max-width: 380px) {
+  .wrap { padding: 0 16px; }
+  .hero h1 { font-size: 27px; }
+  .hero-sub { font-size: 15px; }
+  .btn { padding: 12px 20px; font-size: 13.5px; }
+  .btn-sm { padding: 9px 16px; font-size: 12.5px; }
+  .nav { padding: 12px 16px; gap: 12px; }
+  .brand .mark, .foot-logo { height: 32px; }
+  .step-title { font-size: 17px; }
+  .badge-circle { width: 62px; height: 62px; }
+  .wa-float { width: 50px; height: 50px; right: 16px; bottom: 16px; }
+  .top-float { right: 76px; bottom: 18px; }
+}
+
+/* Evitar desbordes horizontales en cualquier dispositivo */
+html, body { overflow-x: hidden; }
+img, svg { max-width: 100%; }
