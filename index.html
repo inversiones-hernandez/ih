@@ -56,7 +56,7 @@
 {
   "@context": "https://schema.org",
   "@type": "FinancialService",
-  "name": "Inversiones Hernández.",
+  "name": "Inversiones Hernández",
   "image": "https://inversiones-hernandez.github.io/ih/assets/logo-transparent.png",
   "url": "https://inversiones-hernandez.github.io/ih/",
   "telephone": "+18495942190",
@@ -91,7 +91,7 @@
       <img class="mark" src="logo-transparent.png" alt="Logotipo de Inversiones Hernández">
       Inversiones Hernández
     </a>
-    <nav class="navlinks">
+    <nav class="navlinks" id="navLinks">
       <a href="#quienes-somos">Quiénes somos</a>
       <a href="#como-funciona">Cómo funciona</a>
       <a href="#compromiso">Compromiso</a>
@@ -104,6 +104,10 @@
         <svg class="icon icon-sun" viewBox="0 0 24 24" style="display:none;"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M4.6 4.6l1.9 1.9M17.5 17.5l1.9 1.9M2.5 12h2.6M18.9 12h2.6M4.6 19.4l1.9-1.9M17.5 6.5l1.9-1.9"/></svg>
       </button>
       <a class="btn btn-primary btn-sm" href="https://wa.me/18495942190?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Inversiones%20Hern%C3%A1ndez" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="icon icon-burger" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        <svg class="icon icon-close" viewBox="0 0 24 24" style="display:none;"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
     </div>
   </div>
 </header>
@@ -294,52 +298,6 @@
   </div>
 </section>
 
-<!-- ================= TESTIMONIOS ================= -->
-<section style="background:var(--bg-alt);">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow">Testimonios</div>
-      <h2>Lo que dicen quienes ya nos conocen.</h2>
-      <p style="font-size:13px;">Espacio preparado para reseñas reales de clientes — sustituir por testimonios verificados.</p>
-    </div>
-    <div class="test-grid">
-      <div class="test-card reveal">
-        <div class="stars">
-          <svg class="icon icon-fill" viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8L18.2 21 12 17.5 5.8 21l1.4-6.9L2 9.3l7-.8z"/></svg>
-          <svg class="icon icon-fill" viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8L18.2 21 12 17.5 5.8 21l1.4-6.9L2 9.3l7-.8z"/></svg>
-          <svg class="icon icon-fill" viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8L18.2 21 12 17.5 5.8 21l1.4-6.9L2 9.3l7-.8z"/></svg>
-          <svg class="icon icon-fill" viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8L18.2 21 12 17.5 5.8 21l1.4-6.9L2 9.3l7-.8z"/></svg>
-          <svg class="icon icon-fill" viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8L18.2 21 12 17.5 5.8 21l1.4-6.9L2 9.3l7-.8z"/></svg>
-        </div>
-        <p>“Me explicaron cada paso antes de firmar. Nunca sentí que me apuraran a decidir.”</p>
-        <div class="test-who"><div class="avatar">R.</div><div><strong>Ramona P.</strong><span>Cliente desde 2026</span></div></div>
-      </div>
-      <div class="test-card reveal">
-        <div class="stars">
-          <svg class="icon icon-fill" viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8L18.2 21 12 17.5 5.8 21l1.4-6.9L2 9.3l7-.8z"/></svg>
-          <svg class="icon icon-fill" viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8L18.2 21 12 17.5 5.8 21l1.4-6.9L2 9.3l7-.8z"/></svg>
-          <svg class="icon icon-fill" viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8L18.2 21 12 17.5 5.8 21l1.4-6.9L2 9.3l7-.8z"/></svg>
-          <svg class="icon icon-fill" viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8L18.2 21 12 17.5 5.8 21l1.4-6.9L2 9.3l7-.8z"/></svg>
-          <svg class="icon icon-fill" viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8L18.2 21 12 17.5 5.8 21l1.4-6.9L2 9.3l7-.8z"/></svg>
-        </div>
-        <p>“Respondieron rápido por WhatsApp y todo el proceso fue claro de principio a fin.”</p>
-        <div class="test-who"><div class="avatar">J.</div><div><strong>Junior M.</strong><span>Préstamo comercial</span></div></div>
-      </div>
-      <div class="test-card reveal">
-        <div class="stars">
-          <svg class="icon icon-fill" viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8L18.2 21 12 17.5 5.8 21l1.4-6.9L2 9.3l7-.8z"/></svg>
-          <svg class="icon icon-fill" viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8L18.2 21 12 17.5 5.8 21l1.4-6.9L2 9.3l7-.8z"/></svg>
-          <svg class="icon icon-fill" viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8L18.2 21 12 17.5 5.8 21l1.4-6.9L2 9.3l7-.8z"/></svg>
-          <svg class="icon icon-fill" viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8L18.2 21 12 17.5 5.8 21l1.4-6.9L2 9.3l7-.8z"/></svg>
-          <svg class="icon icon-fill" viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8L18.2 21 12 17.5 5.8 21l1.4-6.9L2 9.3l7-.8z"/></svg>
-        </div>
-        <p>“Se nota que se preocupan por entender tu situación, no solo por aprobar rápido.”</p>
-        <div class="test-who"><div class="avatar">A.</div><div><strong>Altagracia S.</strong><span>Préstamo personal</span></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ================= REDES SOCIALES ================= -->
 <section>
   <div class="wrap">
@@ -440,7 +398,7 @@
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© 2026 Inversiones Hernández. Todos los derechos reservados.</span>
+      <span>© 2026 Inversiones Hernández, S.R.L. Todos los derechos reservados.</span>
       <span>Comunícate solo por nuestros canales oficiales.</span>
     </div>
   </div>
