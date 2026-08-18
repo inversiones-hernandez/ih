@@ -638,3 +638,311 @@ footer { background: var(--azul-oscuro); color: var(--blanco); padding: 64px 0 2
 /* Evitar desbordes horizontales en cualquier dispositivo */
 html, body { overflow-x: hidden; }
 img, svg { max-width: 100%; }
+
+
+/* =========================================================
+   INVERSIONES HERNÁNDEZ — RESPONSIVE PRO / APP EXPERIENCE
+   Capa adicional: no altera los tokens ni la identidad visual.
+   ========================================================= */
+
+/* Menú móvil más sólido: se ancla al header sticky y no depende de top fijo */
+@media (max-width: 980px) {
+  header { z-index: 100; }
+  .nav { min-height: 68px; }
+  .navlinks {
+    top: 100%;
+    max-height: 0;
+    overflow: hidden;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .navlinks.open {
+    max-height: min(78vh, 560px);
+    overflow-y: auto;
+  }
+  .navlinks a {
+    display: flex;
+    align-items: center;
+    min-height: 54px;
+  }
+  .nav-actions .btn {
+    display: none;
+  }
+  .menu-toggle {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+    background: var(--card);
+    box-shadow: 0 8px 20px rgba(6,20,73,.08);
+  }
+
+  /* Sutil velo detrás del menú para sensación de app */
+  body.menu-is-open::after {
+    content: "";
+    position: fixed;
+    inset: 68px 0 0;
+    z-index: 48;
+    background: rgba(6,20,73,.18);
+    backdrop-filter: blur(2px);
+    pointer-events: auto;
+  }
+
+  /* Dos columnas en tablet */
+  .solutions-grid,
+  .trust-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Tablet / móvil grande */
+@media (max-width: 760px) {
+  .wrap { padding-left: 20px; padding-right: 20px; }
+
+  /* CTAs tipo app: siempre horizontales */
+  .hero-ctas,
+  .page-hero-ctas,
+  .cta-final-ctas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    width: 100%;
+  }
+
+  .hero-ctas .btn,
+  .page-hero-ctas .btn,
+  .cta-final-ctas .btn {
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    padding: 12px 10px;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
+    line-height: 1.15;
+  }
+
+  .hero-ctas { margin-top: 26px; }
+  .page-hero-ctas { margin-top: 24px; }
+  .cta-final-ctas { margin-top: 24px; }
+
+  /* Hero más compacto en móvil */
+  .hero {
+    padding: 56px 0 42px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 8.4vw, 38px);
+  }
+  .hero-sub {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .hero-strip {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 16px 12px;
+    margin-top: 30px;
+  }
+
+  /* Tarjetas tipo app */
+  .why-grid,
+  .trust-grid {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 10px;
+  }
+  .why-card,
+  .trust-card {
+    padding: 20px 16px;
+    border-radius: 18px;
+  }
+  .why-card h3,
+  .trust-card h3 {
+    font-size: 14.5px;
+  }
+  .why-card p,
+  .trust-card p {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  /* Soluciones: 2 columnas en teléfonos normales */
+  .solutions-grid {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 10px;
+  }
+  .solution-card,
+  .solution-card.detailed {
+    padding: 20px 16px;
+    border-radius: 18px;
+  }
+  .solution-card .sol-icon {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 12px;
+  }
+  .solution-card h3 {
+    font-size: 15px;
+  }
+  .solution-card p {
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .solution-card .sol-link {
+    font-size: 12px;
+  }
+
+  /* Proceso: 2 columnas tipo menú */
+  .steps {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 0;
+  }
+  .step {
+    min-height: 170px;
+    padding: 22px 16px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .step:nth-child(2n) { border-right: none; }
+  .step:nth-last-child(-n+1) { border-bottom: none; }
+  .step-title { font-size: 16px; }
+  .step p { font-size: 12px; line-height: 1.5; }
+
+  /* Requisitos: también 2 columnas */
+  .req-list {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 10px;
+  }
+  .req-item {
+    padding: 18px 14px;
+    gap: 10px;
+    border-radius: 16px;
+  }
+  .req-item h3 { font-size: 14px; }
+  .req-item p { font-size: 12px; line-height: 1.45; }
+
+  /* Redes: 2 columnas */
+  .social-wrap {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 10px;
+  }
+  .social-card {
+    padding: 20px 16px;
+    border-radius: 18px;
+  }
+  .social-card h3 { font-size: 14.5px; }
+  .social-card p { font-size: 12px; }
+
+  /* Calculadora */
+  .calc-card {
+    grid-template-columns: 1fr;
+  }
+  .calc-pillgroup {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+  }
+  .calc-pill {
+    padding: 11px 7px;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  /* Contacto */
+  .contact-grid {
+    gap: 30px;
+  }
+
+  /* Footer */
+  footer { padding-top: 46px; }
+}
+
+/* Teléfonos compactos: conserva los botones lado a lado */
+@media (max-width: 420px) {
+  .wrap { padding-left: 16px; padding-right: 16px; }
+
+  .nav {
+    padding: 11px 16px;
+    gap: 10px;
+  }
+  .brand {
+    font-size: 15px;
+    gap: 8px;
+    min-width: 0;
+  }
+  .brand .mark {
+    width: 36px;
+    height: 36px;
+  }
+
+  .hero-ctas,
+  .page-hero-ctas,
+  .cta-final-ctas {
+    gap: 8px;
+  }
+  .hero-ctas .btn,
+  .page-hero-ctas .btn,
+  .cta-final-ctas .btn {
+    min-height: 46px;
+    font-size: 12px;
+    padding: 10px 7px;
+  }
+
+  .hero-strip {
+    gap: 12px 8px;
+  }
+  .hero-strip div {
+    font-size: 10px;
+  }
+  .hero-strip strong {
+    font-size: 13px;
+  }
+
+  .why-card,
+  .trust-card,
+  .solution-card,
+  .solution-card.detailed,
+  .social-card {
+    padding: 17px 12px;
+  }
+
+  .why-card h3,
+  .trust-card h3,
+  .solution-card h3,
+  .social-card h3 {
+    font-size: 13px;
+  }
+
+  .why-card p,
+  .trust-card p,
+  .solution-card p,
+  .social-card p {
+    font-size: 10.8px;
+  }
+
+  .step {
+    min-height: 155px;
+    padding: 18px 12px;
+  }
+  .step-title { font-size: 14px; }
+  .step p { font-size: 10.8px; }
+
+  .req-item {
+    padding: 15px 11px;
+  }
+  .req-item h3 { font-size: 12.5px; }
+  .req-item p { font-size: 10.5px; }
+}
+
+/* Pantallas muy pequeñas: solo las tarjetas complejas pasan a una columna,
+   pero los botones principales siguen en horizontal. */
+@media (max-width: 340px) {
+  .solutions-grid,
+  .why-grid,
+  .trust-grid,
+  .req-list,
+  .social-wrap,
+  .steps {
+    grid-template-columns: 1fr;
+  }
+  .step { border-right: none; }
+}
