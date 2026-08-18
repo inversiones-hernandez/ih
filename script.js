@@ -67,11 +67,13 @@ if (menuToggle && navLinks) {
     navLinks.classList.remove('open');
     menuToggle.classList.remove('open');
     menuToggle.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('menu-is-open');
   };
   const toggleMenu = () => {
     const isOpen = navLinks.classList.toggle('open');
     menuToggle.classList.toggle('open', isOpen);
     menuToggle.setAttribute('aria-expanded', String(isOpen));
+    document.body.classList.toggle('menu-is-open', isOpen);
   };
 
   menuToggle.addEventListener('click', toggleMenu);
@@ -86,6 +88,11 @@ if (menuToggle && navLinks) {
     if (!navLinks.classList.contains('open')) return;
     if (navLinks.contains(e.target) || menuToggle.contains(e.target)) return;
     closeMenu();
+  });
+
+  // Cerrar con Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
   });
 
   // Cerrar si la ventana vuelve a tamaño de escritorio
