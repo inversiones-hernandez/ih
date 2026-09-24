@@ -27,6 +27,28 @@
 <link rel="manifest" href="site.webmanifest">
 <meta name="theme-color" content="#0066ff">
 <link rel="stylesheet" href="styles.css">
+<style>
+  /* Optimización para el iframe embebido en móviles */
+  .iframe-container {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 12px;
+    overflow: hidden;
+  }
+  .iframe-container iframe {
+    width: 100%;
+    height: 950px;
+    border: 0;
+    border-radius: 12px;
+    display: block;
+  }
+  @media (max-width: 600px) {
+    .iframe-container { padding: 4px; }
+    .iframe-container iframe { height: 1050px; }
+  }
+</style>
 </head>
 <body>
 
@@ -64,9 +86,22 @@
 <!-- ================= PAGE HERO ================= -->
 <section class="page-hero">
   <div class="wrap">
-    <div class="eyebrow">Solicitud</div>
+    <div class="eyebrow">Solicitud en Línea</div>
     <h1 class="reveal">Iniciemos tu solicitud de préstamo.</h1>
-    <p class="reveal">Completa tu solicitud por nuestra plataforma oficial. Un asesor la revisará de forma individual y responsable, y se pondrá en contacto contigo.</p>
+    <p class="reveal">Completa tu formulario directamente a continuación. Un asesor revisará tu perfil de forma confidencial y se pondrá en contacto contigo.</p>
+  </div>
+</section>
+
+<!-- ================= FORMULARIO OFICIAL EMBEBIDO ================= -->
+<section id="form-section" style="padding: 0 0 64px;">
+  <div class="wrap">
+    <div class="iframe-container reveal">
+      <iframe 
+        src="https://solicitud.prestamoscloud.com/solicitudes/i/inversioneshernandezrd" 
+        loading="lazy" 
+        title="Solicitud de crédito - Inversiones Hernández RD">
+      </iframe>
+    </div>
   </div>
 </section>
 
@@ -74,8 +109,8 @@
 <section class="stripe" style="background:var(--bg-alt);">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="eyebrow">Antes de comenzar</div>
-      <h2>Ten esto a mano para agilizar tu solicitud.</h2>
+      <div class="eyebrow">Requisitos Básicos</div>
+      <h2>Ten esto a mano para agilizar tu evaluación.</h2>
     </div>
     <div class="ready-list reveal">
       <div class="ready-item">
@@ -98,40 +133,22 @@
   </div>
 </section>
 
-<!-- ================= PASOS ================= -->
-<section>
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow">El proceso</div>
-      <h2>Así continúa tu solicitud, en tres pasos.</h2>
-    </div>
-  </div>
-  <div class="wrap">
-    <div class="steps reveal" style="grid-template-columns:repeat(3,1fr);">
-      <div class="step"><div class="num">01</div><h3>Completas la solicitud</h3><p>Ingresas tus datos por nuestra plataforma oficial de solicitudes.</p></div>
-      <div class="step"><div class="num">02</div><h3>Evaluamos tu caso</h3><p>Un asesor revisa tu perfil, documentación y capacidad de pago.</p></div>
-      <div class="step"><div class="num">03</div><h3>Te contactamos</h3><p>Te explicamos las condiciones aplicables y los próximos pasos.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= CTA / PLATAFORMA ================= -->
+<!-- ================= CTA / SEGURIDAD ================= -->
 <section class="pre-cta">
   <div class="wrap">
     <div class="pre-cta-card reveal">
       <div class="pre-cta-copy">
-        <div class="eyebrow">Antes de continuar</div>
-        <h2>Tu información se usa solo para evaluar y dar seguimiento a tu solicitud.</h2>
-        <p>Al completar el formulario de solicitud autorizas el uso de tus datos para contacto, validación, evaluación y seguimiento del proceso. Nunca compartas contraseñas, PIN, tokens, códigos de seguridad ni información de tarjetas por ningún canal.</p>
-        <p class="fine-print">Enviar la solicitud no garantiza aprobación. Consulta los documentos completos antes de continuar.</p>
+        <div class="eyebrow">Seguridad e Información</div>
+        <h2>Tu información está protegida con estándares bancarios.</h2>
+        <p>Al enviar el formulario, autorizas el uso de tus datos exclusivamente para la evaluación crediticia y contacto oficial. Nunca solicitamos contraseñas, PIN ni datos confidenciales de tarjetas.</p>
+        <p class="fine-print">La solicitud está sujeta a evaluación de crédito individual.</p>
         <div class="pre-cta-links">
           <a href="privacidad.html">Política de privacidad</a>
           <a href="terminos.html">Términos y condiciones</a>
         </div>
       </div>
       <div class="pre-cta-actions">
-        <a class="btn btn-primary" href="https://solicitud.prestamoscloud.com/solicitudes/i/inversioneshernandez" target="_blank" rel="noopener">Entiendo y deseo continuar</a>
-        <a class="btn btn-ghost" href="https://wa.me/18495942190?text=Hola%2C%20quiero%20solicitar%20un%20pr%C3%A9stamo%20con%20Inversiones%20Hern%C3%A1ndez" target="_blank" rel="noopener">Hablar con un asesor primero</a>
+        <a class="btn btn-primary" href="https://wa.me/18495942190?text=Hola%2C%20tengo%20una%20duda%20sobre%20mi%20solicitud" target="_blank" rel="noopener">Hablar con un asesor</a>
       </div>
     </div>
   </div>
@@ -146,7 +163,7 @@
         <div class="foot-brand">
           <img class="foot-logo" src="logo-horizontal.png" alt="Inversiones Hernández — Impulsando tu crecimiento financiero">
         </div>
-        <p>Financiamiento responsable, atención cercana y decisiones claras para personas y negocios en San Cristóbal.</p>
+        <p>Financiamiento responsable, atención cercana y decisiones claras en San Cristóbal, RD.</p>
       </div>
       <div class="foot-col">
         <h4>Navegación</h4>
@@ -164,12 +181,12 @@
       <div class="foot-col">
         <h4>Contacto</h4>
         <a href="tel:+18495942190">+1 (849) 594-2190</a>
-        <a href="mailto:gestion.inversioneshernandez@gmail.com">gestion.inversioneshernandez@gmail.com</a>
-        <a href="https://wa.me/18495942190" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="mailto:gestion@inversioneshernandezrd.com">gestion@inversioneshernandezrd.com</a>
+        <p style="font-size: 13px; color: rgba(255,255,255,.62); margin-top: 8px;">Autopista 6 de Noviembre, Sector Villa Progreso 1, Calle No. 1, San Cristóbal, RD.</p>
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© 2026 Inversiones Hernández. Todos los derechos reservados.</span>
+      <span>© 2026 Inversiones Hernández RD. Todos los derechos reservados.</span>
       <span>Comunícate solo por nuestros canales oficiales.</span>
     </div>
   </div>
