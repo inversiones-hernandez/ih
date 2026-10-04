@@ -1,6 +1,6 @@
 // ===== Calculadora de préstamos — Inversiones Hernández =====
 // Tasas por periodo (se aplican de forma acumulativa sobre el saldo, cada periodo)
-const TASAS = { diario: 0.009, semanal: 0.6, quincenal: 0.14 };
+const TASAS = { diario: 0.009, semanal: 0.06, quincenal: 0.14 };
 const PLAZOS = {
   diario:    { min: 30, max: 90, label: 'día',      labelPlural: 'días' },
   semanal:   { min: 8,  max: 16,  label: 'semana',   labelPlural: 'semanas' },
