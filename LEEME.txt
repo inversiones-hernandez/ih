@@ -1,0 +1,9 @@
+SITIO INVERSIONES HERNÁNDEZ RD
+
+Sube el contenido de esta carpeta a la raíz del sitio, conservando los nombres de archivo. El paquete incluye páginas, estilos, scripts y todas las imágenes recibidas. Abre index.html para consultar el inicio.
+
+Cambios: identidad del encabezado, menú simplificado, portada, secciones repetidas reducidas, enlaces específicos de productos, correo de dirección, aviso de plataforma y enlace alternativo del formulario, calculadora con tasas por período y dos decimales, resumen de referencia en la solicitud, rutas de imágenes y manifiestos corregidas.
+
+Pendiente de confirmar con el negocio: correo direccion@ operativo; tasas y sistema definitivo frente a los documentos de préstamo; cargos aplicables y desembolso neto; ubicación exacta del mapa; plazo de conservación de datos. Las tasas actuales de la calculadora se conservaron. No se modificó el formulario externo ni se publicó el sitio.
+
+Validación: sintaxis JavaScript y enlaces locales. La revisión visual en navegador no estuvo disponible en este entorno.
