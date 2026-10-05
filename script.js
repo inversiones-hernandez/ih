@@ -118,3 +118,61 @@ if (resumen) {
   resumen.textContent = `Tu referencia: RD$${monto.toLocaleString('es-DO')} · modalidad ${modalidad} · ${plazo} cuotas. Indica estos valores al completar el formulario. Las condiciones finales están sujetas a evaluación.`;
  }
 }
+
+// INTRO: reproducción inicial, imagen fija y botón para repetir.
+
+(() => {
+  const video = document.getElementById("brandIntroVideo");
+  const poster = document.getElementById("brandIntroPoster");
+  const replay = document.getElementById("brandIntroReplay");
+
+  if (!video || !poster || !replay) return;
+
+  const reduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  );
+
+  const showPoster = () => {
+    video.pause();
+    video.hidden = true;
+    poster.hidden = false;
+    replay.hidden = false;
+  };
+
+  const playIntro = () => {
+    poster.hidden = false;
+    video.hidden = true;
+    replay.hidden = true;
+
+    video.muted = true;
+    video.currentTime = 0;
+
+    const promise = video.play();
+
+    if (promise && promise.catch) {
+      promise.catch(showPoster);
+    }
+  };
+
+  video.addEventListener("playing", () => {
+    poster.hidden = true;
+    video.hidden = false;
+  });
+
+  video.addEventListener("ended", showPoster);
+  video.addEventListener("error", showPoster);
+
+  replay.addEventListener("click", playIntro);
+
+  if (reduced.matches) {
+    showPoster();
+  } else {
+    playIntro();
+  }
+
+  reduced.addEventListener?.("change", (event) => {
+    if (event.matches) {
+      showPoster();
+    }
+  });
+})();
