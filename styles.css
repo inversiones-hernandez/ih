@@ -1040,3 +1040,36 @@ section { padding:76px 0; }
     margin: 0 auto;
   }
 }
+
+/* Presentación inicial a pantalla completa */
+.welcome-intro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  opacity: 1;
+  transition: opacity .3s ease;
+}
+.welcome-intro-active body { overflow: hidden; }
+.welcome-intro-video { display:block; object-fit:contain; }
+.welcome-intro-leaving { opacity:0; pointer-events:none; }
+.welcome-intro-skip {
+  right: max(24px, env(safe-area-inset-right));
+  bottom: max(24px, env(safe-area-inset-bottom));
+  min-height: 48px;
+  padding: 12px 22px;
+  border: 1px solid rgba(255,255,255,.65);
+  border-radius: 999px;
+  background: #ffffff;
+  color: #061449;
+  font: 700 14px Arial, sans-serif;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0,0,0,.2);
+}
+.welcome-intro-skip:hover { background:#eaf2ff; }
+.welcome-intro-skip:focus-visible { outline:3px solid #1495ff; outline-offset:4px; }
+@media (prefers-reduced-motion:reduce) {
+  .welcome-intro { transition:none; }
+}
