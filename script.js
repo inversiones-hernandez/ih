@@ -1,3 +1,86 @@
+// PRESENTACIÓN INICIAL: ejecutada antes de las funciones del sitio.
+(() => {
+  const layer = document.getElementById('welcomeIntro');
+  const video = document.getElementById('welcomeIntroVideo');
+  const skip = document.getElementById('welcomeIntroSkip');
+  if (!layer || !video || !skip || layer.hidden) return;
+  window.clearTimeout(window.ihIntroSafety);
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const previousFocus = document.activeElement;
+  const inertNodes = Array.from(document.body.children)
+    .filter(el => el !== layer && !['SCRIPT', 'STYLE'].includes(el.tagName))
+    .map(el => ({ el, inert: el.inert }));
+  inertNodes.forEach(({el}) => { el.inert = true; });
+  let closed = false;
+  let started = false;
+  let loadTimer;
+  let stallTimer;
+  let finalTimer;
+  const finish = (immediate = false) => {
+    if (closed) return;
+    closed = true;
+    [loadTimer, stallTimer, finalTimer].forEach(window.clearTimeout);
+    video.pause();
+    document.removeEventListener('keydown', onKey);
+    window.removeEventListener('pagehide', onPageHide);
+    reduced.removeEventListener?.('change', onReduced);
+    const reveal = () => {
+      layer.hidden = true;
+      document.documentElement.classList.remove('welcome-intro-active');
+      inertNodes.forEach(({el, inert}) => { el.inert = inert; });
+      if (previousFocus && previousFocus !== document.body && previousFocus.isConnected) {
+        previousFocus.focus({preventScroll:true});
+      } else {
+        const target = document.querySelector('header a, main a, .hero a');
+        target?.focus({preventScroll:true});
+      }
+    };
+    if (immediate || reduced.matches) reveal();
+    else {
+      layer.classList.add('welcome-intro-leaving');
+      window.setTimeout(reveal, 350);
+    }
+  };
+  const onKey = event => {
+    if (event.key === 'Escape') finish();
+    // Mantener el teclado dentro del diálogo.
+    if (event.key === 'Tab') { event.preventDefault(); skip.focus(); }
+  };
+  const onPageHide = () => finish(true);
+  const onReduced = event => { if (event.matches) finish(true); };
+  skip.addEventListener('click', () => finish());
+  document.addEventListener('keydown', onKey);
+  window.addEventListener('pagehide', onPageHide);
+  reduced.addEventListener?.('change', onReduced);
+  video.addEventListener('ended', () => finish());
+  video.addEventListener('error', () => finish());
+  video.querySelector('source')?.addEventListener('error', () => finish());
+  video.addEventListener('playing', () => {
+    if (closed) return;
+    window.clearTimeout(loadTimer);
+    window.clearTimeout(stallTimer);
+    if (!started) {
+      started = true;
+      const remaining = Number.isFinite(video.duration) ? Math.max(0, video.duration - video.currentTime) : 60;
+      finalTimer = window.setTimeout(() => finish(), Math.min(remaining + 5, 120) * 1000);
+    }
+  });
+  const onStall = () => {
+    window.clearTimeout(stallTimer);
+    stallTimer = window.setTimeout(() => finish(), 6000);
+  };
+  video.addEventListener('waiting', onStall);
+  video.addEventListener('stalled', onStall);
+  skip.focus({preventScroll:true});
+  loadTimer = window.setTimeout(() => finish(), 8000);
+  video.muted = true;
+  video.defaultMuted = true;
+  try {
+    const playback = video.play();
+    playback?.catch(() => finish());
+  } catch (error) { finish(); }
+})();
+
 // ===== Theme toggle (with persistence) =====
 const toggle = document.getElementById('themeToggle');
 const root = document.documentElement;
@@ -164,11 +247,9 @@ if (resumen) {
 
   replay.addEventListener("click", playIntro);
 
-  if (reduced.matches) {
-    showPoster();
-  } else {
-    playIntro();
-  }
+  // La presentación automática está en la pantalla inicial.
+  // Esta sección queda disponible para repetirla manualmente.
+  showPoster();
 
   reduced.addEventListener?.("change", (event) => {
     if (event.matches) {
