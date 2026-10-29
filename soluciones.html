@@ -48,6 +48,7 @@
 </div>
 </header>
 <main id="main">
+<noscript><div class="wrap"><p class="legal-callout">Activa JavaScript para usar el simulador y el resumen de cuotas. También puedes consultar por WhatsApp al +1 (849) 594-2190.</p></div></noscript>
 <section class="page-hero">
 <div class="wrap">
 <div class="eyebrow">Soluciones financieras</div>
@@ -85,7 +86,6 @@
 <p>Orientado a fortalecer operaciones, inventario y necesidades de flujo de efectivo.</p>
 <a class="sol-link" href="#calculadora">Ver estimación general →</a>
 </div>
-
 </div>
 </div>
 </section>
@@ -102,35 +102,35 @@
 <div class="calc-field">
 <label for="calcMonto">Monto solicitado</label>
 <div class="calc-amount-display" id="calcMontoValor">RD$5,000</div>
-<input id="calcMonto" max="15000" min="5000" step="500" type="range" value="10000"/>
-<div class="calc-hint">Monto disponible: entre RD$5,000 y RD$15,000.</div>
+<select id="calcMonto"><option value="5000">RD$5,000</option></select>
+<div class="calc-hint">Solo se muestran los montos y plazos de la tabla de IH.</div>
 </div>
 <div class="calc-field">
 <label>Modalidad de pago</label>
-<div class="calc-pillgroup">
+<div aria-label="Modalidad de pago" class="calc-pillgroup" role="group">
 <button class="calc-pill" data-modalidad="diario" type="button">Diario</button>
 <button class="calc-pill" data-modalidad="semanal" type="button">Semanal</button>
 <button class="calc-pill active" data-modalidad="quincenal" type="button">Quincenal</button>
 </div>
 </div>
 <div class="calc-field">
-<label for="calcPlazo">Plazo — <span id="calcPlazoValor">4 quincenas</span></label>
-<input id="calcPlazo" max="12" min="4" step="1" type="range" value="4"/>
-<div class="calc-hint">Perfil de cliente: Estándar. Las opciones comerciales requieren una cotización personalizada.</div>
+<label for="calcPlazo">Número de pagos</label>
+<select id="calcPlazo"><option value="4">4 pagos · 4 quincenas</option></select>
+<div class="calc-hint">La modalidad diaria considera un pago cada día calendario.</div>
 </div>
 </div>
 <div class="calc-result">
 <div class="eyebrow">Resultado estimado</div>
-<div class="calc-result-grid">
+<div aria-atomic="true" aria-live="polite" class="calc-result-grid">
 <div class="calc-result-row"><span>Monto solicitado</span><span id="resMonto">—</span></div>
-<div class="calc-result-row"><span>Tasa por período</span><span id="resTasa">—</span></div><div class="calc-result-row"><span>Interés estimado</span><span id="resInteres">—</span></div>
+<div class="calc-result-row"><span>Interés total del plazo</span><span id="resTasa">—</span></div><div class="calc-result-row"><span>Interés estimado</span><span id="resInteres">—</span></div>
 <div class="calc-result-row"><span>Número de cuotas</span><span id="resCuotas">—</span></div>
 <div class="calc-result-row"><span>Valor de cada cuota</span><span id="resCuotaValor">—</span></div>
 <div class="calc-result-row"><span>Frecuencia de pago</span><span id="resFrecuencia">—</span></div>
 <div class="calc-result-row total"><span>Total a pagar</span><span id="resTotal">—</span></div>
 </div>
-<a class="btn btn-primary" href="solicitud.html" id="calcSolicitud">Continuar con esta estimación</a>
-<p class="calc-disclaimer">Estimación general para perfil Estándar con cuota fija (sistema francés). No incluye cargos de cierre, seguros u otros cargos que puedan aplicar. El desembolso neto y las condiciones finales se confirman antes de firmar. Esta estimación no constituye una oferta ni aprobación.</p>
+<a class="btn btn-primary" href="solicitud.html" id="calcSolicitud">Continuar con esta estimación</a><a class="btn btn-ghost calc-advisor" href="https://wa.me/18495942190" id="calcAsesor" rel="noopener" target="_blank">Consultar por WhatsApp</a>
+<p class="calc-disclaimer">Cuotas de la tabla de IH: el total equivale al número de pagos multiplicado por la cuota indicada. Sin gastos de cierre. Mora no incluida. Los porcentajes totales varían según el plazo y el redondeo; no son tasas mensuales. Solicitud sujeta a evaluación y condiciones contractuales.</p>
 </div>
 </div>
 </div>
@@ -174,7 +174,8 @@
 <a aria-label="Escribir por WhatsApp" class="wa-float" href="https://wa.me/18495942190?text=Hola%2C%20tengo%20una%20consulta" rel="noopener" target="_blank">
 <svg class="icon" viewbox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 01-12.4 7.6L4 20l1-4.4A8.5 8.5 0 1121 11.5z"></path><path d="M8.5 10.3c.3 2.6 2.5 4.8 5.1 5.1"></path></svg>
 </a>
-<script src="script.js"></script>
-<script src="calculadora.js"></script>
-</body>
+
+
+<script defer="True" src="prestamos.js"></script><script defer="True" src="script.js"></script><script defer="True" src="calculadora.js"></script></body>
 </html>
+
