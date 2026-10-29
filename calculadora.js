@@ -1,98 +1,32 @@
-// ===== Calculadora de préstamos — Inversiones Hernández =====
-// Tasas por periodo (se aplican de forma acumulativa sobre el saldo, cada periodo)
-const TASAS = { diario: 0.009, semanal: 0.06, quincenal: 0.14 };
-const PLAZOS = {
-  diario:    { min: 30, max: 90, label: 'día',      labelPlural: 'días' },
-  semanal:   { min: 8,  max: 16,  label: 'semana',   labelPlural: 'semanas' },
-  quincenal: { min: 4,  max: 12,  label: 'quincena', labelPlural: 'quincenas' }
-};
-const MONTO_MIN = 5000;
-const MONTO_MAX = 15000;
-
-let estado = { modalidad: 'quincenal', monto: 5000, plazo: 4 };
-
-function formatRD(n) {
-  return 'RD$' + n.toLocaleString('es-DO', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+(function(){
+'use strict';
+function iniciar(){
+ const datos=window.IHPrestamos,monto=document.getElementById('calcMonto'),plazo=document.getElementById('calcPlazo');
+ if(!datos||!monto||!plazo)return;
+ const dinero=v=>'RD$'+v.toLocaleString('es-DO',{minimumFractionDigits:2,maximumFractionDigits:2});
+ let modalidad='quincenal';
+ function opciones(select,values,label){select.replaceChildren(...values.map(v=>{const o=document.createElement('option');o.value=String(v);o.textContent=label(v);return o;}));}
+ function render(){
+   const r=datos.calcular(modalidad,monto.value,plazo.value);if(!r)return;
+   document.getElementById('calcMontoValor').textContent=dinero(r.monto);
+   for(const [id,text] of Object.entries({resMonto:dinero(r.monto),resTasa:r.porcentajeTotal.toLocaleString('es-DO',{maximumFractionDigits:2})+'% del capital',resInteres:dinero(r.interes),resCuotas:String(r.plazo),resCuotaValor:dinero(r.cuota),resFrecuencia:datos.planes[modalidad].nombre,resTotal:dinero(r.total)}))document.getElementById(id).textContent=text;
+   const params=new URLSearchParams({monto:String(r.monto),modalidad,plazo:String(r.plazo)});
+   document.getElementById('calcSolicitud').href='solicitud.html?'+params;
+   const mensaje='Hola, quiero información sobre un préstamo de '+dinero(r.monto)+', '+r.plazo+' pagos '+({diario:'diarios',semanal:'semanales',quincenal:'quincenales'}[modalidad])+' de '+dinero(r.cuota)+'. Total: '+dinero(r.total)+'.';
+   document.getElementById('calcAsesor').href='https://wa.me/18495942190?text='+encodeURIComponent(mensaje);
+ }
+ function seleccionar(mode){
+   if(!Object.hasOwn(datos.planes,mode))return;
+   modalidad=mode;const plan=datos.planes[mode],oldMonto=Number(monto.value),oldPlazo=Number(plazo.value);
+   opciones(monto,plan.capitales,dinero);monto.value=String(plan.capitales.includes(oldMonto)?oldMonto:5000);
+   opciones(plazo,plan.plazos,n=>n+' pagos · '+n+' '+plan.unidad);plazo.value=String(plan.plazos.includes(oldPlazo)?oldPlazo:plan.plazos[0]);
+   document.querySelectorAll('[data-modalidad]').forEach(b=>{const active=b.dataset.modalidad===mode;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
+   render();
+ }
+ const previo=datos.desdeParametros(new URLSearchParams(location.search));
+ if(previo){modalidad=previo.modalidad;monto.value=String(previo.monto);plazo.value=String(previo.plazo);}
+ document.querySelectorAll('[data-modalidad]').forEach(b=>b.addEventListener('click',()=>seleccionar(b.dataset.modalidad)));
+ monto.addEventListener('change',render);plazo.addEventListener('change',render);seleccionar(modalidad);if(previo){monto.value=String(previo.monto);plazo.value=String(previo.plazo);render();}
 }
-
-function calcularFrances(P, i, n) {
-  const cuota = i === 0 ? P / n : P * i / (1 - Math.pow(1 + i, -n));
-  const total = cuota * n;
-  return { cuota, total, interes: total - P };
-}
-
-function actualizarPlazoRange() {
-  const rango = PLAZOS[estado.modalidad];
-  const input = document.getElementById('calcPlazo');
-  if (!input) return;
-  input.min = rango.min;
-  input.max = rango.max;
-  if (estado.plazo < rango.min) estado.plazo = rango.min;
-  if (estado.plazo > rango.max) estado.plazo = rango.max;
-  input.value = estado.plazo;
-  document.getElementById('calcPlazoValor').textContent = `${estado.plazo} ${estado.plazo === 1 ? rango.label : rango.labelPlural}`;
-}
-
-function render() {
-  const i = TASAS[estado.modalidad];
-  const n = estado.plazo;
-  const P = estado.monto;
-
-  document.getElementById('calcMontoValor').textContent = formatRD(P);
-
-  const freqLabel = { diario: 'Diario', semanal: 'Semanal', quincenal: 'Quincenal' }[estado.modalidad];
-  const cuotaFreq = { diario: 'por día', semanal: 'por semana', quincenal: 'por quincena' }[estado.modalidad];
-
-  let resultado = calcularFrances(P, i, n);
-  let cuotaTexto = `${formatRD(resultado.cuota)} ${cuotaFreq}`;
-
-  document.getElementById('resTasa').textContent = `${(i * 100).toLocaleString('es-DO')}% ${cuotaFreq}`;
-  const params = new URLSearchParams({monto:String(P),modalidad:estado.modalidad,plazo:String(n)});
-  document.getElementById('calcSolicitud').href = `solicitud.html?${params}`;
-  document.getElementById('resMonto').textContent = formatRD(P);
-  document.getElementById('resInteres').textContent = formatRD(resultado.interes);
-  document.getElementById('resCuotas').textContent = n;
-  document.getElementById('resCuotaValor').textContent = cuotaTexto;
-  document.getElementById('resFrecuencia').textContent = freqLabel;
-  document.getElementById('resTotal').textContent = formatRD(resultado.total);
-}
-
-function initCalculadora() {
-  const montoInput = document.getElementById('calcMonto');
-  const plazoInput = document.getElementById('calcPlazo');
-  if (!montoInput || !plazoInput) return;
-
-  montoInput.min = MONTO_MIN;
-  montoInput.max = MONTO_MAX;
-  montoInput.step = 500;
-  montoInput.value = estado.monto;
-
-  actualizarPlazoRange();
-
-  montoInput.addEventListener('input', () => {
-    estado.monto = parseInt(montoInput.value, 10);
-    render();
-  });
-
-  plazoInput.addEventListener('input', () => {
-    estado.plazo = parseInt(plazoInput.value, 10);
-    document.getElementById('calcPlazoValor').textContent = `${estado.plazo} ${estado.plazo === 1 ? PLAZOS[estado.modalidad].label : PLAZOS[estado.modalidad].labelPlural}`;
-    render();
-  });
-
-  document.querySelectorAll('[data-modalidad]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('[data-modalidad]').forEach((b) => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.querySelectorAll('[data-modalidad]').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
-      estado.modalidad = btn.dataset.modalidad;
-      actualizarPlazoRange();
-      render();
-    });
-  });
-
-  document.querySelectorAll('[data-modalidad]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.modalidad === estado.modalidad)));
-  render();
-}
-
-document.addEventListener('DOMContentLoaded', initCalculadora);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',iniciar);else iniciar();
+})();
