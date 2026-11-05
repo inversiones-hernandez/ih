@@ -19,7 +19,7 @@ class Page(HTMLParser):
 pages={}
 for p in Path('.').glob('*.html'):
  s=Page();s.feed(p.read_text());pages[p.name]=s
-new=[n for n in pages if n.startswith('aprende') or n in ['cookies.html','herramientas.html']]
+new=[n for n in pages if n.startswith('aprende') or n in ['cookies.html','herramientas.html','criterios-editoriales.html','recursos.html','plantilla-presupuesto.html','ejemplo-calendario.html','ejemplo-recibo.html']]
 for n in new:
  p=pages[n];assert p.h1==1,(n,'h1');assert p.mains==1,(n,'main')
  for link in p.links:
@@ -36,3 +36,16 @@ for n in new:assert 'https://inversioneshernandezrd.com/'+n in locs,n
 assert 'adsbygoogle' not in '\n'.join(p.read_text() for p in Path('.').glob('*.js'))
 assert not Path('ads.txt').exists()
 print('PASS: navigation, local destinations, section anchors, JSON-LD, unique main/h1, sitemap and advertising remains off')
+
+assert len(list(Path('.').glob('aprende-*.html')))==12
+for path in Path('.').glob('aprende-*.html'):
+ text=path.read_text()
+ assert text.count('<strong>Alcance educativo</strong>')==1,path
+ assert 'criterios-editoriales.html' in text,path
+ assert 'fecha de aprobación' not in text.lower(),path
+for path in ['plantilla-presupuesto.html','ejemplo-calendario.html','ejemplo-recibo.html']:
+ text=Path(path).read_text()
+ assert 'data-print' in text and ' download>' in text,path
+ assert 'Material de práctica' in text,path
+assert 'guaranteed' not in Path('index.html').read_text()
+print('PASS: twelve guides, editorial provenance, printable/downloadable educational resources')
