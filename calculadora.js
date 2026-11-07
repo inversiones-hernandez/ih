@@ -23,10 +23,13 @@ function iniciar(){
    document.querySelectorAll('[data-modalidad]').forEach(b=>{const active=b.dataset.modalidad===mode;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
    render();
  }
- const previo=datos.desdeParametros(new URLSearchParams(location.search));
+ const params=new URLSearchParams(location.search),previo=datos.desdeParametros(params);
+ const aviso=document.getElementById('calcAviso');
+ if(aviso&&datos.tieneSeleccion(params)&&!previo)aviso.hidden=false;
  if(previo){modalidad=previo.modalidad;monto.value=String(previo.monto);plazo.value=String(previo.plazo);}
  document.querySelectorAll('[data-modalidad]').forEach(b=>b.addEventListener('click',()=>seleccionar(b.dataset.modalidad)));
- monto.addEventListener('change',render);plazo.addEventListener('change',render);seleccionar(modalidad);if(previo){monto.value=String(previo.monto);plazo.value=String(previo.plazo);render();}
+ function elegir(){if(aviso)aviso.hidden=true;render();}
+ monto.addEventListener('change',elegir);plazo.addEventListener('change',elegir);seleccionar(modalidad);if(previo){monto.value=String(previo.monto);plazo.value=String(previo.plazo);render();}
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',iniciar);else iniciar();
 })();

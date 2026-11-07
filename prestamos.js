@@ -8,7 +8,7 @@
     quincenal:{nombre:'Quincenal',unidad:'quincenas',plazos:[4,5,8],capitales,cuotas:[[330,280,205],[660,560,410],[990,840,615],[1320,1120,820],[1650,1400,1025],[1980,1680,1230],[2310,1960,1435],[2640,2240,1640],[2970,2520,1845],[3300,2800,2050],[4950,4200,3075],[6600,5600,4100],[8250,7000,5125]]}
   };
   function calcular(modalidad,monto,plazo){
-    const plan=planes[modalidad];monto=Number(monto);plazo=Number(plazo);
+    const plan=Object.hasOwn(planes,modalidad)?planes[modalidad]:null;monto=Number(monto);plazo=Number(plazo);
     if(!plan||!Number.isSafeInteger(monto)||!Number.isSafeInteger(plazo))return null;
     const fila=plan.capitales.indexOf(monto),col=plan.plazos.indexOf(plazo);
     if(fila<0||col<0)return null;
@@ -16,7 +16,8 @@
     return {modalidad,monto,plazo,cuota,total,interes,porcentajeTotal:interes/monto*100};
   }
   function desdeParametros(params){return calcular(params.get('modalidad'),params.get('monto'),params.get('plazo'));}
-  const api={planes,calcular,desdeParametros};
+  function tieneSeleccion(params){return ['modalidad','monto','plazo'].some(k=>params.has(k));}
+  const api={planes,calcular,desdeParametros,tieneSeleccion};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
   else root.IHPrestamos=api;
 })(typeof window==='undefined'?globalThis:window);
