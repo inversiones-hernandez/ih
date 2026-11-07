@@ -34,7 +34,8 @@ for n,p in pages.items():
 s=ET.parse('sitemap.xml');locs=[e.text for e in s.iter() if e.tag.endswith('}loc')]
 for n in new:assert 'https://inversioneshernandezrd.com/'+n in locs,n
 assert 'adsbygoogle' not in '\n'.join(p.read_text() for p in Path('.').glob('*.js'))
-assert not Path('ads.txt').exists()
+assert Path('ads.txt').read_text().strip() == 'google.com, pub-2272005848401303, DIRECT, f08c47fec0942fa0'
+assert all('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js' not in p.read_text() for p in Path('.').glob('*.html'))
 print('PASS: navigation, local destinations, section anchors, JSON-LD, unique main/h1, sitemap and advertising remains off')
 
 assert len(list(Path('.').glob('aprende-*.html')))==12
