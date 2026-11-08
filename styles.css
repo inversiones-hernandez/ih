@@ -668,3 +668,5 @@ body > header { background: var(--bg); backdrop-filter: none; }
 }
 .learn-home { background: var(--bg-alt); }
 .page-top-marker { position: absolute; inset: 0 auto auto 0; width: 1px; height: 1px; pointer-events: none; }
+
+.navlinks a[aria-current="page"] { color: var(--text-accent); opacity: 1; }
