@@ -1,18 +1,14 @@
 /* Matriz autorizada de cuotas IH. Mantener sincronizada con las tablas comerciales. */
 (function (root) {
   'use strict';
-  const capitales=[1000,2000,3000,4000,5000,6000,7000,8000,9000,10000,15000,20000,25000];
-  const planes={
-    diario:{nombre:'Diario',unidad:'días',plazos:[30,45],capitales,cuotas:[[40,30],[75,55],[115,85],[155,110],[195,140],[230,165],[270,195],[310,220],[350,250],[385,275],[580,415],[775,550],[965,690]]},
-    semanal:{nombre:'Semanal',unidad:'semanas',plazos:[5,10,13],capitales,cuotas:[[260,140,115],[520,280,230],[780,420,345],[1040,560,460],[1300,700,575],[1560,840,690],[1820,980,810],[2080,1120,925],[2340,1260,1040],[2600,1400,1155],[3900,2100,1730],[5200,2800,2310],[6500,3500,2885]]},
-    quincenal:{nombre:'Quincenal',unidad:'quincenas',plazos:[4,5,8],capitales,cuotas:[[330,280,205],[660,560,410],[990,840,615],[1320,1120,820],[1650,1400,1025],[1980,1680,1230],[2310,1960,1435],[2640,2240,1640],[2970,2520,1845],[3300,2800,2050],[4950,4200,3075],[6600,5600,4100],[8250,7000,5125]]}
-  };
+  const planes={"diario":{"nombre":"Diario","unidad":"días","plazos":[30,45],"capitales":[3000,4000,5000,6000,7000,8000,9000,10000,15000,20000,25000,30000],"cuotas":[[115,null],[155,110],[190,135],[230,165],[270,190],[305,220],[345,245],[385,270],[575,410],[765,545],[960,680],[1150,815]]},"semanal":{"nombre":"Semanal","unidad":"semanas","plazos":[8,10,13],"capitales":[2000,3000,4000,5000,6000,7000,8000,9000,10000,15000,20000,25000,30000],"cuotas":[[325,null,null],[490,null,null],[650,550,460],[815,690,570],[975,825,685],[1140,965,800],[1300,1100,915],[1465,1240,1030],[1625,1375,1145],[2440,2065,1715],[3250,2750,2290],[4065,3440,2860],[4875,4125,3435]]},"quincenal":{"nombre":"Quincenal","unidad":"quincenas","plazos":[4,5,8,10],"capitales":[1000,2000,3000,4000,5000,6000,7000,8000,9000,10000,15000,20000,25000,30000],"cuotas":[[325,null,null,null],[650,null,null,null],[975,825,600,null],[1300,1100,800,700],[1625,1375,1000,875],[1950,1650,1200,1050],[2275,1925,1400,1225],[2600,2200,1600,1400],[2925,2475,1800,1575],[3250,2750,2000,1750],[4875,4125,3000,2625],[6500,5500,4000,3500],[8125,6875,5000,4375],[9750,8250,6000,5250]]}};
   function calcular(modalidad,monto,plazo){
     const plan=Object.hasOwn(planes,modalidad)?planes[modalidad]:null;monto=Number(monto);plazo=Number(plazo);
     if(!plan||!Number.isSafeInteger(monto)||!Number.isSafeInteger(plazo))return null;
     const fila=plan.capitales.indexOf(monto),col=plan.plazos.indexOf(plazo);
     if(fila<0||col<0)return null;
-    const cuota=plan.cuotas[fila][col],total=cuota*plazo,interes=total-monto;
+    const cuota=plan.cuotas[fila][col];if(!Number.isFinite(cuota)||cuota<=0)return null;
+    const total=cuota*plazo,interes=total-monto;
     return {modalidad,monto,plazo,cuota,total,interes,porcentajeTotal:interes/monto*100};
   }
   function desdeParametros(params){return calcular(params.get('modalidad'),params.get('monto'),params.get('plazo'));}

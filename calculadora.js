@@ -15,21 +15,22 @@ function iniciar(){
    const mensaje='Hola, quiero información sobre un préstamo de '+dinero(r.monto)+', '+r.plazo+' pagos '+({diario:'diarios',semanal:'semanales',quincenal:'quincenales'}[modalidad])+' de '+dinero(r.cuota)+'. Total: '+dinero(r.total)+'.';
    document.getElementById('calcAsesor').href='https://wa.me/18495942190?text='+encodeURIComponent(mensaje);
  }
- function seleccionar(mode){
+ function seleccionar(mode,preferred){
    if(!Object.hasOwn(datos.planes,mode))return;
-   modalidad=mode;const plan=datos.planes[mode],oldMonto=Number(monto.value),oldPlazo=Number(plazo.value);
+   modalidad=mode;const plan=datos.planes[mode],oldMonto=preferred?.monto??Number(monto.value),oldPlazo=preferred?.plazo??Number(plazo.value);
    opciones(monto,plan.capitales,dinero);monto.value=String(plan.capitales.includes(oldMonto)?oldMonto:5000);
-   opciones(plazo,plan.plazos,n=>n+' pagos · '+n+' '+plan.unidad);plazo.value=String(plan.plazos.includes(oldPlazo)?oldPlazo:plan.plazos[0]);
+   const disponibles=plan.plazos.filter(n=>datos.calcular(mode,monto.value,n));
+   opciones(plazo,disponibles,n=>n+' pagos · '+n+' '+plan.unidad);plazo.value=String(disponibles.includes(oldPlazo)?oldPlazo:disponibles[0]);
    document.querySelectorAll('[data-modalidad]').forEach(b=>{const active=b.dataset.modalidad===mode;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
    render();
  }
  const params=new URLSearchParams(location.search),previo=datos.desdeParametros(params);
  const aviso=document.getElementById('calcAviso');
  if(aviso&&datos.tieneSeleccion(params)&&!previo)aviso.hidden=false;
- if(previo){modalidad=previo.modalidad;monto.value=String(previo.monto);plazo.value=String(previo.plazo);}
+ if(previo)modalidad=previo.modalidad;
  document.querySelectorAll('[data-modalidad]').forEach(b=>b.addEventListener('click',()=>seleccionar(b.dataset.modalidad)));
  function elegir(){if(aviso)aviso.hidden=true;render();}
- monto.addEventListener('change',elegir);plazo.addEventListener('change',elegir);seleccionar(modalidad);if(previo){monto.value=String(previo.monto);plazo.value=String(previo.plazo);render();}
+ monto.addEventListener('change',()=>{seleccionar(modalidad);if(aviso)aviso.hidden=true;});plazo.addEventListener('change',elegir);seleccionar(modalidad,previo);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',iniciar);else iniciar();
 })();
