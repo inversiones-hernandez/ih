@@ -1069,3 +1069,94 @@ body.ih-home .process-list li::before {
 @media (prefers-reduced-motion: reduce) {
   .ih-home #como-funciona::before, body > footer::before { transform: none; }
 }
+
+/* Navegación y ritmo vertical para pantallas táctiles. */
+@media screen and (max-width: 980px) {
+  body { --ih-touch-header: 64px; }
+  body > header .nav {
+    min-height: var(--ih-touch-header);
+    gap: 8px;
+    padding-block: 8px;
+  }
+  body > header .brand { gap: 8px; }
+  body > header .brand .mark { width: 38px; height: 38px; flex: none; }
+  body > header .brand-name { font-size: 18px; }
+  body > header .nav-actions { gap: 4px; }
+  body > header .nav-actions :is(.theme-toggle, .menu-toggle) {
+    width: 44px; height: 44px; min-width: 44px; min-height: 44px;
+    border-radius: 8px;
+  }
+  body > header .navlinks {
+    left: max(12px, var(--ih-safe-left)); right: max(12px, var(--ih-safe-right));
+    top: calc(100% + 4px); width: auto; max-width: 460px; margin-left: auto;
+    border: 1px solid transparent; border-radius: 12px;
+    padding-inline: 10px;
+  }
+  body > header .navlinks.open {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-content: start; align-items: stretch; gap: 4px 8px;
+    border-color: var(--line); box-shadow: 0 12px 24px #08142b24;
+    padding-block: 8px;
+    max-height: calc(100vh - var(--ih-touch-header) - 12px);
+    max-height: calc(100dvh - var(--ih-touch-header) - var(--ih-safe-top) - var(--ih-safe-bottom) - 12px);
+  }
+  body > header .navlinks a {
+    min-width: 0; min-height: 44px; padding: 8px 10px;
+    border: 0; border-radius: 6px;
+    font-size: 14px; line-height: 1.25; overflow-wrap: anywhere;
+  }
+  body > header .navlinks a[aria-current="page"] {
+    background: color-mix(in srgb, var(--primary) 12%, var(--card));
+  }
+  body > header .navlinks a:focus-visible { outline-offset: -2px; }
+  body > header .navlinks .nav-mobile-only {
+    grid-column: 1 / -1; margin-top: 4px;
+    background: #0754ce; color: #fff;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  body { --ih-mobile-section-space: 36px; --ih-mobile-gap: 16px; }
+  body :is(main, footer) .wrap,
+  body main.wrap {
+    padding-inline: max(16px, var(--ih-safe-left)) max(16px, var(--ih-safe-right));
+  }
+  body main > section:not(.hero, .page-hero, .legal-hero, .learn-hero),
+  body .about-ih-page > section:not(.page-hero) { padding-block: var(--ih-mobile-section-space); }
+  body:not(.ih-home) main :is(.page-hero, .legal-hero, .learn-hero) { padding-block: 28px 24px; }
+  body.ih-home main > .hero { padding-block: 28px 32px; }
+  body.ih-home .hero-grid,
+  body.ih-home :is(.process-grid, .about-grid, .contact-grid),
+  body main :is(.learn-grid, .learn-layout, .about-ih-hero > .wrap, .about-ih-story,
+    .about-ih-identity, .about-ih-values, .about-ih-contact, .solutions-grid) { gap: var(--ih-mobile-gap); }
+  body.ih-home .hero-sub { margin-top: 14px; line-height: 1.5; }
+  body.ih-home .hero-ctas { margin-top: 16px; gap: 8px; }
+  body.ih-home .hero-note { margin-top: 10px; }
+  body.ih-home :is(.preview-head, .preview-note) { padding-block: 12px; }
+  body main .section-head { margin-bottom: 16px; }
+  body main .section-head p { margin-top: 8px; }
+  body main :is(.learn-card, .solution-card, .about-ih-identity article,
+    .about-ih-values article, .about-ih-contact article, .channel-item) { padding: 16px; }
+  body main :is(.about-ih-identity h3, .about-ih-values h3, .about-ih-contact h3) { margin-block: 8px; }
+  body main :is(.calc-form, .calc-result, .clarity-panel, .pre-cta-card) { padding: 16px; }
+  body main .faq-q { min-height: 48px; padding: 12px 14px; }
+  body.ih-home :is(.contact-row, .req-item) { padding-block: 12px; }
+  body > footer { padding-block: 28px calc(72px + var(--ih-safe-bottom)); }
+  body > footer .foot-grid { gap: 16px; padding-bottom: 20px; }
+  body > footer .foot-brand { width: min(100%, 180px); }
+  body > footer .foot-col :is(a, .privacy-link) { min-height: 44px; margin-bottom: 0; }
+  body > footer .foot-bottom { padding-top: 18px; }
+}
+
+@media screen and (max-width: 480px) {
+  body main :is(.hero-ctas, .page-hero-ctas, .learn-actions) {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;
+  }
+  body main :is(.hero-ctas, .page-hero-ctas, .learn-actions) .btn {
+    min-width: 0; min-height: 44px; padding-inline: 8px;
+    justify-content: center; text-align: center; white-space: normal;
+  }
+  body main :is(.hero-ctas, .page-hero-ctas, .learn-actions) .btn:only-child {
+    grid-column: 1 / -1;
+  }
+}
