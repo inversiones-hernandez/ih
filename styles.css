@@ -1184,7 +1184,7 @@ body.ih-home main .ih-back-row:not([hidden]) ~ .hero { padding-top: clamp(16px, 
   display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;
 }
 body :is(main, footer) .ih-social-links a {
-  display: inline-flex; align-items: center; justify-content: center;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
   min-width: 0; max-width: 100%; min-height: 44px; margin: 0; padding-inline: 10px;
   border: 1px solid var(--line); border-radius: 8px;
   color: var(--text-accent, var(--primary)); background: var(--card);
@@ -1192,6 +1192,7 @@ body :is(main, footer) .ih-social-links a {
   transition: color var(--ih-time) var(--ih-ease), background-color var(--ih-time) var(--ih-ease),
     border-color var(--ih-time) var(--ih-ease);
 }
+.ih-social-icon { width: 15px; height: 15px; flex: none; }
 body :is(main, footer) .ih-social-links a:is(:hover, :focus-visible) {
   border-color: currentColor; text-decoration: underline; text-underline-offset: 3px;
   transform: none;
