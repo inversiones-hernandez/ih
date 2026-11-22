@@ -100,7 +100,7 @@ if('IntersectionObserver' in window){
 }
 subir.addEventListener('click',()=>{const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;window.scrollTo({top:0,behavior:reduced?'instant':'smooth'});const destino=document.querySelector('main h1, main');if(destino){const previo=destino.getAttribute('tabindex');destino.setAttribute('tabindex','-1');destino.focus({preventScroll:true});destino.addEventListener('blur',()=>{if(previo===null)destino.removeAttribute('tabindex');else destino.setAttribute('tabindex',previo);},{once:true});}});
 
-// El fondo del pie acompaña el scroll. El recorrido solo indica la etapa en lectura.
+// Los fondos acompañan el scroll. La línea indica la etapa en lectura.
 const processList=document.querySelector('.process-list');
 const processRows=Array.from(processList?.children||[]);
 const footerScene=document.querySelector('body > footer');
@@ -116,13 +116,11 @@ if(scenes.length && 'IntersectionObserver' in window){
     if(motionPreference.matches)return;
     const viewport=window.innerHeight;
     for(const scene of visible){
-      if(scene===footerScene){
-        const rect=scene.getBoundingClientRect();
-        const travel=clamp((viewport-rect.top)/(viewport+rect.height));
-        scene.style.setProperty('--ih-scroll-offset',Math.round((travel-.5)*112)+'px');
-        continue;
-      }
-      if(!processRows.length)continue;
+      const rect=scene.getBoundingClientRect();
+      const travel=clamp((viewport-rect.top)/(viewport+rect.height));
+      const distance=scene===footerScene?112:56;
+      scene.style.setProperty('--ih-scroll-offset',Math.round((travel-.5)*distance)+'px');
+      if(scene===footerScene||!processRows.length)continue;
 
       const positions=processRows.map(row=>row.offsetTop);
       const anchor=viewport*.54-processList.getBoundingClientRect().top;
