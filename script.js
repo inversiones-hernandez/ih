@@ -66,4 +66,43 @@ if('IntersectionObserver' in window){
   window.requestAnimationFrame(actualizar);
 }
 subir.addEventListener('click',()=>{const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;window.scrollTo({top:0,behavior:reduced?'instant':'smooth'});const destino=document.querySelector('main h1, main');if(destino){const previo=destino.getAttribute('tabindex');destino.setAttribute('tabindex','-1');destino.focus({preventScroll:true});destino.addEventListener('blur',()=>{if(previo===null)destino.removeAttribute('tabindex');else destino.setAttribute('tabindex',previo);},{once:true});}});
+
+// Recorrido de solicitud: el scroll cambia el énfasis, no el estado de un crédito.
+const journey=document.querySelector('.loan-journey');
+if(journey){
+ const cards=Array.from(journey.querySelectorAll('.journey-step'));
+ const guideTitle=journey.querySelector('[data-journey-title]');
+ const guideCount=journey.querySelector('[data-journey-count]');
+ const dots=journey.querySelectorAll('.journey-dots span');
+ let queued=false,active=-1,inView=true;
+ function updateJourney(){
+  queued=false;
+  if(!inView||!cards.length)return;
+  const positions=cards.map(card=>card.getBoundingClientRect().top+30);
+  const anchor=window.innerHeight*.54;
+  const progress=Math.max(0,Math.min(1,(anchor-positions[0])/(positions.at(-1)-positions[0]||1)));
+  const current=positions.reduce((best,value,index)=>Math.abs(value-anchor)<Math.abs(positions[best]-anchor)?index:best,0);
+  journey.style.setProperty('--journey-progress',String(progress));
+  journey.style.setProperty('--journey-length',Math.max(0,positions.at(-1)-positions[0])+'px');
+  journey.style.setProperty('--journey-ring',String((current+1)/cards.length));
+  if(current===active)return;
+  active=current;
+  cards.forEach((card,index)=>{
+   card.classList.toggle('is-current',index===current);
+   if(index===current)card.setAttribute('aria-current','step');else card.removeAttribute('aria-current');
+  });
+  dots.forEach((dot,index)=>dot.classList.toggle('is-current',index<=current));
+  guideTitle.textContent=cards[current].dataset.journeyLabel;
+  guideCount.textContent=String(current+1).padStart(2,'0');
+ }
+ function queueJourney(){if(!queued&&inView){queued=true;window.requestAnimationFrame(updateJourney);}}
+ window.addEventListener('scroll',queueJourney,{passive:true});
+ window.addEventListener('resize',queueJourney,{passive:true});
+ if('IntersectionObserver' in window){
+  new IntersectionObserver(([entry])=>{inView=entry.isIntersecting;if(inView)queueJourney();},{rootMargin:'150px'}).observe(journey);
+ }
+ window.addEventListener('pageshow',queueJourney);
+ document.fonts?.ready.then(queueJourney);
+ queueJourney();
+}
 })();
