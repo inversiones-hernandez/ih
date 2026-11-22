@@ -9,7 +9,8 @@ assert.equal(count,107);
 // Run the actual browser controller against select semantics, including deep-link restoration.
 class El{constructor(tag='div'){this.tag=tag;this.children=[];this.listeners={};this.attrs={};this._value='';this.dataset={};this.classList={toggle(){}};}set value(v){this._value=this.tag==='select'&&!this.children.some(o=>o.value===String(v))?'':String(v);}get value(){return this._value;}replaceChildren(...nodes){this.children=nodes;this._value=nodes[0]?.value||'';}setAttribute(k,v){this.attrs[k]=v;}addEventListener(name,fn){this.listeners[name]=fn;}}
 function browser(search=''){
- const ids={};for(const id of ['calcMonto','calcPlazo','calcFrecuenciaAyuda','calcResumen','resMonto','resTasa','resInteres','resCuotaValor','resFrecuencia','resTotal','calcSolicitud','calcAsesor'])ids[id]=new El(['calcMonto','calcPlazo'].includes(id)?'select':'div');
+ const ids={};for(const id of ['calcMonto','calcPlazo','calcFrecuenciaAyuda','calcResumen','calcAviso','calcAjuste','resMonto','resTasa','resInteres','resCuotaValor','resFrecuencia','resTotal','calcSolicitud','calcAsesor'])ids[id]=new El(['calcMonto','calcPlazo'].includes(id)?'select':'div');
+ ids.calcAviso.hidden=true;
  const modes=['diario','semanal','quincenal'].map(mode=>{const e=new El('button');e.dataset.modalidad=mode;return e;});
  const context={window:{IHPrestamos:loans},document:{readyState:'complete',getElementById:id=>ids[id],querySelectorAll:()=>modes,querySelector:()=>null,createElement:tag=>new El(tag)},location:{search},URLSearchParams};vm.createContext(context);vm.runInContext(fs.readFileSync(require.resolve('../calculadora.js'),'utf8'),context);return{ids,modes};
 }
@@ -19,9 +20,13 @@ assert.equal(b.ids.calcFrecuenciaAyuda.textContent,'Un pago cada semana.');
 b.modes[0].listeners.click();assert.equal(b.ids.calcPlazo.value,'30');assert.equal(b.ids.calcMonto.value,'25000');
 assert.equal(b.ids.calcFrecuenciaAyuda.textContent,'Un pago cada día calendario.');
 const low=browser('?modalidad=semanal&monto=2000&plazo=8');assert.equal(low.ids.calcPlazo.children.length,1);low.modes[0].listeners.click();assert.equal(low.ids.calcMonto.value,'5000');
+assert.match(low.ids.calcAjuste.textContent,/2,000.*5,000.*8 pagos.*30 pagos/);
 const limited=browser('?modalidad=diario&monto=3000&plazo=30');assert.equal(limited.ids.calcPlazo.children.length,1);
 const q=browser('?modalidad=quincenal&monto=5000&plazo=10');q.ids.calcMonto.value='1000';q.ids.calcMonto.listeners.change();assert.equal(q.ids.calcPlazo.value,'4');assert.equal(q.ids.calcPlazo.children.length,1);assert(q.ids.resTotal.textContent.includes('1,300'));
 q.ids.calcMonto.value='3000';q.ids.calcMonto.listeners.change();assert.equal(q.ids.calcPlazo.children.length,3);assert(!q.ids.calcPlazo.children.some(o=>o.value==='10'));
 const invalid=browser('?modalidad=diario&monto=3000&plazo=45');assert.equal(invalid.ids.calcMonto.value,'5000');assert.equal(invalid.ids.calcPlazo.value,'4');
+assert.equal(invalid.ids.calcAviso.hidden,false);
+invalid.modes[1].listeners.click();assert.equal(invalid.ids.calcAviso.hidden,true);
+invalid.ids.calcPlazo.value='10';invalid.ids.calcPlazo.listeners.change();assert.equal(invalid.ids.calcAjuste.textContent,'');
 for(const [capital,cuota] of [[3000,115],[10000,385],[30000,1150]]){const d=browser('?modalidad=diario&monto='+capital+'&plazo=30');assert.equal(d.ids.calcMonto.value,String(capital));assert(d.ids.resCuotaValor.textContent.includes(cuota.toLocaleString('es-DO')));}
 console.log('PASS: '+count+' combinaciones autorizadas, redondeos, selección por monto, plazos excluidos y totales compartidos.');

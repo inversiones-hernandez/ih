@@ -3,6 +3,7 @@
 function iniciar(){
  const datos=window.IHPrestamos,monto=document.getElementById('calcMonto'),plazo=document.getElementById('calcPlazo');
  if(!datos||!monto||!plazo)return;
+ const aviso=document.getElementById('calcAviso'),ajuste=document.getElementById('calcAjuste');
  const dinero=v=>'RD$'+v.toLocaleString('es-DO',{minimumFractionDigits:2,maximumFractionDigits:2});
  const frecuencias={
    diario:{pagos:'diarios',ayuda:'Un pago cada día calendario.'},
@@ -38,23 +39,35 @@ function iniciar(){
    document.getElementById('calcSolicitud').href='solicitud.html?'+params;
    const mensaje='Hola, quiero información sobre un préstamo de '+dinero(r.monto)+', '+r.plazo+' pagos '+frecuencia.pagos+' de '+dinero(r.cuota)+'. Total: '+dinero(r.total)+'.';
    document.getElementById('calcAsesor').href='https://wa.me/18495942190?text='+encodeURIComponent(mensaje);
+   return true;
  }
- function seleccionar(mode,preferred){
+ function seleccionar(mode,preferred,interactive=false){
    if(!Object.hasOwn(datos.planes,mode))return;
    modalidad=mode;const plan=datos.planes[mode],oldMonto=preferred?.monto??Number(monto.value),oldPlazo=preferred?.plazo??Number(plazo.value);
-   opciones(monto,plan.capitales,dinero);monto.value=String(plan.capitales.includes(oldMonto)?oldMonto:5000);
+   const capital=plan.capitales.includes(oldMonto)?oldMonto:5000;
+   opciones(monto,plan.capitales,dinero);monto.value=String(capital);
    const disponibles=plan.plazos.filter(n=>datos.calcular(mode,monto.value,n));
-   opciones(plazo,disponibles,n=>n+' pagos · '+n+' '+plan.unidad);plazo.value=String(disponibles.includes(oldPlazo)?oldPlazo:disponibles[0]);
+   const pagos=disponibles.includes(oldPlazo)?oldPlazo:disponibles[0];
+   opciones(plazo,disponibles,n=>n+' pagos · '+n+' '+plan.unidad);plazo.value=String(pagos);
    document.querySelectorAll('[data-modalidad]').forEach(b=>{const active=b.dataset.modalidad===mode;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
-   render();
+   if(!render()||!interactive)return;
+   if(aviso)aviso.hidden=true;
+   const mensajes=[];
+   if(capital!==oldMonto)mensajes.push(`El monto de ${dinero(oldMonto)} no está disponible en la modalidad ${plan.nombre.toLowerCase()}. Se seleccionó ${dinero(capital)} por defecto. Puedes elegir otro monto de la lista.`);
+   if(pagos!==oldPlazo)mensajes.push(`Con esta selección, ${oldPlazo} pagos no están disponibles. El plazo se ajustó a ${pagos} pagos.`);
+   if(ajuste)ajuste.textContent=mensajes.join(' ');
  }
  const params=new URLSearchParams(location.search),previo=datos.desdeParametros(params);
- const aviso=document.getElementById('calcAviso');
  if(aviso&&datos.tieneSeleccion(params)&&!previo)aviso.hidden=false;
  if(previo)modalidad=previo.modalidad;
- document.querySelectorAll('[data-modalidad]').forEach(b=>b.addEventListener('click',()=>seleccionar(b.dataset.modalidad)));
- function elegir(){if(aviso)aviso.hidden=true;render();}
- monto.addEventListener('change',()=>{seleccionar(modalidad);if(aviso)aviso.hidden=true;});plazo.addEventListener('change',elegir);seleccionar(modalidad,previo);
+ document.querySelectorAll('[data-modalidad]').forEach(b=>b.addEventListener('click',()=>seleccionar(b.dataset.modalidad,null,true)));
+ monto.addEventListener('change',()=>seleccionar(modalidad,null,true));
+ plazo.addEventListener('change',()=>{
+   if(!render())return;
+   if(aviso)aviso.hidden=true;
+   if(ajuste)ajuste.textContent='';
+ });
+ seleccionar(modalidad,previo);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',iniciar);else iniciar();
 })();

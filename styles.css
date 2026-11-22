@@ -933,7 +933,7 @@ body > footer .foot-grid { gap: 32px; }
 .ih-home .process-list::after {
   background: var(--primary); transform: scaleY(var(--ih-reading-progress, 0)); transform-origin: top;
 }
-body.ih-home .process-list li::before {
+body.ih-home .process-list .process-number {
   z-index: 1; inset: 18px auto auto -2px; display: grid; place-items: center;
   width: 24px; height: 24px; border-radius: 50%;
   background: var(--bg-alt); border: 1px solid var(--line);
@@ -941,7 +941,7 @@ body.ih-home .process-list li::before {
   transition: color var(--ih-time) var(--ih-ease), border-color var(--ih-time) var(--ih-ease);
 }
 .ih-home .process-list li { border-top-color: var(--line); }
-.ih-home .process-list li.is-reading::before { color: var(--primary); border-color: var(--primary); }
+.ih-home .process-list li.is-reading .process-number { color: var(--primary); border-color: var(--primary); }
 .ih-home .process-list li.is-reading h3 { color: var(--primary); }
 @media (min-width: 981px) {
   .ih-home .process-grid > .section-head { position: sticky; top: 124px; align-self: start; }
@@ -951,7 +951,7 @@ body.ih-home .process-list li::before {
   body > footer .foot-col :is(a, .privacy-link):is(:hover, :focus-visible) { transform: none; }
   .ih-home .process-list::after { display: none; }
   .ih-home .process-list li.is-reading h3 { color: var(--ink); }
-  .ih-home .process-list li.is-reading::before { color: var(--muted); border-color: var(--line); }
+  .ih-home .process-list li.is-reading .process-number { color: var(--muted); border-color: var(--line); }
 }
 @media print {
   body > footer::before, .ih-home #como-funciona::before,
@@ -1071,6 +1071,7 @@ body.ih-home .process-list li::before {
 }
 
 /* Navegación y ritmo vertical para pantallas táctiles. */
+#calcAjuste:not(:empty) { margin-top: 8px; }
 .ih-back-row { padding-top: 8px; }
 .ih-back-row[hidden] { display: none; }
 .ih-back-link {
