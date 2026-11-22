@@ -28,6 +28,8 @@
  function loadAnalytics(){
   if(!hasAnalytics||!prefs?.analytics||analyticsLoaded)return;
   analyticsLoaded=true;consent(true);
+  const configure=function(){window.dataLayer.push(arguments);};
+  configure('set',{ads_data_redaction:true,url_passthrough:false,allow_google_signals:false,allow_ad_personalization_signals:false,page_location:location.origin+location.pathname,page_referrer:document.referrer?document.referrer.split('?')[0].split('#')[0]:''});
   const script=document.createElement('script');script.async=true;script.dataset.ihAnalytics='true';
   if(config.analyticsId){
    script.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(config.analyticsId);
