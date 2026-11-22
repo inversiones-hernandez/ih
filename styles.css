@@ -1178,3 +1178,32 @@ body.ih-home main .ih-back-row:not([hidden]) ~ .hero { padding-top: clamp(16px, 
     grid-column: 1 / -1;
   }
 }
+
+/* Enlaces sociales de IH en contacto y en el pie compartido. */
+.ih-social-links {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;
+}
+body :is(main, footer) .ih-social-links a {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 0; max-width: 100%; min-height: 44px; margin: 0; padding-inline: 10px;
+  border: 1px solid var(--line); border-radius: 8px;
+  color: var(--text-accent, var(--primary)); background: var(--card);
+  font-size: 13px; font-weight: 550; line-height: 1.25; text-decoration: none;
+  transition: color var(--ih-time) var(--ih-ease), background-color var(--ih-time) var(--ih-ease),
+    border-color var(--ih-time) var(--ih-ease);
+}
+body :is(main, footer) .ih-social-links a:is(:hover, :focus-visible) {
+  border-color: currentColor; text-decoration: underline; text-underline-offset: 3px;
+  transform: none;
+}
+body.ih-home .contact-row.ih-contact-social { padding-inline-start: 30px; }
+body > footer .ih-footer-social-label {
+  margin-block: 14px 0; color: var(--ih-footer-text);
+  font-size: 13px; font-weight: 600;
+}
+body > footer .foot-col .ih-social-links a {
+  border-color: #9ec4ff50; background: #9ec4ff0d; color: var(--ih-footer-text);
+}
+body > footer .foot-col .ih-social-links a:is(:hover, :focus-visible) {
+  border-color: var(--ih-footer-link); background: #9ec4ff1c; color: #fff;
+}
