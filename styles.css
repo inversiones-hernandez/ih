@@ -716,8 +716,9 @@ body > header { background: var(--bg); backdrop-filter: none; }
 .btn:focus-visible,.theme-toggle:focus-visible,.menu-toggle:focus-visible,.privacy-link:focus-visible{
  outline:3px solid var(--text-accent);outline-offset:4px
 }
-.ih-enter{animation:ih-enter 240ms var(--ih-motion-ease) var(--ih-enter-delay,0ms) both}
-@keyframes ih-enter{from{opacity:.55;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.ih-enter{animation:ih-enter 300ms var(--ih-motion-ease) var(--ih-enter-delay,0ms) both}
+.ih-enter:focus-within{animation:none!important}
+@keyframes ih-enter{from{opacity:.80;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .ih-privacy-dialog[open]{animation:ih-dialog-enter 180ms var(--ih-motion-ease) both}
 @keyframes ih-dialog-enter{from{opacity:.6;transform:translateY(6px) scale(.995)}to{opacity:1;transform:translateY(0) scale(1)}}
 .privacy-banner:not([hidden]){animation:ih-dialog-enter 180ms var(--ih-motion-ease) both}
@@ -870,6 +871,58 @@ body > footer .foot-grid { gap: 32px; }
   background: repeating-linear-gradient(135deg, transparent 0 56px, color-mix(in srgb, var(--primary) 8%, transparent) 57px 58px, transparent 59px 80px);
   mask-image: linear-gradient(to right, #000, transparent 70%);
 }
+@media screen {
+  .ih-depth { position: relative; isolation: isolate; }
+  .ih-depth-layer {
+    position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
+    border-radius: inherit;
+  }
+  .ih-depth-layer::before {
+    content: ""; position: absolute; inset: -32px 0;
+    background: repeating-linear-gradient(135deg, transparent 0 38px,
+      color-mix(in srgb, var(--primary) 13%, transparent) 39px 40px, transparent 41px 57px);
+    mask-image: linear-gradient(to left, #000, transparent 46%);
+    transform: translateY(calc(var(--ih-scroll-offset, 0px) * var(--ih-depth-scale, 1)));
+  }
+  @media (max-width: 980px) {
+    .ih-depth { --ih-depth-scale: .65; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ih-depth-layer::before { transform: none; }
+  }
+}
+@media print { .ih-depth-layer { display: none; } }
+
+/* Acentos de lectura en los títulos de IH y Aprende con IH. */
+@media screen {
+  .about-ih-hero h1 em {
+    background: linear-gradient(color-mix(in srgb, var(--primary) 21%, transparent),
+      color-mix(in srgb, var(--primary) 21%, transparent)) 0 91% / 100% .2em no-repeat;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+  :is(.learn-home h2, .learn-hero h1 em) {
+    text-decoration: underline wavy color-mix(in srgb, var(--primary) 66%, var(--ink));
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: .16em;
+    text-decoration-skip-ink: auto;
+  }
+}
+@media screen and (prefers-reduced-motion: no-preference) {
+  body:not(.ih-home) main h1 { animation: ih-mask-rise 340ms var(--ih-ease); }
+  .about-ih-hero h1 em { animation: ih-marker-highlight 240ms var(--ih-ease) 170ms backwards; }
+  .learn-hero h1 em { animation: ih-squiggle 210ms var(--ih-ease) 165ms backwards; }
+  .learn-home h2.ih-enter {
+    animation: ih-enter 300ms var(--ih-ease) both, ih-squiggle 185ms var(--ih-ease) 105ms backwards;
+  }
+}
+@keyframes ih-mask-rise {
+  from { clip-path: inset(0 -4px 85% -4px); transform: translateY(9px); }
+  to { clip-path: inset(-4px); transform: translateY(0); }
+}
+@keyframes ih-marker-highlight { from { background-size: 0 .2em; } }
+@keyframes ih-squiggle { from { text-decoration-color: transparent; } }
+
 .ih-home .process-list { position: relative; }
 .ih-home .process-list::before,
 .ih-home .process-list::after {
@@ -890,8 +943,6 @@ body.ih-home .process-list li::before {
 .ih-home .process-list li { border-top-color: var(--line); }
 .ih-home .process-list li.is-reading::before { color: var(--primary); border-color: var(--primary); }
 .ih-home .process-list li.is-reading h3 { color: var(--primary); }
-body.ih-home .process-list > .ih-enter,
-body > footer .foot-grid > .ih-enter { animation: ih-enter 260ms var(--ih-ease) var(--ih-enter-delay, 0ms) both; }
 @media (min-width: 981px) {
   .ih-home .process-grid > .section-head { position: sticky; top: 124px; align-self: start; }
 }
@@ -976,13 +1027,16 @@ body > footer .foot-grid > .ih-enter { animation: ih-enter 260ms var(--ih-ease) 
   body .calc-pill { padding-inline: 6px; }
 }
 
+@media screen and (max-width: 980px) {
+  .ih-home #como-funciona::before, body > footer::before {
+    transform: translateY(calc(var(--ih-scroll-offset, 0px) * .65));
+  }
+}
+
 @media screen and (max-width: 760px) {
   body .calc-form, body .calc-result { padding: 20px; }
   body .calc-result-grid { gap: 12px; }
   body .calc-result-row { padding-bottom: 10px; }
-  .ih-home #como-funciona::before, body > footer::before {
-    transform: translateY(calc(var(--ih-scroll-offset, 0px) * .65));
-  }
 }
 
 @media screen and (max-width: 620px) {

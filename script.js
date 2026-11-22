@@ -53,25 +53,40 @@ if(resumen&&window.IHPrestamos){
 const play=document.getElementById('brandIntroReplay'),video=document.getElementById('brandIntroVideo'),poster=document.getElementById('brandIntroPoster');
 if(play&&video){const restore=()=>{video.pause();video.hidden=true;if(poster)poster.hidden=false;play.hidden=false;};play.addEventListener('click',()=>{if(!video.src){if(poster?.currentSrc)video.poster=poster.currentSrc;video.src=video.dataset.src;}video.hidden=false;if(poster)poster.hidden=true;video.controls=true;video.play().then(()=>{play.hidden=true;}).catch(restore);});video.addEventListener('ended',restore);video.addEventListener('error',restore);document.addEventListener('visibilitychange',()=>{if(document.hidden)video.pause();});}
 
-// Entradas breves, solo para contenido que comienza fuera de pantalla.
-// El contenido permanece visible si no hay observador o se reduce movimiento.
+// Entrada única para encabezados y grupos, con el contenido visible por defecto.
 const motionPreference=window.matchMedia('(prefers-reduced-motion: reduce)');
 if(!motionPreference.matches && 'IntersectionObserver' in window){
+  const groups='.solution-card, .why-card, .social-card, .learn-card, .step, .process-list > li, .req-item, .about-ih-identity article, .about-ih-values article, .about-ih-contact article, body > footer .foot-grid > div';
   const enterObserver=new IntersectionObserver(entries=>{
-    for(const entry of entries){
-      if(!entry.isIntersecting)continue;
-      enterObserver.unobserve(entry.target);
-      if(motionPreference.matches || entry.target.contains(document.activeElement))continue;
-      entry.target.classList.add('ih-enter');
-      entry.target.addEventListener('animationend',()=>entry.target.classList.remove('ih-enter'),{once:true});
+    for(const {isIntersecting,target} of entries){
+      if(!isIntersecting)continue;
+      enterObserver.unobserve(target);
+      if(motionPreference.matches || target.contains(document.activeElement))continue;
+      target.classList.add('ih-enter');
+      const clear=event=>{
+        if(event.type!=='focusin' && (event.target!==target || event.animationName!=='ih-enter'))return;
+        target.classList.remove('ih-enter');
+        target.removeEventListener('animationend',clear);
+        target.removeEventListener('animationcancel',clear);
+        target.removeEventListener('focusin',clear);
+      };
+      target.addEventListener('animationend',clear);
+      target.addEventListener('animationcancel',clear);
+      target.addEventListener('focusin',clear);
     }
-  },{threshold:0.12});
-  const selector='.solution-card, .why-card, .social-card, .learn-card, .step, .about-ih-values article, .about-ih-contact article, body > footer .foot-grid > div';
-  document.querySelectorAll(selector).forEach(element=>{
-    const rect=element.getBoundingClientRect();
-    if(rect.top < window.innerHeight || rect.height > window.innerHeight)return;
-    const siblings=Array.from(element.parentElement.children).filter(child=>child.matches(selector));
-    element.style.setProperty('--ih-enter-delay',Math.min(siblings.indexOf(element),3)*50+'ms');
+  },{threshold:0.08});
+
+  document.querySelectorAll(`main h2, main h3, ${groups}`).forEach(element=>{
+    const isGroup=element.matches(groups);
+    if(!isGroup && element.closest(`${groups}, .ih-home .hero`))return;
+    if(element.closest('[hidden]') || !element.getClientRects().length)return;
+    const {top,height}=element.getBoundingClientRect();
+    if(top<window.innerHeight || height>window.innerHeight)return;
+    if(isGroup){
+      const siblings=Array.from(element.parentElement.children).filter(child=>child.matches(groups));
+      const delay=Math.min(siblings.indexOf(element),3)*45;
+      element.style.setProperty('--ih-enter-delay',`${delay}ms`);
+    }
     enterObserver.observe(element);
   });
 }
@@ -103,8 +118,18 @@ subir.addEventListener('click',()=>{const reduced=window.matchMedia('(prefers-re
 // Los fondos acompañan el scroll. La línea indica la etapa en lectura.
 const processList=document.querySelector('.process-list');
 const processRows=Array.from(processList?.children||[]);
+const processScene=document.getElementById('como-funciona');
 const footerScene=document.querySelector('body > footer');
-const scenes=[document.getElementById('como-funciona'),footerScene].filter(Boolean);
+const pageTitle=document.querySelector('main h1');
+const headerScene=pageTitle?.closest('.page-hero, .legal-hero, .learn-hero, .printable-sheet');
+if(headerScene){
+  headerScene.classList.add('ih-depth');
+  const layer=document.createElement('span');
+  layer.className='ih-depth-layer';
+  layer.setAttribute('aria-hidden','true');
+  headerScene.prepend(layer);
+}
+const scenes=[processScene,footerScene,headerScene].filter(Boolean);
 if(scenes.length && 'IntersectionObserver' in window){
   const visible=new Set();
   const clamp=value=>Math.max(0,Math.min(1,value));
@@ -118,9 +143,9 @@ if(scenes.length && 'IntersectionObserver' in window){
     for(const scene of visible){
       const rect=scene.getBoundingClientRect();
       const travel=clamp((viewport-rect.top)/(viewport+rect.height));
-      const distance=scene===footerScene?112:56;
+      const distance=scene===footerScene?112:scene===processScene?56:48;
       scene.style.setProperty('--ih-scroll-offset',Math.round((travel-.5)*distance)+'px');
-      if(scene===footerScene||!processRows.length)continue;
+      if(scene!==processScene||!processRows.length)continue;
 
       const positions=processRows.map(row=>row.offsetTop);
       const anchor=viewport*.54-processList.getBoundingClientRect().top;
