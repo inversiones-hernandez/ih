@@ -14,6 +14,36 @@ document.addEventListener('click',e=>{if(nav?.classList.contains('open')&&!nav.c
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav?.classList.contains('open')){cerrar();menu.focus();}});
 mobile.addEventListener('change',cerrar);
 if(nav)nav.inert=mobile.matches;
+
+// Usa el historial para conservar la sección y la posición de lectura.
+const backLink=document.querySelector('[data-ih-back]');
+if(backLink){
+  const label=backLink.querySelector('span');
+  const fallback=label.textContent;
+  const row=backLink.closest('[data-ih-back-home]');
+  const navigation=window.navigation;
+  function canReturnWithinSite(){
+    if(navigation?.currentEntry){
+      return navigation.canGoBack && navigation.entries().some(entry=>entry.index===navigation.currentEntry.index-1);
+    }
+    return history.length>1 && Boolean(document.referrer) && new URL(document.referrer).origin===location.origin;
+  }
+  function updateBackLink(){
+    const canReturn=canReturnWithinSite();
+    label.textContent=canReturn?'Volver':fallback;
+    if(row)row.hidden=!canReturn;
+  }
+  backLink.addEventListener('click',event=>{
+    if(event.defaultPrevented || event.button!==0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)return;
+    if(!canReturnWithinSite())return;
+    event.preventDefault();
+    history.back();
+  });
+  window.addEventListener('pageshow',updateBackLink);
+  navigation?.addEventListener('currententrychange',updateBackLink);
+  updateBackLink();
+}
+
 document.querySelectorAll('.faq-item').forEach((item,index)=>{const q=item.querySelector('.faq-q'),answer=item.querySelector('.faq-a');if(!q||!answer)return;answer.id='faq-respuesta-'+index;q.setAttribute('aria-controls',answer.id);q.setAttribute('aria-expanded',String(item.classList.contains('open')));q.addEventListener('click',()=>{const open=!item.classList.contains('open');item.classList.toggle('open',open);q.setAttribute('aria-expanded',String(open));});});
 const resumen=document.getElementById('solicitudResumen');
 if(resumen&&window.IHPrestamos){

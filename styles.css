@@ -1071,6 +1071,24 @@ body.ih-home .process-list li::before {
 }
 
 /* Navegación y ritmo vertical para pantallas táctiles. */
+.ih-back-row { padding-top: 8px; }
+.ih-back-row[hidden] { display: none; }
+.ih-back-link {
+  display: inline-flex; align-items: center; gap: 7px;
+  min-height: 44px; padding-inline: 10px; border: 1px solid transparent;
+  border-radius: 8px; color: var(--text-accent, var(--primary));
+  font-size: 14px; font-weight: 600; text-decoration: none;
+}
+.ih-back-link:hover { background: var(--bg-alt); border-color: var(--line); }
+.ih-back-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ih-back-link .icon { width: 16px; height: 16px; flex: none; }
+body:not(.ih-home) main .ih-back-row ~ :is(.page-hero, .legal-hero, .learn-hero) { padding-top: 24px; }
+body.ih-home main .ih-back-row:not([hidden]) ~ .hero { padding-top: clamp(16px, 3vw, 40px); }
+@media screen and (max-width: 760px) {
+  body:not(.ih-home) main .ih-back-row ~ :is(.page-hero, .legal-hero, .learn-hero) { padding-top: 12px; }
+}
+@media print { .ih-back-row, .ih-back-link { display: none; } }
+
 @media screen and (max-width: 980px) {
   body { --ih-touch-header: 64px; }
   body > header .nav {
