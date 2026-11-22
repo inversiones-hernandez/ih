@@ -81,7 +81,7 @@ if(journey){
   const positions=cards.map(card=>card.getBoundingClientRect().top+30);
   const anchor=window.innerHeight*.54;
   const progress=Math.max(0,Math.min(1,(anchor-positions[0])/(positions.at(-1)-positions[0]||1)));
-  const current=positions.reduce((best,value,index)=>Math.abs(value-anchor)<Math.abs(positions[best]-anchor)?index:best,0);
+  const current=positions.reduce((best,value,index)=>value<=anchor?index:best,0);
   journey.style.setProperty('--journey-progress',String(progress));
   journey.style.setProperty('--journey-length',Math.max(0,positions.at(-1)-positions[0])+'px');
   journey.style.setProperty('--journey-ring',String((current+1)/cards.length));
