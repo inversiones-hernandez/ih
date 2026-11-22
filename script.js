@@ -16,9 +16,33 @@ mobile.addEventListener('change',cerrar);
 if(nav)nav.inert=mobile.matches;
 document.querySelectorAll('.faq-item').forEach((item,index)=>{const q=item.querySelector('.faq-q'),answer=item.querySelector('.faq-a');if(!q||!answer)return;answer.id='faq-respuesta-'+index;q.setAttribute('aria-controls',answer.id);q.setAttribute('aria-expanded',String(item.classList.contains('open')));q.addEventListener('click',()=>{const open=!item.classList.contains('open');item.classList.toggle('open',open);q.setAttribute('aria-expanded',String(open));});});
 const resumen=document.getElementById('solicitudResumen');
-if(resumen&&window.IHPrestamos){const params=new URLSearchParams(location.search),r=window.IHPrestamos.desdeParametros(params),aviso=document.getElementById('solicitudAviso');if(aviso&&window.IHPrestamos.tieneSeleccion(params)&&!r)aviso.hidden=false;if(r){const dinero=v=>'RD$'+v.toLocaleString('es-DO',{minimumFractionDigits:2,maximumFractionDigits:2});resumen.hidden=false;const text='Tu selección: '+dinero(r.monto)+' · '+r.plazo+' pagos '+({diario:'diarios',semanal:'semanales',quincenal:'quincenales'}[r.modalidad])+' de '+dinero(r.cuota)+'. Total: '+dinero(r.total)+'.';const wa=document.getElementById('solicitudWhatsApp');if(wa)wa.href='https://wa.me/18495942190?text='+encodeURIComponent('Hola, quiero iniciar una solicitud con IH. '+text);const p=document.createElement('p');p.textContent=text;const note=document.createElement('small');note.textContent='Referencia sujeta a evaluación. Puedes editar el mensaje antes de enviarlo por WhatsApp.';const change=document.createElement('a');change.className='btn btn-ghost btn-sm';change.href='soluciones.html?'+new URLSearchParams({monto:r.monto,plazo:r.plazo,modalidad:r.modalidad})+'#calculadora';change.textContent='Cambiar selección';const copy=document.createElement('button');copy.type='button';copy.className='btn btn-primary btn-sm';copy.textContent='Copiar resumen';copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(text);copy.textContent='Resumen copiado';}catch{copy.textContent='Selecciona el texto para copiarlo';}});const actions=document.createElement('div');actions.className='summary-actions';actions.append(change,copy);resumen.replaceChildren(p,note,actions);}}
+if(resumen&&window.IHPrestamos){const params=new URLSearchParams(location.search),r=window.IHPrestamos.desdeParametros(params),aviso=document.getElementById('solicitudAviso');if(aviso&&window.IHPrestamos.tieneSeleccion(params)&&!r)aviso.hidden=false;if(r){const dinero=v=>'RD$'+v.toLocaleString('es-DO',{minimumFractionDigits:2,maximumFractionDigits:2});resumen.hidden=false;const text='Tu selección: '+dinero(r.monto)+' · '+r.plazo+' pagos '+({diario:'diarios',semanal:'semanales',quincenal:'quincenales'}[r.modalidad])+' de '+dinero(r.cuota)+'. Total: '+dinero(r.total)+'.';const wa=document.getElementById('solicitudWhatsApp');if(wa)wa.href='https://wa.me/18495942190?text='+encodeURIComponent('Hola, quiero iniciar una solicitud con IH. '+text);const p=document.createElement('p');p.textContent=text;const note=document.createElement('small');note.textContent='Referencia sujeta a evaluación. Puedes editar el mensaje antes de enviarlo por WhatsApp.';const change=document.createElement('a');change.className='btn btn-ghost btn-sm';change.href='soluciones.html?'+new URLSearchParams({monto:r.monto,plazo:r.plazo,modalidad:r.modalidad})+'#calculadora';change.textContent='Cambiar selección';const copy=document.createElement('button');copy.type='button';copy.className='btn btn-primary btn-sm';copy.textContent='Copiar resumen';copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(text);copy.textContent='✓ Resumen copiado';copy.classList.add('is-confirmed');}catch{copy.textContent='Selecciona el texto para copiarlo';}});const actions=document.createElement('div');actions.className='summary-actions';actions.append(change,copy);resumen.replaceChildren(p,note,actions);}}
 const play=document.getElementById('brandIntroReplay'),video=document.getElementById('brandIntroVideo'),poster=document.getElementById('brandIntroPoster');
 if(play&&video){const restore=()=>{video.pause();video.hidden=true;if(poster)poster.hidden=false;play.hidden=false;};play.addEventListener('click',()=>{if(!video.src){if(poster?.currentSrc)video.poster=poster.currentSrc;video.src=video.dataset.src;}video.hidden=false;if(poster)poster.hidden=true;video.controls=true;video.play().then(()=>{play.hidden=true;}).catch(restore);});video.addEventListener('ended',restore);video.addEventListener('error',restore);document.addEventListener('visibilitychange',()=>{if(document.hidden)video.pause();});}
+
+// Entradas breves, solo para contenido que comienza fuera de pantalla.
+// El contenido permanece visible si no hay observador o se reduce movimiento.
+const motionPreference=window.matchMedia('(prefers-reduced-motion: reduce)');
+if(!motionPreference.matches && 'IntersectionObserver' in window){
+  const enterObserver=new IntersectionObserver(entries=>{
+    for(const entry of entries){
+      if(!entry.isIntersecting)continue;
+      enterObserver.unobserve(entry.target);
+      if(motionPreference.matches || entry.target.contains(document.activeElement))continue;
+      entry.target.classList.add('ih-enter');
+      entry.target.addEventListener('animationend',()=>entry.target.classList.remove('ih-enter'),{once:true});
+    }
+  },{threshold:0.12});
+  const selector='.solution-card, .why-card, .social-card, .learn-card, .step, .about-ih-values article, .about-ih-contact article';
+  document.querySelectorAll(selector).forEach(element=>{
+    const rect=element.getBoundingClientRect();
+    if(rect.top < window.innerHeight || rect.height > window.innerHeight)return;
+    const siblings=Array.from(element.parentElement.children).filter(child=>child.matches(selector));
+    element.style.setProperty('--ih-enter-delay',Math.min(siblings.indexOf(element),3)*50+'ms');
+    enterObserver.observe(element);
+  });
+}
+
 // Acceso al inicio en todas las páginas, sin invadir WhatsApp.
 const subir=document.createElement('button');
 subir.type='button';subir.className='top-float';subir.hidden=true;

@@ -697,3 +697,37 @@ body > header { background: var(--bg); backdrop-filter: none; }
  .not-found{padding-block:40px}.not-found .hero-ctas{display:grid;grid-template-columns:1fr}
 }
 @media print{.privacy-banner,.ih-privacy-dialog{display:none!important}}
+
+/* Movimiento IH: breve, funcional y sin ocultar contenido al iniciar. */
+:root{--ih-motion-duration:200ms;--ih-motion-ease:cubic-bezier(.16,1,.3,1)}
+.btn,.theme-toggle,.menu-toggle,.sol-link,.navlinks a,.faq-q .plus{
+ transition-duration:var(--ih-motion-duration);transition-timing-function:var(--ih-motion-ease)
+}
+.solution-card,.why-card,.social-card,.learn-card,.about-ih-values article,.about-ih-contact article{
+ transition:transform 200ms var(--ih-motion-ease),box-shadow 200ms var(--ih-motion-ease),border-color 200ms var(--ih-motion-ease)
+}
+@media(hover:hover) and (pointer:fine){
+ .solution-card:hover,.why-card:hover,.social-card:hover,.learn-card:hover,.about-ih-values article:hover,.about-ih-contact article:hover{
+  transform:translateY(-3px);border-color:var(--text-accent);box-shadow:0 12px 26px -18px rgba(0,45,110,.32)
+ }
+ .sol-link:hover{transform:translateX(2px)}
+}
+.btn:active:not(:disabled),.theme-toggle:active,.menu-toggle:active{transform:scale(.98);transition-duration:100ms}
+.btn:focus-visible,.theme-toggle:focus-visible,.menu-toggle:focus-visible,.privacy-link:focus-visible{
+ outline:3px solid var(--text-accent);outline-offset:4px
+}
+.ih-enter{animation:ih-enter 240ms var(--ih-motion-ease) var(--ih-enter-delay,0ms) both}
+@keyframes ih-enter{from{opacity:.55;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.ih-privacy-dialog[open]{animation:ih-dialog-enter 180ms var(--ih-motion-ease) both}
+@keyframes ih-dialog-enter{from{opacity:.6;transform:translateY(6px) scale(.995)}to{opacity:1;transform:translateY(0) scale(1)}}
+.privacy-banner:not([hidden]){animation:ih-dialog-enter 180ms var(--ih-motion-ease) both}
+.summary-actions .btn{min-width:150px}
+.summary-actions .is-confirmed{background:#126036;color:#fff;animation:ih-confirm 200ms var(--ih-motion-ease)}
+@keyframes ih-confirm{from{transform:scale(.98)}to{transform:scale(1)}}
+@media(max-width:980px){.navlinks.open{animation:ih-dialog-enter 180ms var(--ih-motion-ease) both}}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+ .btn:active,.theme-toggle:active,.menu-toggle:active,.sol-link:hover,
+ .solution-card:hover,.why-card:hover,.social-card:hover,.learn-card:hover,.about-ih-values article:hover,.about-ih-contact article:hover{transform:none}
+}
+@media print{.ih-enter{animation:none!important;transform:none!important;opacity:1!important}}

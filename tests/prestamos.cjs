@@ -11,7 +11,7 @@ class El{constructor(tag='div'){this.tag=tag;this.children=[];this.listeners={};
 function browser(search=''){
  const ids={};for(const id of ['calcMonto','calcPlazo','calcMontoValor','resMonto','resTasa','resInteres','resCuotas','resCuotaValor','resFrecuencia','resTotal','calcSolicitud','calcAsesor'])ids[id]=new El(['calcMonto','calcPlazo'].includes(id)?'select':'div');
  const modes=['diario','semanal','quincenal'].map(mode=>{const e=new El('button');e.dataset.modalidad=mode;return e;});
- const context={window:{IHPrestamos:loans},document:{readyState:'complete',getElementById:id=>ids[id],querySelectorAll:()=>modes,createElement:tag=>new El(tag)},location:{search},URLSearchParams};vm.createContext(context);vm.runInContext(fs.readFileSync(require.resolve('../calculadora.js'),'utf8'),context);return{ids,modes};
+ const context={window:{IHPrestamos:loans},document:{readyState:'complete',getElementById:id=>ids[id],querySelectorAll:()=>modes,querySelector:()=>null,createElement:tag=>new El(tag)},location:{search},URLSearchParams};vm.createContext(context);vm.runInContext(fs.readFileSync(require.resolve('../calculadora.js'),'utf8'),context);return{ids,modes};
 }
 const b=browser('?modalidad=semanal&monto=25000&plazo=13');assert.equal(b.ids.calcMonto.value,'25000');assert.equal(b.ids.calcPlazo.value,'13');assert.equal(b.ids.calcSolicitud.href,'solicitud.html?monto=25000&modalidad=semanal&plazo=13');assert(b.ids.resTotal.textContent.includes('37,180'));
 b.modes[0].listeners.click();assert.equal(b.ids.calcPlazo.value,'30');assert.equal(b.ids.calcMonto.value,'25000');

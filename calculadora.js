@@ -4,12 +4,19 @@ function iniciar(){
  const datos=window.IHPrestamos,monto=document.getElementById('calcMonto'),plazo=document.getElementById('calcPlazo');
  if(!datos||!monto||!plazo)return;
  const dinero=v=>'RD$'+v.toLocaleString('es-DO',{minimumFractionDigits:2,maximumFractionDigits:2});
- let modalidad='quincenal';
+ let modalidad='quincenal',previousResult='';
  function opciones(select,values,label){select.replaceChildren(...values.map(v=>{const o=document.createElement('option');o.value=String(v);o.textContent=label(v);return o;}));}
  function render(){
    const r=datos.calcular(modalidad,monto.value,plazo.value);if(!r)return;
    document.getElementById('calcMontoValor').textContent=dinero(r.monto);
    for(const [id,text] of Object.entries({resMonto:dinero(r.monto),resTasa:r.porcentajeTotal.toLocaleString('es-DO',{maximumFractionDigits:2})+'% del capital',resInteres:dinero(r.interes),resCuotas:String(r.plazo),resCuotaValor:dinero(r.cuota),resFrecuencia:datos.planes[modalidad].nombre,resTotal:dinero(r.total)}))document.getElementById(id).textContent=text;
+   const signature=[modalidad,r.monto,r.plazo].join(':');
+   const result=document.querySelector('.calc-result');
+   if(previousResult && previousResult!==signature && result?.animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+     result.getAnimations().forEach(animation=>animation.cancel());
+     result.animate([{opacity:.8,transform:'translateY(3px)'},{opacity:1,transform:'translateY(0)'}],{duration:180,easing:'cubic-bezier(.16,1,.3,1)'});
+   }
+   previousResult=signature;
    const params=new URLSearchParams({monto:String(r.monto),modalidad,plazo:String(r.plazo)});
    document.getElementById('calcSolicitud').href='solicitud.html?'+params;
    const mensaje='Hola, quiero información sobre un préstamo de '+dinero(r.monto)+', '+r.plazo+' pagos '+({diario:'diarios',semanal:'semanales',quincenal:'quincenales'}[modalidad])+' de '+dinero(r.cuota)+'. Total: '+dinero(r.total)+'.';
