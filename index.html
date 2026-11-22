@@ -34,6 +34,7 @@
 <meta content="#0066ff" name="theme-color"/>
 <!-- ESTILOS -->
 <link href="styles.css?v=recorrido-20261121" rel="stylesheet"/>
+<link href="portada.css" rel="stylesheet"/>
 <!-- DATOS DE LA EMPRESA -->
 <script type="application/ld+json">{
   "@context": "https://schema.org",
@@ -75,7 +76,7 @@
   ]
 }</script>
 </head>
-<body>
+<body class="ih-home">
 <!-- PRESENTACIÓN INICIAL: se oculta sin JavaScript -->
 <a class="skip-link" href="#contenido">
     Saltar al contenido principal
@@ -86,7 +87,7 @@
 <a class="brand" href="#inicio">
 <img alt="" class="mark" height="64" src="assets/logo-ih-144.webp" width="64"/>
 <span class="brand-copy">
-<span class="brand-kicker">INVERSIONES</span>
+<span class="brand-kicker">Inversiones</span>
 <span class="brand-name">
             Hernández<span class="brand-rd"> RD</span>
 </span>
@@ -124,55 +125,101 @@
 </header>
 <!-- ================= INICIO / PORTADA ================= -->
 <main id="contenido"><section class="hero" id="inicio">
-<svg aria-hidden="true" class="hero-deco" viewbox="0 0 600 600">
-<circle cx="300" cy="300" fill="none" r="280" stroke="url(#hg)" stroke-width="2"></circle>
-<circle cx="300" cy="300" fill="none" r="220" stroke="url(#hg)" stroke-dasharray="2 10" stroke-width="1.4"></circle>
-<defs>
-<lineargradient id="hg" x1="0" x2="1" y1="0" y2="1">
-<stop offset="0" stop-color="var(--azul-oscuro)"></stop>
-<stop offset="1" stop-color="var(--azul-electrico)"></stop>
-</lineargradient>
-</defs>
-</svg>
 <div class="wrap hero-grid">
 <div>
-<div class="eyebrow">Inversiones Hernández.</div>
-<h1 class="reveal">Tu próximo paso,<br/><em>con cuotas claras.</em></h1>
-<p class="hero-sub reveal">Préstamos diarios, semanales y quincenales para personas y pequeños negocios en San Cristóbal. Consulta tu cuota y solicita una evaluación.</p>
+<p class="eyebrow hero-locality">San Cristóbal, República Dominicana</p>
+<h1 class="reveal">Préstamos en <span class="hero-city">San Cristóbal</span></h1>
+<p class="hero-sub reveal">Consulta tu cuota diaria, semanal o quincenal para un préstamo personal o para tu negocio.</p>
 <div class="hero-ctas reveal">
 <a class="btn btn-primary" href="soluciones.html#calculadora">Ver mi cuota</a>
 <a class="btn btn-ghost" href="solicitud.html">Solicitar préstamo</a>
 </div>
-<p class="hero-note reveal">
-          Iniciar una conversación no representa una aprobación
-          automática. Cada solicitud se evalúa de forma individual.
-        </p>
-<div class="hero-strip"><div>Modalidades<strong>3 opciones</strong></div><div>Montos de tabla<strong>Hasta RD$30,000</strong></div><div>Atención<strong>San Cristóbal</strong></div></div>
+<p class="hero-note">Cada solicitud se evalúa de forma individual.</p>
 </div>
-<!-- INTRO ANIMADA DEL LOGO Y ESLOGAN -->
-<aside class="home-action-card"><img alt="Logo de Inversiones Hernández RD" height="80" src="assets/logo-ih-144.webp" srcset="assets/logo-ih-144.webp 144w, assets/logo-ih-280.webp 280w, assets/logo-ih-400.webp 400w" sizes="80px" width="80"/><div class="eyebrow">IMPULSANDO TU CRECIMIENTO</div><h2>Atención cercana, desde donde estés.</h2><p>Te orientamos por WhatsApp, teléfono y correo. Actualmente no contamos con local de atención al público.</p><small>San Cristóbal · República Dominicana</small></aside></div>
+<div class="payment-preview">
+  <div class="preview-head">
+    <h2 id="payment-preview-title">Modalidades de pago</h2>
+    <p>Capital hasta <strong>RD$30,000</strong></p>
+  </div>
+  <table aria-labelledby="payment-preview-title">
+    <thead><tr><th scope="col">Modalidad</th><th scope="col">Capital desde</th><th scope="col">Pagos</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Diario</th><td>RD$3,000</td><td>30 o 45</td></tr>
+      <tr><th scope="row">Semanal</th><td>RD$2,000</td><td>8, 10 o 13</td></tr>
+      <tr><th scope="row">Quincenal</th><td>RD$1,000</td><td>4, 5, 8 o 10</td></tr>
+    </tbody>
+  </table>
+  <p class="preview-note">Los plazos disponibles dependen del monto.</p>
+</div></div>
 </section><section id="soluciones">
 <div class="wrap">
 <div class="section-head reveal">
-<div class="eyebrow">Soluciones financieras</div>
-<h2>Elige cómo prefieres pagar.</h2>
-<p>Las cuotas y los montos disponibles cambian según la modalidad.</p>
+<h2>Compara las modalidades de pago</h2>
+<p>Elige una frecuencia para abrir el simulador con esa modalidad.</p>
 </div>
 <div class="solutions-grid">
-<div class="solution-card reveal"><span class="product-code">01 · DIARIO</span><h3>Un pago cada día</h3><p>30 o 45 pagos, según el monto. Capital desde RD$3,000 hasta RD$30,000.</p><a class="sol-link" href="soluciones.html?modalidad=diario&amp;monto=5000&amp;plazo=30#calculadora">Ver cuotas →</a></div>
-<div class="solution-card reveal"><span class="product-code">02 · SEMANAL</span><h3>Organiza tu semana</h3><p>8, 10 o 13 pagos, según el monto. Capital desde RD$2,000 hasta RD$30,000.</p><a class="sol-link" href="soluciones.html?modalidad=semanal&amp;monto=5000&amp;plazo=10#calculadora">Ver cuotas →</a></div>
-<div class="solution-card reveal"><span class="product-code">03 · QUINCENAL</span><h3>Planifica por quincena</h3><p>4, 5, 8 o 10 pagos, según el monto. Capital desde RD$1,000 hasta RD$30,000.</p><a class="sol-link" href="soluciones.html?modalidad=quincenal&amp;monto=5000&amp;plazo=4#calculadora">Ver cuotas →</a></div>
+  <article class="solution-card">
+    <h3>Diario</h3>
+    <dl><div><dt>Capital</dt><dd>RD$3,000 – RD$30,000</dd></div><div><dt>Número de pagos</dt><dd>30 o 45</dd></div></dl>
+    <a class="sol-link" href="soluciones.html?modalidad=diario&amp;monto=5000&amp;plazo=30#calculadora" aria-label="Ver cuotas de pago diario">Ver cuotas <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></a>
+  </article>
+  <article class="solution-card">
+    <h3>Semanal</h3>
+    <dl><div><dt>Capital</dt><dd>RD$2,000 – RD$30,000</dd></div><div><dt>Número de pagos</dt><dd>8, 10 o 13</dd></div></dl>
+    <a class="sol-link" href="soluciones.html?modalidad=semanal&amp;monto=5000&amp;plazo=10#calculadora" aria-label="Ver cuotas de pago semanal">Ver cuotas <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></a>
+  </article>
+  <article class="solution-card">
+    <h3>Quincenal</h3>
+    <dl><div><dt>Capital</dt><dd>RD$1,000 – RD$30,000</dd></div><div><dt>Número de pagos</dt><dd>4, 5, 8 o 10</dd></div></dl>
+    <a class="sol-link" href="soluciones.html?modalidad=quincenal&amp;monto=5000&amp;plazo=4#calculadora" aria-label="Ver cuotas de pago quincenal">Ver cuotas <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></a>
+  </article>
 </div>
 </div>
-</section><section id="como-funciona" class="loan-journey"><div class="wrap"><div class="section-head"><div class="eyebrow">ASÍ FUNCIONA IH</div><h2>De un mensaje<br>a tu próximo paso.</h2><p>Cinco etapas claras. Desliza y conoce el recorrido.</p></div><div class="journey-layout"><aside class="journey-guide" aria-label="Guía del proceso de solicitud"><div class="journey-guide-top"><span>ATENCIÓN 100 % DIGITAL</span><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m5 17 12-12M5 5h12v12"/></svg></div><div class="journey-orbit" aria-hidden="true"><svg viewBox="0 0 180 180"><circle class="journey-ring-track" cx="90" cy="90" r="76"/><circle class="journey-ring-fill" cx="90" cy="90" r="76"/></svg><span class="journey-count"><strong data-journey-count>01</strong><small>DE 05 ETAPAS</small></span></div><p class="journey-guide-label">EXPLORA EL PROCESO</p><h3 data-journey-title>WhatsApp</h3><div class="journey-dots" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div><p class="journey-guide-note">Un recorrido informativo.<br>No representa una solicitud activa.</p><a class="journey-start" href="solicitud.html">Iniciar mi solicitud <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 17 12-12M5 5h12v12"/></svg></a></aside><div class="journey-track"><div class="journey-line" aria-hidden="true"><span></span></div><ol class="journey-list" aria-label="Etapas para solicitar un préstamo"><li class="journey-step" data-journey-label="WhatsApp"><div class="journey-node" aria-hidden="true">01</div><div class="journey-step-head"><span class="journey-category">WhatsApp</span><svg class="journey-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L4 20l1-4.4A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8 9h8M8 13h5"/></svg></div><h3>Tu primer mensaje</h3><p>Nos escribes por WhatsApp. Te solicitamos tu nombre y número de documento para iniciar la revisión.</p><span class="journey-time">El punto de partida</span></li><li class="journey-step" data-journey-label="Historial"><div class="journey-node" aria-hidden="true">02</div><div class="journey-step-head"><span class="journey-category">Historial</span><svg class="journey-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3H5v18h14V3h-4M9 3h6v4H9zM8 12h8M8 16h5"/></svg></div><h3>Revisamos tu historial</h3><p>Comprobamos préstamos vigentes y atrasos en Préstamos Cloud antes de continuar con la evaluación.</p><span class="journey-time">≈ 5 minutos</span></li><li class="journey-step" data-journey-label="Evaluación IH"><div class="journey-node" aria-hidden="true">03</div><div class="journey-step-head"><span class="journey-category">Evaluación IH</span><svg class="journey-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"/></svg></div><h3>Conocemos tu capacidad de pago</h3><p>Recibes un enlace para declarar tus ingresos, gastos y deudas. Evaluamos la información para decidir si la solicitud puede aprobarse.</p><span class="journey-time">≈ 20 minutos</span></li><li class="journey-step" data-journey-label="Contrato digital"><div class="journey-node" aria-hidden="true">04</div><div class="journey-step-head"><span class="journey-category">Contrato digital</span><svg class="journey-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H5v18h14V8zM14 3v5h5M8 15l2 2 5-5"/></svg></div><h3>Revisas y firmas</h3><p>Si tu solicitud es aprobada, registramos el cliente y el préstamo en Préstamos Cloud. Recibes el contrato digital para revisar las condiciones y firmarlo.</p><span class="journey-time">Después de la aprobación</span></li><li class="journey-step" data-journey-label="Desembolso"><div class="journey-node" aria-hidden="true">05</div><div class="journey-step-head"><span class="journey-category">Desembolso</span><svg class="journey-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h16v12H4zM4 8l8-5 8 5M8 12v4M12 12v4M16 12v4"/></svg></div><h3>Tu préstamo, listo para avanzar</h3><p>Tras la firma y las verificaciones necesarias, gestionamos el desembolso por el medio acordado. El registro, la firma y la gestión del desembolso toman aproximadamente 1 hora después de aprobar la evaluación.</p><span class="journey-time">Etapa final · ≈ 1 hora</span></li></ol></div></div><p class="journey-disclaimer">Los tiempos son aproximados y pueden variar según la información recibida y las verificaciones. Continuar una etapa no garantiza la aprobación.</p></div></section><section style="background:var(--bg-alt);">
+</section><section id="como-funciona">
+  <div class="wrap process-grid">
+    <div class="section-head">
+      <h2>Cómo se solicita un préstamo</h2>
+      <p>Del primer mensaje por WhatsApp al desembolso.</p>
+      <a class="btn btn-ghost" href="solicitud.html">Iniciar solicitud <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></a>
+    </div>
+    <div>
+      <ol class="process-list">
+        <li>
+          <h3>Tu primer mensaje</h3>
+          <p>Nos escribes por WhatsApp. Te solicitamos tu nombre y número de documento para iniciar la revisión.</p>
+
+        </li>
+        <li>
+          <h3>Revisamos tu historial</h3>
+          <p>Comprobamos préstamos vigentes y atrasos en Préstamos Cloud antes de continuar con la evaluación.</p>
+          <small>≈ 5 minutos</small>
+        </li>
+        <li>
+          <h3>Conocemos tu capacidad de pago</h3>
+          <p>Recibes un enlace para declarar tus ingresos, gastos y deudas. Evaluamos la información para decidir si la solicitud puede aprobarse.</p>
+          <small>≈ 20 minutos</small>
+        </li>
+        <li>
+          <h3>Revisas y firmas</h3>
+          <p>Si tu solicitud es aprobada, registramos el cliente y el préstamo en Préstamos Cloud. Recibes el contrato digital para revisar las condiciones y firmarlo.</p>
+          <small>Después de la aprobación</small>
+        </li>
+        <li>
+          <h3>Gestionamos el desembolso</h3>
+          <p>Tras la firma y las verificaciones necesarias, gestionamos el desembolso por el medio acordado. El registro, la firma y la gestión del desembolso toman aproximadamente 1 hora después de aprobar la evaluación.</p>
+          <small>≈ 1 hora</small>
+        </li>
+      </ol>
+      <p class="process-note">Los tiempos son aproximados y pueden variar según la información recibida y las verificaciones. Continuar una etapa no garantiza la aprobación.</p>
+    </div>
+  </div>
+</section><section style="background:var(--bg-alt);">
 <div class="wrap">
 <div class="section-head reveal">
-<div class="eyebrow">Requisitos</div>
-<h2>Lo que necesitas tener a mano.</h2>
+<h2>Requisitos para solicitar</h2>
 </div>
 <div class="req-list">
 <div class="req-item reveal">
-<div class="idx">01</div>
 <div>
 <h3>Ser mayor de edad</h3>
 <p>
@@ -182,7 +229,6 @@
 </div>
 </div>
 <div class="req-item reveal">
-<div class="idx">02</div>
 <div>
 <h3>Cédula vigente</h3>
 <p>
@@ -192,7 +238,6 @@
 </div>
 </div>
 <div class="req-item reveal">
-<div class="idx">03</div>
 <div>
 <h3>Comprobante de ingresos</h3>
 <p>
@@ -202,7 +247,6 @@
 </div>
 </div>
 <div class="req-item reveal">
-<div class="idx">04</div>
 <div>
 <h3>Canal de contacto activo</h3>
 <p>
@@ -213,12 +257,11 @@
 </div>
 </div>
 </div>
-</section><section id="compromiso"><div class="wrap"><div class="clarity-panel"><div><div class="eyebrow">ANTES DE ACEPTAR</div><h2>Conoce todos los números.</h2></div><p>Confirma el capital, el importe neto que recibirás, los intereses, cada cuota y el total a pagar. Revisa también las fechas, las condiciones de mora y tu contrato.</p><a class="btn btn-ghost" href="https://wa.me/18495942190" rel="noopener" target="_blank">Aclarar una duda</a></div></div></section><section id="quienes-somos">
+</section><section id="compromiso"><div class="wrap"><div class="clarity-panel"><div><h2>Qué revisar antes de firmar</h2></div><p>Confirma el capital, el importe neto que recibirás, los intereses, cada cuota y el total a pagar. Revisa también las fechas, las condiciones de mora y tu contrato.</p><a class="btn btn-ghost" href="https://wa.me/18495942190" rel="noopener" target="_blank">Aclarar una duda</a></div></div></section><section id="quienes-somos">
 <div class="wrap about-grid">
 <div class="reveal">
-<div class="eyebrow">Sobre IH</div>
-<h2>Conoce el propósito detrás de IH.</h2>
-<div class="about-copy"><p>Préstamos con evaluación individual y atención cercana en San Cristóbal. Conoce nuestra misión, visión, valores y la forma en que acompañamos a nuestros clientes.</p><a class="btn btn-ghost" href="sobre-ih.html">Conoce IH →</a></div>
+<h2>Sobre Inversiones Hernández</h2>
+<div class="about-copy"><p>Préstamos con evaluación individual y atención cercana en San Cristóbal. Conoce nuestra misión, visión, valores y la forma en que acompañamos a nuestros clientes.</p><a class="btn btn-ghost" href="sobre-ih.html">Conoce IH<svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></a></div>
 </div>
 <div aria-label="Presentación de Inversiones Hernández RD" class="brand-intro reveal">
 <div class="brand-intro-stage">
@@ -229,17 +272,16 @@
 <button class="brand-intro-replay" id="brandIntroReplay" type="button">Ver presentación</button>
 </div>
 </div>
-</section><section class="learn-home"><div class="wrap"><div class="section-head"><span class="eyebrow">APRENDE CON IH</span><h2>Antes de decidir, entiende tu dinero.</h2><p>Explora guías con ejemplos en RD$, herramientas de presupuesto y consejos para cuidar tus comprobantes.</p><a class="btn btn-ghost" href="aprende.html">Explorar Aprende con IH →</a></div></div></section><section id="preguntas">
+</section><section class="learn-home"><div class="wrap"><div class="section-head"><h2>Aprende con IH</h2><p>Explora guías con ejemplos en RD$, herramientas de presupuesto y consejos para cuidar tus comprobantes.</p><a class="btn btn-ghost" href="aprende.html">Explorar Aprende con IH<svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></a></div></div></section><section id="preguntas">
 <div class="wrap">
 <div class="section-head reveal">
-<div class="eyebrow">Preguntas frecuentes</div>
-<h2>Resolvemos tus dudas antes de que las tengas.</h2>
+<h2>Preguntas frecuentes</h2>
 </div>
 <div class="faq-list reveal">
 <div class="faq-item open">
 <button class="faq-q" type="button">
 <span>¿Cuánto tarda el proceso?</span>
-<span class="plus">+</span>
+<span class="plus" aria-hidden="true"><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7v14"/></svg><svg class="faq-icon faq-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/></svg></span>
 </button>
 <div class="faq-a">
 <p>
@@ -252,7 +294,7 @@
 <div class="faq-item">
 <button class="faq-q" type="button">
 <span>¿Cómo solicito un préstamo?</span>
-<span class="plus">+</span>
+<span class="plus" aria-hidden="true"><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7v14"/></svg><svg class="faq-icon faq-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/></svg></span>
 </button>
 <div class="faq-a">
 <p>Puedes iniciar tu solicitud por WhatsApp o llamarnos. Un asesor te orientará sobre los siguientes pasos.</p>
@@ -261,7 +303,7 @@
 <div class="faq-item">
 <button class="faq-q" type="button">
 <span>¿Qué documentos necesito?</span>
-<span class="plus">+</span>
+<span class="plus" aria-hidden="true"><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7v14"/></svg><svg class="faq-icon faq-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/></svg></span>
 </button>
 <div class="faq-a">
 <p>
@@ -274,7 +316,7 @@
 <div class="faq-item">
 <button class="faq-q" type="button">
 <span>¿Cómo pago mi préstamo?</span>
-<span class="plus">+</span>
+<span class="plus" aria-hidden="true"><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7v14"/></svg><svg class="faq-icon faq-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/></svg></span>
 </button>
 <div class="faq-a">
 <p>
@@ -286,7 +328,7 @@
 <div class="faq-item">
 <button class="faq-q" type="button">
 <span>¿Cómo me comunico con ustedes?</span>
-<span class="plus">+</span>
+<span class="plus" aria-hidden="true"><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7v14"/></svg><svg class="faq-icon faq-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/></svg></span>
 </button>
 <div class="faq-a">
 <p>Puedes escribir por WhatsApp, llamar o enviar un correo en nuestro horario de atención.</p>
@@ -295,7 +337,7 @@
 <div class="faq-item">
 <button class="faq-q" type="button">
 <span>¿Enviar la solicitud garantiza la aprobación?</span>
-<span class="plus">+</span>
+<span class="plus" aria-hidden="true"><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7v14"/></svg><svg class="faq-icon faq-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/></svg></span>
 </button>
 <div class="faq-a">
 <p>
@@ -307,7 +349,7 @@
 <div class="faq-item">
 <button class="faq-q" type="button">
 <span>¿Qué modalidades de pago ofrecen?</span>
-<span class="plus">+</span>
+<span class="plus" aria-hidden="true"><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7v14"/></svg><svg class="faq-icon faq-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/></svg></span>
 </button>
 <div class="faq-a">
 <p>Diario: 30 o 45 pagos. Semanal: 8, 10 o 13 pagos. Quincenal: 4, 5, 8 o 10 pagos. No todos los plazos están disponibles para cada monto. Consulta los montos y cuotas disponibles en el simulador.</p>
@@ -316,7 +358,7 @@
 <div class="faq-item">
 <button class="faq-q" type="button">
 <span>¿Cómo se calcula el interés de mi préstamo?</span>
-<span class="plus">+</span>
+<span class="plus" aria-hidden="true"><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7v14"/></svg><svg class="faq-icon faq-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/></svg></span>
 </button>
 <div class="faq-a">
 <p>El simulador utiliza las cuotas de la tabla de IH. El total es la cuota multiplicada por el número de pagos; el interés total es la diferencia entre ese total y el capital. El porcentaje total corresponde a todo el plazo, no a una tasa mensual.</p>
@@ -328,12 +370,8 @@
 <div class="wrap">
 <div class="pre-cta-card reveal">
 <div class="pre-cta-copy">
-<div class="eyebrow">Antes de continuar</div>
-<h2>
-            Tu información se usa solo para evaluar
-            y dar seguimiento a tu solicitud.
-          </h2>
-<p>La solicitud se coordina por los canales oficiales de IH. Consulta nuestra política de privacidad antes de compartir documentación. Nunca envíes contraseñas, PIN, tokens ni códigos de seguridad. Enviar una solicitud no garantiza aprobación.</p>
+<h2>Cómo usamos tus datos</h2>
+<p>Usamos tu información solo para evaluar y dar seguimiento a tu solicitud. El proceso se coordina por los canales oficiales de IH. Consulta nuestra política de privacidad antes de compartir documentación. Nunca envíes contraseñas, PIN, tokens ni códigos de seguridad. Enviar una solicitud no garantiza aprobación.</p>
 
 <div class="pre-cta-links">
 <a href="privacidad.html">Política de privacidad</a>
@@ -353,15 +391,14 @@
 </section><section class="stripe" id="contacto" style="background:var(--bg-alt);">
 <div class="wrap">
 <div class="section-head reveal">
-<div class="eyebrow">Contacto</div>
-<h2>Conversemos sobre lo que necesitas.</h2>
+<h2>Contacto y horario</h2>
 </div>
 <div class="contact-grid" style="grid-template-columns:1fr">
 <div class="reveal">
 <div class="contact-info">
 <div class="contact-row">
 <span class="ic">
-<svg class="icon" viewbox="0 0 24 24">
+<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
 <path d="M12 22s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z"></path>
 <circle cx="12" cy="10" r="2.5"></circle>
 </svg>
@@ -373,7 +410,7 @@
 </div>
 <div class="contact-row">
 <span class="ic">
-<svg class="icon" viewbox="0 0 24 24">
+<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
 <circle cx="12" cy="12" r="9"></circle>
 <path d="M12 7v5l3.3 3.3"></path>
 </svg>
@@ -384,7 +421,7 @@
 </div>
 <div class="contact-row">
 <span class="ic">
-<svg class="icon" viewbox="0 0 24 24">
+<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
 <path d="M22 16.9v2a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 013 4.2 2 2 0 015 2h2a2 2 0 012 1.7c.1.9.3 1.8.6 2.6a2 2 0 01-.5 2.1L8 9.7a16 16 0 006 6l1.4-1.4a2 2 0 012.1-.5c.8.3 1.7.5 2.6.6a2 2 0 012 2.5z"></path>
 </svg>
 </span>
@@ -398,7 +435,7 @@
 </div>
 <div class="contact-row">
 <span class="ic">
-<svg class="icon" viewbox="0 0 24 24">
+<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
 <rect height="16" rx="2.5" width="20" x="2" y="4"></rect>
 <path d="M22 6.5l-10 7-10-7"></path>
 </svg>
@@ -477,7 +514,7 @@
 </footer>
 <!-- ================= WHATSAPP FLOTANTE ================= -->
 <a aria-label="Escribir por WhatsApp" class="wa-float" href="https://wa.me/18495942190?text=Hola%2C%20tengo%20una%20consulta%20sobre%20un%20pr%C3%A9stamo%20con%20Inversiones%20Hern%C3%A1ndez" rel="noopener" target="_blank">
-<svg class="icon" viewbox="0 0 24 24">
+<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
 <path d="M21 11.5a8.5 8.5 0 01-12.4 7.6L4 20l1-4.4A8.5 8.5 0 1121 11.5z"></path>
 <path d="M8.5 10.3c.3 2.6 2.5 4.8 5.1 5.1"></path>
 </svg>
