@@ -34,7 +34,7 @@
 <meta content="#0066ff" name="theme-color"/>
 <!-- ESTILOS -->
 <link href="styles.css?v=recorrido-20261121" rel="stylesheet"/>
-<link href="portada.css?v=video-recorrido" rel="stylesheet"/>
+<link href="portada.css?v=modalidades-recorrido" rel="stylesheet"/>
 <!-- DATOS DE LA EMPRESA -->
 <script type="application/ld+json">{
   "@context": "https://schema.org",
@@ -136,7 +136,7 @@
 </div>
 <p class="hero-note">Cada solicitud se evalúa de forma individual.</p>
 </div>
-<div class="payment-preview">
+<div class="payment-preview" id="soluciones">
   <div class="preview-head">
     <h2 id="payment-preview-title">Modalidades de pago</h2>
     <p>Capital hasta <strong>RD$30,000</strong></p>
@@ -144,48 +144,27 @@
   <table aria-labelledby="payment-preview-title">
     <thead><tr><th scope="col">Modalidad</th><th scope="col">Capital desde</th><th scope="col">Pagos</th></tr></thead>
     <tbody>
-      <tr><th scope="row">Diario</th><td>RD$3,000</td><td>30 o 45</td></tr>
-      <tr><th scope="row">Semanal</th><td>RD$2,000</td><td>8, 10 o 13</td></tr>
-      <tr><th scope="row">Quincenal</th><td>RD$1,000</td><td>4, 5, 8 o 10</td></tr>
+      <tr><th scope="row"><a class="payment-link" href="soluciones.html?modalidad=diario&amp;monto=5000&amp;plazo=30#calculadora" aria-label="Ver cuotas de pago diario">Diario <span aria-hidden="true">→</span></a></th><td>RD$3,000</td><td>30 o 45</td></tr>
+      <tr><th scope="row"><a class="payment-link" href="soluciones.html?modalidad=semanal&amp;monto=5000&amp;plazo=10#calculadora" aria-label="Ver cuotas de pago semanal">Semanal <span aria-hidden="true">→</span></a></th><td>RD$2,000</td><td>8, 10 o 13</td></tr>
+      <tr><th scope="row"><a class="payment-link" href="soluciones.html?modalidad=quincenal&amp;monto=5000&amp;plazo=4#calculadora" aria-label="Ver cuotas de pago quincenal">Quincenal <span aria-hidden="true">→</span></a></th><td>RD$1,000</td><td>4, 5, 8 o 10</td></tr>
     </tbody>
   </table>
-  <p class="preview-note">Los plazos disponibles dependen del monto.</p>
+  <p class="preview-note">Elige una modalidad para calcular tu cuota. Los plazos dependen del monto.</p>
 </div></div>
-</section><section id="soluciones">
-<div class="wrap">
-<div class="section-head reveal">
-<h2>Compara las modalidades de pago</h2>
-<p>Elige una frecuencia para abrir el simulador con esa modalidad.</p>
-</div>
-<div class="solutions-grid">
-  <article class="solution-card">
-    <h3>Diario</h3>
-    <dl><div><dt>Capital</dt><dd>RD$3,000 – RD$30,000</dd></div><div><dt>Número de pagos</dt><dd>30 o 45</dd></div></dl>
-    <a class="sol-link" href="soluciones.html?modalidad=diario&amp;monto=5000&amp;plazo=30#calculadora" aria-label="Ver cuotas de pago diario">Ver cuotas <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></a>
-  </article>
-  <article class="solution-card">
-    <h3>Semanal</h3>
-    <dl><div><dt>Capital</dt><dd>RD$2,000 – RD$30,000</dd></div><div><dt>Número de pagos</dt><dd>8, 10 o 13</dd></div></dl>
-    <a class="sol-link" href="soluciones.html?modalidad=semanal&amp;monto=5000&amp;plazo=10#calculadora" aria-label="Ver cuotas de pago semanal">Ver cuotas <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></a>
-  </article>
-  <article class="solution-card">
-    <h3>Quincenal</h3>
-    <dl><div><dt>Capital</dt><dd>RD$1,000 – RD$30,000</dd></div><div><dt>Número de pagos</dt><dd>4, 5, 8 o 10</dd></div></dl>
-    <a class="sol-link" href="soluciones.html?modalidad=quincenal&amp;monto=5000&amp;plazo=4#calculadora" aria-label="Ver cuotas de pago quincenal">Ver cuotas <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></a>
-  </article>
-</div>
-</div>
 </section><section id="como-funciona">
   <div class="wrap process-grid">
     <div class="section-head">
       <h2>Cómo se solicita un préstamo</h2>
       <p>Del primer mensaje por WhatsApp al desembolso.</p>
       <a class="btn btn-ghost" href="solicitud.html">Iniciar solicitud <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></a>
-      <video class="process-video" aria-label="Recorrido de solicitud en cinco pasos" controls playsinline preload="none"
-        width="960" height="540" poster="assets/recorrido-solicitud-portada.webp">
-        <source src="assets/recorrido-solicitud-ih.mp4" type="video/mp4"/>
-        <a href="assets/recorrido-solicitud-ih.mp4">Abrir el video del recorrido</a>
-      </video>
+      <figure class="process-media">
+        <figcaption id="process-video-caption">Ver el recorrido <span>· 17 s</span></figcaption>
+        <video class="process-video" aria-labelledby="process-video-caption" controls playsinline preload="none"
+          width="960" height="540" poster="assets/recorrido-solicitud-portada.webp">
+          <source src="assets/recorrido-solicitud-ih.mp4" type="video/mp4"/>
+          <a href="assets/recorrido-solicitud-ih.mp4">Abrir el video del recorrido</a>
+        </video>
+      </figure>
     </div>
     <div>
       <ol class="process-list">
@@ -527,6 +506,6 @@
 </a>
 <!-- ================= VOLVER ARRIBA ================= -->
 <!-- JAVASCRIPT DEL SITIO -->
-<script defer="" src="script.js?v=recorrido-20261121-2"></script>
+<script defer="" src="script.js?v=modalidades-recorrido"></script>
 <script defer src="/privacidad-config.js?v=gtm-20261121"></script><script defer src="/privacidad-preferencias.js?v=gtm-20261121"></script></body>
 </html>

@@ -4,8 +4,7 @@
 .ih-home .wrap { max-width: 1224px; padding-inline: 32px; }
 .ih-home main > section { padding-block: 80px; }
 .ih-home main > section[id]:not(#inicio) { scroll-margin-top: 88px; }
-.ih-home .hero { padding-block: 88px 96px; }
-.ih-home #soluciones { padding-top: 56px; }
+.ih-home .hero { padding-block: 88px 72px; }
 .ih-home .hero-sub { margin-top: 24px; }
 .ih-home .hero-ctas { gap: 12px; margin-top: 28px; }
 .ih-home .hero-note { margin-top: 16px; }
@@ -52,7 +51,7 @@
 }
 .ih-home header { background: var(--bg); border-color: var(--line); backdrop-filter: none; }
 .ih-home .brand-name { color: var(--ink); }
-.ih-home .hero, .ih-home #soluciones { background: var(--bg); }
+.ih-home .hero { background: var(--bg); }
 .ih-home #como-funciona { background: var(--bg-alt); }
 .ih-home #contacto { background-image: none; }
 .ih-home .btn-primary,
@@ -72,7 +71,6 @@
   width: 18px; height: 18px; flex: none; stroke-width: 1.5;
 }
 .ih-home .contact-row .ic .icon { color: var(--muted); }
-.ih-home .sol-link { display: inline-flex; align-items: center; gap: 8px; }
 .ih-home .faq-q .plus { display: grid; place-items: center; transform: none; }
 .ih-home .faq-minus,
 .ih-home .faq-item.open .faq-icon { display: none; }
@@ -108,21 +106,14 @@
 
 /* 6. Composición */
 .ih-home .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; }
-.ih-home .solutions-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.ih-home .solution-card {
-  display: flex; flex-direction: column; gap: 16px; align-items: flex-start;
-  min-height: 0; padding: 24px; background: var(--card);
-}
-.ih-home .solution-card h3 { margin: 0; font-size: 22px; letter-spacing: -.02em; }
-.ih-home .solution-card dl { display: grid; gap: 12px; margin: 0; }
-.ih-home .solution-card dt { color: var(--muted); font-size: 13px; }
-.ih-home .solution-card dd { margin: 0; font-weight: 550; font-size: 15px; }
-.ih-home .solution-card .sol-link { margin-top: auto; min-height: 44px; color: var(--primary); }
 .ih-home .process-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 6fr); gap: 64px; }
 .ih-home .process-grid .section-head { margin: 0; }
 .ih-home .process-grid .btn { margin-top: 20px; }
+.ih-home .process-media { margin: 24px 0 0; }
+.ih-home .process-media figcaption { margin-bottom: 8px; font-size: 14px; font-weight: 600; }
+.ih-home .process-media figcaption span { color: var(--muted); font-weight: 400; }
 .ih-home .process-video {
-  display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; margin-top: 24px;
+  display: block; width: 100%; height: auto; aspect-ratio: 16 / 9;
   border: 1px solid var(--line); border-radius: 12px; background: #0b1934;
 }
 @media screen and (max-height: 720px) {
@@ -155,11 +146,9 @@
 
 /* 7. Detalles */
 .ih-home :is(.btn, .brand-intro-replay, .theme-toggle, .menu-toggle, .top-float) { border-radius: 8px; }
-.ih-home :is(.solution-card, .clarity-panel, .brand-intro, .pre-cta-card) { border-radius: 12px; box-shadow: none; }
+.ih-home :is(.clarity-panel, .brand-intro, .pre-cta-card) { border-radius: 12px; box-shadow: none; }
 .ih-home .pre-cta-card { padding: 32px; }
-.ih-home :is(.solution-card, .clarity-panel, .pre-cta-card) { border-color: var(--line); }
-.ih-home .solution-card:hover { border-color: var(--line); }
-.ih-home .sol-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+.ih-home :is(.clarity-panel, .pre-cta-card) { border-color: var(--line); }
 .ih-home :focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; }
 .ih-home .faq-q { min-height: 48px; font-weight: 550; }
 .ih-home .faq-item:not(.open) .faq-a { display: none; }
@@ -170,7 +159,7 @@
 /* 8. Vista de las condiciones publicadas */
 .ih-home .payment-preview {
   overflow: hidden; min-width: 0; background: var(--card); border: 1px solid var(--line);
-  border-radius: 16px; box-shadow: var(--shadow);
+  border-radius: 16px; box-shadow: var(--shadow); scroll-margin-top: 104px;
 }
 .ih-home .preview-head {
   padding: 28px 24px 24px; background: var(--card); border-top: 4px solid var(--primary);
@@ -188,16 +177,22 @@
 .ih-home .payment-preview th:first-child { padding-left: 24px; text-align: left; font-weight: 550; }
 .ih-home .payment-preview :is(th, td):last-child { padding-right: 24px; }
 .ih-home .payment-preview td:nth-child(2) { white-space: nowrap; font-weight: 600; }
+.ih-home .payment-preview tbody th { padding-block: 0; }
+.ih-home .payment-link {
+  display: inline-flex; align-items: center; gap: 4px; min-height: 44px;
+  color: var(--primary); text-decoration: underline; text-underline-offset: 3px;
+}
+.ih-home .payment-link span { text-decoration: none; }
 .ih-home .preview-note { padding: 16px 24px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
 
 /* 9. Movimiento */
-.ih-home :is(.btn, .solution-card, .top-float, .wa-float, .faq-a, .ih-enter) {
+.ih-home :is(.btn, .top-float, .wa-float, .faq-a) {
   animation: none;
   transition: background-color 160ms ease-out, color 160ms ease-out, border-color 160ms ease-out;
 }
 .ih-home { transition: none; }
-.ih-home :is(.btn, .solution-card, .top-float, .wa-float):hover { transform: none; }
-.ih-home :is(.btn, .solution-card):hover { box-shadow: none; }
+.ih-home :is(.btn, .top-float, .wa-float):hover { transform: none; }
+.ih-home .btn:hover { box-shadow: none; }
 .ih-home :is(.btn, .top-float, .wa-float):active { transform: none; }
 
 @media (max-width: 980px) {
@@ -208,8 +203,7 @@
 @media (max-width: 760px) {
   .ih-home .wrap { padding-inline: 20px; }
   .ih-home main > section { padding-block: 48px; }
-  .ih-home #soluciones { padding-top: 48px; }
-  .ih-home .hero-grid, .ih-home .solutions-grid, .ih-home .process-grid, .ih-home .about-grid { grid-template-columns: 1fr; }
+  .ih-home .hero-grid, .ih-home .process-grid, .ih-home .about-grid { grid-template-columns: 1fr; }
   .ih-home .hero-grid, .ih-home .process-grid, .ih-home .about-grid { gap: 24px; }
   .ih-home .hero h1 { max-width: 13ch; }
   .ih-home .hero-ctas { margin-top: 24px; }
@@ -227,7 +221,7 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .ih-home,
-  .ih-home :is(.btn, .solution-card, .top-float, .wa-float, .faq-a) { transition: none; }
+  .ih-home :is(.btn, .top-float, .wa-float, .faq-a) { transition: none; }
 }
 
 @media screen and (max-width: 1200px) {
