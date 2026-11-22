@@ -35,8 +35,19 @@ s=ET.parse('sitemap.xml');locs=[e.text for e in s.iter() if e.tag.endswith('}loc
 for n in new:assert 'https://inversioneshernandezrd.com/'+n in locs,n
 assert 'adsbygoogle' not in '\n'.join(p.read_text() for p in Path('.').glob('*.js'))
 assert Path('ads.txt').read_text().strip() == 'google.com, pub-2272005848401303, DIRECT, f08c47fec0942fa0'
-assert all('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js' not in p.read_text() for p in Path('.').glob('*.html'))
-print('PASS: navigation, local destinations, section anchors, JSON-LD, unique main/h1, sitemap and advertising remains off')
+adsense_pages={
+ 'index.html','aprende-capital-intereses-total.html','aprende-comparar-prestamos.html',
+ 'aprende-evitar-falsas-ofertas.html',
+}
+adsense_script='<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2272005848401303" crossorigin="anonymous"></script>'
+for path in Path('.').glob('*.html'):
+ text=path.read_text(encoding='utf-8')
+ head=text.split('</head>',1)[0]
+ expected=int(path.name in adsense_pages)
+ assert head.count(adsense_script)==expected,path
+ assert text.count('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js')==expected,path
+ assert 'class="adsbygoogle"' not in text,path
+print('PASS: navigation, sitemap, exact AdSense script in approved heads, no manual ad units')
 
 assert len(list(Path('.').glob('aprende-*.html')))==12
 for path in Path('.').glob('aprende-*.html'):

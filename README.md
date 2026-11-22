@@ -37,4 +37,4 @@ Inicio no bloquea la navegación con video. La presentación se carga únicament
 
 ## Publicidad
 
-El archivo ads.txt y la etiqueta de cuenta identifican el editor declarado ca-pub-2272005848401303. No hay llamadas a adsbygoogle, Google Tag Manager ni analítica publicitaria en este código. El diálogo de privacidad administra únicamente el mapa, no constituye una CMP de Google. La configuración y verificación de la cuenta de AdSense se realizan fuera de este repositorio.
+El archivo ads.txt y la etiqueta de cuenta identifican el editor declarado ca-pub-2272005848401303. La portada y tres guías de Aprende con IH cargan el fragmento de conexión de AdSense en el encabezado. Las unidades de anuncios, la revisión del sitio y las opciones de consentimiento publicitario se gestionan por separado en AdSense. El diálogo de privacidad de IH controla la medición opcional de Google Tag Manager y otras preferencias locales.
