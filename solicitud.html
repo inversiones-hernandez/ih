@@ -24,8 +24,10 @@
 <link href="site.webmanifest" rel="manifest"/>
 <meta content="#0066ff" name="theme-color"/>
 <link href="styles.css?v=recorrido-20261121" rel="stylesheet"/>
-<link rel="stylesheet" href="aprende.css?v=lectura-20261108"></head>
-<body>
+<link rel="stylesheet" href="aprende.css?v=lectura-20261108">
+<link rel="stylesheet" href="cuotas-solicitud.css">
+</head>
+<body class="ih-request">
 <a class="skip-link" href="#main">Saltar al contenido principal</a>
 <header>
 <div class="nav">
@@ -49,17 +51,51 @@
 <!-- ================= PAGE HERO ================= -->
 <section class="page-hero">
 <div class="wrap">
-<div class="eyebrow">Solicitud en Línea</div>
-<h1 class="reveal">Iniciemos tu solicitud de préstamo.</h1>
-<p class="reveal">Revisa tu selección y contacta a IH por WhatsApp para iniciar la evaluación. Esta página no recibe formularios ni documentos.</p>
+<h1 class="reveal">Solicita un préstamo</h1>
+<p class="reveal">Revisa tu estimación si ya calculaste tu cuota. La solicitud comienza por WhatsApp y se evalúa de forma individual.</p>
 </div>
 </section>
 <!-- Inicio de solicitud por WhatsApp -->
 <section id="form-section" style="padding: 0 0 64px;">
 <div class="wrap">
 <p id="solicitudAviso" class="legal-callout" role="status" hidden>Vuelve a elegir tu monto y plazo en el <a href="soluciones.html#calculadora">simulador</a>.</p>
-<div class="estimate-summary" hidden="" id="solicitudResumen"></div>
-<div class="clarity-panel"><div><div class="eyebrow">ATENCIÓN DIRECTA</div><h2>Inicia tu solicitud con IH.</h2></div><p>Escríbenos por WhatsApp y te orientaremos sobre los datos y documentos necesarios. Si vienes del simulador, tu selección aparecerá en el mensaje de WhatsApp. Puedes revisarlo y editarlo antes de enviarlo. Toda solicitud está sujeta a evaluación.</p><a class="btn btn-primary" id="solicitudWhatsApp" href="https://wa.me/18495942190?text=Hola%2C%20quiero%20iniciar%20una%20solicitud%20de%20pr%C3%A9stamo%20con%20IH" rel="noopener" target="_blank">Solicitar por WhatsApp ↗</a></div><section class="legal-block"><h2>Así evaluamos tu solicitud</h2><ol><li><strong>Contacto inicial por WhatsApp:</strong> te solicitamos tu nombre y número de documento.</li><li><strong>Historial en Préstamos Cloud:</strong> revisamos préstamos vigentes y atrasos. Tiempo orientativo: 5 minutos.</li><li><strong>Evaluación de capacidad de pago:</strong> si puedes continuar, te enviamos un enlace para declarar tus ingresos, gastos y deudas. Tiempo orientativo: 20 minutos.</li><li><strong>Aprobación y contrato:</strong> si tu solicitud es aprobada, registramos el expediente y el préstamo en Préstamos Cloud. Te enviamos el contrato digital para su revisión y firma.</li><li><strong>Desembolso:</strong> tras la firma y las verificaciones necesarias, gestionamos la entrega por el medio acordado. El registro, la firma y la gestión del desembolso toman aproximadamente 1 hora después de aprobar la evaluación.</li></ol><p class="fine-print">Toda la atención es digital. Los tiempos son aproximados y pueden variar. Completar la evaluación no garantiza la aprobación.</p></section><p class="fine-print">Si IH te solicita documentos, súbelos en el <a href="https://portal.inversioneshernandezrd.com/">Portal de clientes de IH</a>. Nunca envíes contraseñas, PIN ni códigos de verificación. Consulta nuestra <a href="privacidad.html">política de privacidad</a> y los <a href="terminos.html">términos y condiciones</a>.</p></div>
+<div class="request-panel">
+  <section class="request-estimate" id="solicitudResumen" hidden>
+    <h2>Tu estimación</h2>
+    <dl>
+      <div><dt>Monto solicitado</dt><dd id="solicitudMonto"></dd></div>
+      <div><dt id="solicitudPagos">Cuota estimada</dt><dd id="solicitudCuota"></dd></div>
+      <div><dt>Total estimado</dt><dd id="solicitudTotal"></dd></div>
+    </dl>
+  </section>
+  <div class="request-contact">
+    <p>WhatsApp oficial de IH <strong>+1 (849) 594-2190</strong></p>
+    <a class="btn btn-primary" id="solicitudWhatsApp" href="https://wa.me/18495942190?text=Hola%2C%20quiero%20iniciar%20una%20solicitud%20de%20pr%C3%A9stamo%20con%20IH" rel="noopener" target="_blank">Continuar por WhatsApp</a>
+    <p class="request-note">Podrás revisar y editar el mensaje antes de enviarlo.</p>
+  </div>
+  <div class="request-actions" id="solicitudAcciones" hidden>
+    <a class="btn btn-ghost btn-sm" id="solicitudCambiar" href="soluciones.html#calculadora">Cambiar selección</a>
+    <button class="btn btn-ghost btn-sm" id="solicitudCopiar" type="button">Copiar resumen</button>
+    <span class="request-copy-status" id="solicitudCopiaEstado" role="status"></span>
+  </div>
+  <div class="request-privacy">
+    <h2>Qué datos te pediremos</h2>
+    <p>Al iniciar por el WhatsApp oficial, te pediremos tu nombre y número de documento. Si IH solicita documentos, súbelos al <a href="https://portal.inversioneshernandezrd.com/">Portal de clientes de IH</a>. Nunca compartas contraseñas, PIN ni códigos de verificación.</p>
+    <p><a href="canales-oficiales.html">Ver canales oficiales</a> · <a href="privacidad.html">Política de privacidad</a> · <a href="terminos.html">Términos y condiciones</a></p>
+  </div>
+</div>
+<section class="legal-block">
+  <h2>Así evaluamos tu solicitud</h2>
+  <ol>
+    <li><strong>Contacto inicial por WhatsApp:</strong> te solicitamos tu nombre y número de documento.</li>
+    <li><strong>Historial en Préstamos Cloud:</strong> revisamos préstamos vigentes y atrasos. Tiempo orientativo: 5 minutos.</li>
+    <li><strong>Evaluación de capacidad de pago:</strong> si puedes continuar, te enviamos un enlace para declarar tus ingresos, gastos y deudas. Tiempo orientativo: 20 minutos.</li>
+    <li><strong>Aprobación y contrato:</strong> si tu solicitud es aprobada, registramos el expediente y el préstamo en Préstamos Cloud. Te enviamos el contrato digital para su revisión y firma.</li>
+    <li><strong>Desembolso:</strong> tras la firma y las verificaciones necesarias, gestionamos la entrega por el medio acordado. El registro, la firma y la gestión del desembolso toman aproximadamente 1 hora después de aprobar la evaluación.</li>
+  </ol>
+  <p class="fine-print">Toda la atención es digital. Los tiempos son aproximados y pueden variar. Completar la evaluación no garantiza la aprobación.</p>
+</section>
+</div>
 </section>
 <!-- ================= LO QUE NECESITAS ================= -->
 <!-- ================= CTA / SEGURIDAD ================= -->
@@ -103,6 +139,6 @@
 <svg class="icon" viewbox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 01-12.4 7.6L4 20l1-4.4A8.5 8.5 0 1121 11.5z"></path><path d="M8.5 10.3c.3 2.6 2.5 4.8 5.1 5.1"></path></svg>
 </a>
 <script defer="" src="prestamos.js?v=condiciones-20261119"></script>
-<script defer="" src="script.js?v=recorrido-20261121"></script>
+<script defer="" src="script.js?v=solicitud-cuotas"></script>
 <script defer src="/privacidad-config.js?v=gtm-20261121"></script><script defer src="/privacidad-preferencias.js?v=gtm-20261121"></script></body>
 </html>

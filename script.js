@@ -16,7 +16,40 @@ mobile.addEventListener('change',cerrar);
 if(nav)nav.inert=mobile.matches;
 document.querySelectorAll('.faq-item').forEach((item,index)=>{const q=item.querySelector('.faq-q'),answer=item.querySelector('.faq-a');if(!q||!answer)return;answer.id='faq-respuesta-'+index;q.setAttribute('aria-controls',answer.id);q.setAttribute('aria-expanded',String(item.classList.contains('open')));q.addEventListener('click',()=>{const open=!item.classList.contains('open');item.classList.toggle('open',open);q.setAttribute('aria-expanded',String(open));});});
 const resumen=document.getElementById('solicitudResumen');
-if(resumen&&window.IHPrestamos){const params=new URLSearchParams(location.search),r=window.IHPrestamos.desdeParametros(params),aviso=document.getElementById('solicitudAviso');if(aviso&&window.IHPrestamos.tieneSeleccion(params)&&!r)aviso.hidden=false;if(r){const dinero=v=>'RD$'+v.toLocaleString('es-DO',{minimumFractionDigits:2,maximumFractionDigits:2});resumen.hidden=false;const text='Tu selección: '+dinero(r.monto)+' · '+r.plazo+' pagos '+({diario:'diarios',semanal:'semanales',quincenal:'quincenales'}[r.modalidad])+' de '+dinero(r.cuota)+'. Total: '+dinero(r.total)+'.';const wa=document.getElementById('solicitudWhatsApp');if(wa)wa.href='https://wa.me/18495942190?text='+encodeURIComponent('Hola, quiero iniciar una solicitud con IH. '+text);const p=document.createElement('p');p.textContent=text;const note=document.createElement('small');note.textContent='Referencia sujeta a evaluación. Puedes editar el mensaje antes de enviarlo por WhatsApp.';const change=document.createElement('a');change.className='btn btn-ghost btn-sm';change.href='soluciones.html?'+new URLSearchParams({monto:r.monto,plazo:r.plazo,modalidad:r.modalidad})+'#calculadora';change.textContent='Cambiar selección';const copy=document.createElement('button');copy.type='button';copy.className='btn btn-primary btn-sm';copy.textContent='Copiar resumen';copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(text);copy.textContent='✓ Resumen copiado';copy.classList.add('is-confirmed');}catch{copy.textContent='Selecciona el texto para copiarlo';}});const actions=document.createElement('div');actions.className='summary-actions';actions.append(change,copy);resumen.replaceChildren(p,note,actions);}}
+if(resumen&&window.IHPrestamos){
+  const params=new URLSearchParams(location.search);
+  const plan=window.IHPrestamos.desdeParametros(params);
+  const aviso=document.getElementById('solicitudAviso');
+  if(aviso&&window.IHPrestamos.tieneSeleccion(params)&&!plan)aviso.hidden=false;
+  if(plan){
+    const dinero=value=>'RD$'+value.toLocaleString('es-DO',{minimumFractionDigits:2,maximumFractionDigits:2});
+    const frecuencia={diario:'diarios',semanal:'semanales',quincenal:'quincenales'}[plan.modalidad];
+    const monto=dinero(plan.monto),cuota=dinero(plan.cuota),total=dinero(plan.total);
+    const pagos=`${plan.plazo} pagos ${frecuencia} de`;
+    const texto=`Monto solicitado: ${monto}. ${pagos} ${cuota}. Total estimado: ${total}.`;
+    document.getElementById('solicitudMonto').textContent=monto;
+    document.getElementById('solicitudPagos').textContent=pagos;
+    document.getElementById('solicitudCuota').textContent=cuota;
+    document.getElementById('solicitudTotal').textContent=total;
+    resumen.hidden=false;
+    const whatsapp=document.getElementById('solicitudWhatsApp');
+    const destino=new URL(whatsapp.href);
+    destino.searchParams.set('text','Hola, quiero iniciar una solicitud con IH. '+texto);
+    whatsapp.href=destino.href;
+    const seleccion=new URLSearchParams({monto:plan.monto,plazo:plan.plazo,modalidad:plan.modalidad});
+    document.getElementById('solicitudCambiar').href='soluciones.html?'+seleccion+'#calculadora';
+    const estado=document.getElementById('solicitudCopiaEstado');
+    document.getElementById('solicitudCopiar').addEventListener('click',async()=>{
+      try{
+        await navigator.clipboard.writeText(texto);
+        estado.textContent='Resumen copiado.';
+      }catch{
+        estado.textContent='Puedes seleccionar el texto de la estimación y copiarlo.';
+      }
+    });
+    document.getElementById('solicitudAcciones').hidden=false;
+  }
+}
 const play=document.getElementById('brandIntroReplay'),video=document.getElementById('brandIntroVideo'),poster=document.getElementById('brandIntroPoster');
 if(play&&video){const restore=()=>{video.pause();video.hidden=true;if(poster)poster.hidden=false;play.hidden=false;};play.addEventListener('click',()=>{if(!video.src){if(poster?.currentSrc)video.poster=poster.currentSrc;video.src=video.dataset.src;}video.hidden=false;if(poster)poster.hidden=true;video.controls=true;video.play().then(()=>{play.hidden=true;}).catch(restore);});video.addEventListener('ended',restore);video.addEventListener('error',restore);document.addEventListener('visibilitychange',()=>{if(document.hidden)video.pause();});}
 
