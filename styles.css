@@ -906,3 +906,112 @@ body > footer .foot-grid > .ih-enter { animation: ih-enter 260ms var(--ih-ease) 
   body > footer::before, .ih-home #como-funciona::before,
   .ih-home .process-list::before, .ih-home .process-list::after { display: none; }
 }
+
+/* Áreas seguras, controles táctiles y uso horizontal en teléfonos y tabletas. */
+@media screen and (max-width: 1200px) {
+  body {
+    --ih-safe-left: env(safe-area-inset-left, 0px);
+    --ih-safe-right: env(safe-area-inset-right, 0px);
+    --ih-safe-top: env(safe-area-inset-top, 0px);
+    --ih-safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  body > header {
+    padding-top: var(--ih-safe-top);
+  }
+  body > header .nav {
+    padding-inline: max(16px, var(--ih-safe-left)) max(16px, var(--ih-safe-right));
+  }
+  body :is(main, footer) .wrap,
+  body main.wrap {
+    padding-inline: max(20px, var(--ih-safe-left)) max(20px, var(--ih-safe-right));
+  }
+  body .wa-float {
+    right: calc(16px + var(--ih-safe-right)); bottom: calc(16px + var(--ih-safe-bottom));
+  }
+  body .top-float {
+    right: calc(80px + var(--ih-safe-right)); bottom: calc(16px + var(--ih-safe-bottom));
+  }
+  body .privacy-banner {
+    inset: auto max(12px, var(--ih-safe-right)) max(12px, var(--ih-safe-bottom)) max(12px, var(--ih-safe-left));
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - var(--ih-safe-top) - var(--ih-safe-bottom) - 24px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+@media screen and (max-width: 980px) {
+  body { --ih-touch-header: 78px; }
+  body .navlinks.open {
+    max-height: calc(100vh - var(--ih-touch-header));
+    max-height: calc(100dvh - var(--ih-touch-header) - var(--ih-safe-top) - var(--ih-safe-bottom));
+    padding-inline: max(16px, var(--ih-safe-left)) max(16px, var(--ih-safe-right));
+  }
+  body :is(.theme-toggle, .menu-toggle, .calc-pill, .printable-controls .btn) {
+    min-height: 44px;
+  }
+  body main :is(input:not([type="checkbox"], [type="radio"]), select, textarea) { font-size: 16px; }
+  body main a[href^="mailto:"] { overflow-wrap: anywhere; }
+  body .calc-amount-display { font-weight: 600; }
+  body .calc-field label {
+    font-family: var(--body-font); font-size: 14px; letter-spacing: 0; text-transform: none;
+  }
+  body .calc-pill {
+    font-size: 14px; font-weight: 550;
+    transition: background-color var(--ih-time) var(--ih-ease), border-color var(--ih-time) var(--ih-ease),
+      color var(--ih-time) var(--ih-ease);
+  }
+  body .calc-pill.active { color: #fff; border-color: #0754ce; background: #0754ce; }
+  body .calc-result .btn { white-space: normal; text-align: center; }
+  body .calc-result-row > span { min-width: 0; }
+  body .calc-result-row > span:last-child { color: #fff; }
+  body .calc-result-row.total > span:last-child { color: #bcdaff; }
+}
+
+@media screen and (min-width: 780px) and (max-width: 980px) {
+  body .calc-card { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body :is(.calc-form, .calc-result) { padding: 24px; }
+  body .calc-result-grid { min-height: 0; gap: 12px; }
+  body .calc-pillgroup { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  body .calc-pill { padding-inline: 6px; }
+}
+
+@media screen and (max-width: 760px) {
+  body .calc-form, body .calc-result { padding: 20px; }
+  body .calc-result-grid { gap: 12px; }
+  body .calc-result-row { padding-bottom: 10px; }
+  .ih-home #como-funciona::before, body > footer::before {
+    transform: translateY(calc(var(--ih-scroll-offset, 0px) * .65));
+  }
+}
+
+@media screen and (max-width: 620px) {
+  body { --ih-touch-header: 70px; }
+  body > footer { padding-bottom: calc(84px + var(--ih-safe-bottom)); }
+  body > footer .foot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; }
+  body > footer .foot-grid > :first-child,
+  body > footer .foot-grid > :nth-child(4) { grid-column: 1 / -1; }
+  body > footer .foot-col :is(a, .privacy-link) {
+    display: inline-flex; align-items: center; min-height: 44px; margin-bottom: 0;
+    text-align: left; line-height: 1.3;
+  }
+  body > footer .foot-col > :is(a, .privacy-link) { display: flex; }
+  body > footer .foot-col h4 { margin-bottom: 6px; }
+  body > footer .foot-bottom { align-items: flex-start; flex-direction: column; }
+  body .privacy-banner .btn { white-space: normal; }
+}
+
+@media screen and (max-width: 380px) {
+  body .calc-pill { padding-inline: 4px; font-size: 13px; }
+  body .privacy-banner { padding: 12px; }
+}
+
+@media screen and (max-width: 980px) and (orientation: landscape) and (max-height: 520px) {
+  body { --ih-touch-header: 64px; }
+  body > header .nav { min-height: var(--ih-touch-header); padding-block: 8px; }
+  body > header .brand .mark { width: 40px; height: 40px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ih-home #como-funciona::before, body > footer::before { transform: none; }
+}
