@@ -5,7 +5,7 @@ const root=document.documentElement,toggle=document.getElementById('themeToggle'
 function tema(dark){root.dataset.theme=dark?'dark':'light';if(toggle){toggle.setAttribute('aria-label',dark?'Activar modo claro':'Activar modo oscuro');toggle.setAttribute('aria-pressed',String(dark));toggle.querySelector('.icon-moon')?.style.setProperty('display',dark?'none':'block');toggle.querySelector('.icon-sun')?.style.setProperty('display',dark?'block':'none');}}
 let saved;try{saved=localStorage.getItem(key);}catch{}
 tema(saved?saved==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches);
-toggle?.addEventListener('click',()=>{tema(root.dataset.theme!=='dark');try{localStorage.setItem(key,root.dataset.theme);}catch{}});
+toggle?.addEventListener('click',()=>{tema(root.dataset.theme!=='dark');try{const preference=JSON.parse(localStorage.getItem('ih-privacy-v2')||'null');if(preference?.version===2&&preference.expires>Date.now()&&preference.rememberTheme===false)localStorage.removeItem(key);else localStorage.setItem(key,root.dataset.theme);}catch{}});
 const menu=document.getElementById('menuToggle'),nav=document.getElementById('navLinks');
 function cerrar(){nav?.classList.remove('open');menu?.classList.remove('open');menu?.setAttribute('aria-expanded','false');menu?.setAttribute('aria-label','Abrir menú');document.body.classList.remove('menu-is-open');if(nav)nav.inert=mobile.matches;}
 menu?.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')!=='true';if(!open){cerrar();return;}if(nav)nav.inert=false;nav?.classList.add('open');menu.classList.add('open');menu.setAttribute('aria-expanded','true');menu.setAttribute('aria-label','Cerrar menú');document.body.classList.add('menu-is-open');});

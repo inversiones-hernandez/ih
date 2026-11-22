@@ -25,12 +25,12 @@ for n in new:
  for link in p.links:
   u=urlsplit(link)
   if u.scheme or u.netloc:continue
-  dest=unquote(u.path) or n
+  dest=unquote(u.path).lstrip('/') or n
   assert Path(dest).exists(),(n,link)
   if u.fragment and dest in pages:assert u.fragment in pages[dest].ids,(n,link)
 for n,p in pages.items():
- assert 'aprende.html' in p.links,n
- assert 'cookies.html' in p.links,n
+ assert any(x.lstrip('/')=='aprende.html' for x in p.links),n
+ assert any(x.lstrip('/')=='cookies.html' for x in p.links),n
 s=ET.parse('sitemap.xml');locs=[e.text for e in s.iter() if e.tag.endswith('}loc')]
 for n in new:assert 'https://inversioneshernandezrd.com/'+n in locs,n
 assert 'adsbygoogle' not in '\n'.join(p.read_text() for p in Path('.').glob('*.js'))
