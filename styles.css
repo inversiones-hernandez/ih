@@ -582,7 +582,10 @@ footer { background: var(--azul-oscuro); color: var(--blanco); padding: 64px 0 2
 .wrap { max-width:1200px; }
 section { padding:76px 0; }
 .stripe { background-image:none; }
-.nav { max-width:1280px; min-height:92px; gap:22px; }
+.nav { max-width:none; width:100%; min-height:92px; gap:22px; }
+@media screen and (min-width: 981px) {
+  body > header .nav { padding-inline: clamp(20px, 2.8vw, 56px); }
+}
 .brand { flex-shrink:0; gap:12px; }
 .brand .mark { width:64px; height:64px; padding:5px; border-radius:50%; background:#fff; flex-shrink:0; }
 .brand-copy { display:flex; flex-direction:column; gap:3px; line-height:1; }
@@ -858,8 +861,18 @@ body > footer .foot-col :is(a, .privacy-link):is(:hover, :focus-visible) {
   color: var(--ih-footer-link); text-decoration: underline; transform: translateX(3px);
 }
 body > footer :focus-visible { outline-color: var(--ih-footer-link); }
-body > footer .foot-brand { width: min(100%, 232px); padding: 8px; border-radius: 8px; }
-body > footer .foot-logo { width: 100%; height: auto; border-radius: 0; }
+body > footer .foot-brand {
+  width: min(100%, 280px); padding: 0; border-radius: 8px; overflow: hidden;
+  background: #edf5ff;
+}
+body > footer .foot-logo { width: 100%; height: auto; padding: 0; border-radius: 0; }
+@media screen and (prefers-reduced-motion: no-preference) {
+  body > footer .ih-enter .foot-logo { animation: ih-footer-logo-enter 300ms var(--ih-ease) both; }
+}
+@keyframes ih-footer-logo-enter {
+  from { opacity: .8; transform: translateY(5px); clip-path: inset(12% 0 0); }
+  to { opacity: 1; transform: translateY(0); clip-path: inset(0); }
+}
 body > footer a[href^="mailto:"] { font-size: 13px; }
 body > footer .foot-grid { gap: 32px; }
 @media (max-width: 620px) {
@@ -1162,7 +1175,7 @@ body.ih-home main .ih-back-row:not([hidden]) ~ .hero { padding-top: clamp(16px, 
   body.ih-home :is(.contact-row, .req-item) { padding-block: 12px; }
   body > footer { padding-block: 28px calc(72px + var(--ih-safe-bottom)); }
   body > footer .foot-grid { gap: 16px; padding-bottom: 20px; }
-  body > footer .foot-brand { width: min(100%, 180px); }
+  body > footer .foot-brand { width: min(100%, 240px); }
   body > footer .foot-col :is(a, .privacy-link) { min-height: 44px; margin-bottom: 0; }
   body > footer .foot-bottom { padding-top: 18px; }
 }
